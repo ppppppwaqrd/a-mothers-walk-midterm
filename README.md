@@ -34,7 +34,7 @@
 ### ลิงก์
 
 - **GitHub Project:** [ppppppwaqrd/a-mothers-walk-midterm](https://github.com/ppppppwaqrd/a-mothers-walk-midterm)
-- **Play Game (GitHub Pages):** [เล่นเกม](https://ppppppwaqrd.github.io/a-mothers-walk-midterm/) *(เปิด Pages ที่ `/docs` หลัง push)*
+- **Play Game (GitHub Pages):** [เล่นเกม](https://ppppppwaqrd.github.io/a-mothers-walk-midterm/)
 - **Lab 04 (ส่งแล้ว):** [lab04-a-mothers-walk](https://github.com/ppppppwaqrd/lab04-a-mothers-walk)
 
 ---
