@@ -120,17 +120,19 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -420.0
-offset_top = 10.0
+offset_top = -10.0
 offset_right = 420.0
-offset_bottom = 120.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.97, 0.9, 1)
 theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
 theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "673380308-6 จักรภัทร เวียงสิมมา
-AI Section 1"
+theme_override_font_sizes/font_size = 20
+text = "673380348-4 นายสรวิศ สำราญบึงแก
+673380308-6 นายจักรภัทร เวียงสิมมา
+673380328-0 นายพรหมพัฒน ศิริภัคกุลวัฒน์
+กลุ่มที่ 4 — AI Section 1"
 horizontal_alignment = 1
 vertical_alignment = 1

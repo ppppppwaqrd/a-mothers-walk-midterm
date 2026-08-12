@@ -9,18 +9,29 @@ func _ready() -> void:
 	if %Player:
 		%Player.spawn_point = %Player.global_position
 	$MusicPlayer.play(0)
+	_show_start_hints()
+
+
+func _show_start_hints() -> void:
 	var label := $UserInterface/Label
-	if label:
-		var tween = create_tween()
-		label.scale = Vector2.ZERO
-		tween.tween_property(label, "scale", Vector2.ONE, 0.8)
-		await get_tree().create_timer(2.5).timeout
-		if is_instance_valid(label):
-			label.queue_free()
+	if label == null:
+		return
+	var level_title := str(label.text).strip_edges()
+	label.text = "%s\nA/D เดิน | Space กระโดด | J ปาหิน" % level_title
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var tween = create_tween()
+	label.scale = Vector2.ZERO
+	tween.tween_property(label, "scale", Vector2.ONE, 0.8)
+	await get_tree().create_timer(4.0).timeout
+	if is_instance_valid(label):
+		label.queue_free()
 
 
-func _on_player_hit_enemy() -> void:
-	GameManager.damage(8)
+func _on_player_hit_enemy(enemy: Node2D = null) -> void:
+	if enemy != null and enemy.has_method("get_touch_damage"):
+		GameManager.damage(enemy.get_touch_damage())
+	else:
+		GameManager.damage(8)
 
 
 func _on_player_hit_trap() -> void:

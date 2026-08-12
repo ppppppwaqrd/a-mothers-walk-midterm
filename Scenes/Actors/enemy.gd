@@ -5,20 +5,37 @@ extends CharacterBody2D
 @export var direction = 1
 ## Art sheets face right (boar/snake/crow). Set false for old left-facing mushrooms.
 @export var sprite_faces_right: bool = true
+## Hits from stones required to defeat this enemy.
+@export var max_hits: int = 1
+## How touching the player hurts them.
+@export_enum("normal", "half_hp", "instant_kill") var touch_effect: String = "normal"
+@export var touch_damage: int = 8
 
 var alive = true
+var hits_left: int = 1
 @onready var wall_ray: RayCast2D = $Sprite/Ray/wallRay
 @onready var player_ray: RayCast2D = $Sprite/Ray/playerRay
 @onready var floor_ray: RayCast2D = $Sprite/Ray/floorRay
 
 
 func _ready() -> void:
+	hits_left = maxi(1, max_hits)
 	$DeathParticles.one_shot = true
 	if direction > 0:
 		direction = 1
 	elif direction < 0:
 		direction = -1
 	_update_facing()
+
+
+func get_touch_damage() -> int:
+	match touch_effect:
+		"instant_kill":
+			return maxi(GameManager.hp, GameManager.max_hp)
+		"half_hp":
+			return maxi(1, int(ceili(float(GameManager.hp) * 0.5)))
+		_:
+			return touch_damage
 
 
 func _physics_process(delta: float) -> void:
@@ -68,9 +85,23 @@ func _on_hit_area_body_entered(body: Node2D) -> void:
 	if alive and body.is_in_group("Traps"):
 		death_tween()
 	if alive and body.is_in_group("Bullet"):
-		GameManager.add_score()
-		death_tween()
+		hits_left -= 1
 		body.queue_free()
+		if hits_left <= 0:
+			GameManager.add_score()
+			death_tween()
+		else:
+			_hit_flash()
+
+
+func _hit_flash() -> void:
+	var anim: AnimatedSprite2D = null
+	if $Sprite.has_node("AnimateSprite"):
+		anim = $Sprite.get_node("AnimateSprite") as AnimatedSprite2D
+	var target: CanvasItem = anim if anim else $Sprite
+	var tween := create_tween()
+	tween.tween_property(target, "modulate", Color(1, 0.4, 0.4, 1), 0.05)
+	tween.tween_property(target, "modulate", Color(1, 1, 1, 1), 0.12)
 
 
 func death_tween() -> void:

@@ -57,6 +57,8 @@ animations = [{
 [node name="Enemy" instance=ExtResource("1_base")]
 script = ExtResource("3_script")
 speed = 55.0
+max_hits = 5
+touch_effect = "instant_kill"
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(0, -24)

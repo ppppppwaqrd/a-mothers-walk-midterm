@@ -2,11 +2,22 @@ extends CanvasLayer
 
 @onready var score_label = %ScoreLabel
 @onready var hp_bar = %ProgressBar
+@onready var patience_bar: ProgressBar = %PatienceBar
+@onready var ammo_label: Label = %AmmoLabel
 @onready var alert_label: Label = $GameUI/BottomBar/AlertLabel
+
+func _ready() -> void:
+	# Distinguish Ai Tong patience (warm) from HP bar.
+	if patience_bar:
+		patience_bar.modulate = Color(1.0, 0.85, 0.45, 1.0)
 
 func _process(_delta):
 	score_label.text = "คะแนน: %d" % GameManager.score
+	hp_bar.max_value = GameManager.max_hp
 	hp_bar.value = GameManager.hp
+	patience_bar.max_value = GameManager.max_patience
+	patience_bar.value = GameManager.patience
+	ammo_label.text = "x%d" % GameManager.ammo
 	$GameUI/TopBar/btnSound/on.visible = GameManager.sfx_on
 	$GameUI/TopBar/btnSound/mute.visible = not GameManager.sfx_on
 	$GameUI/TopBar/btnMusic/mute.visible = not GameManager.music_on

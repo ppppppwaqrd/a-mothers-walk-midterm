@@ -1,15 +1,12 @@
-# กล่องข้าวน้อย (A Mother's Walk) — Lab 04
+# กล่องข้าวน้อย (A Mother's Walk) — Midterm Project
 
 **รายวิชา:** CP410844 Computer Game Development  
 **วิทยาลัยการคอมพิวเตอร์ มหาวิทยาลัยขอนแก่น**
 
 ---
 
-## ผู้จัดทำ
+## ผู้จัดทำ (กลุ่มที่ 4)
 
-- **673380308-6** นายจักรภัทร เวียงสิมมา
-
-(สมาชิกกลุ่มต่อยอดโปรเจกต์)
 1. **673380348-4** นายสรวิศ สำราญบึงแก
 2. **673380308-6** นายจักรภัทร เวียงสิมมา
 3. **673380328-0** นายพรหมพัฒน ศิริภัคกุลวัฒน์
@@ -21,6 +18,14 @@
 เกม **"กล่องข้าวน้อย (A Mother's Walk)"** เป็นเกม 2D Platformer ที่ตีความนิทานพื้นบ้านไทยใหม่ในมุมของมารดา  
 ผู้เล่นเป็นแม่ของไอ้ทอง เดินทางนำกล่องข้าวไปส่งลูก ต้องหลบศัตรู กับดัก และเก็บกระติ๊บข้าวผ่าน 4 ด่าน
 
+### Progress (ต่อจาก Lab 04)
+
+- หลอดความอดทนของไอ้ทอง (ลดลงตามเวลา)
+- กระสุนหินจำกัด + เก็บก้อนหินเติมกระสุน
+- หมูป่า / ควาย ต้องยิงหลายครั้งถึงตาย
+- ชนควาย = ตายทันที / ชนหมูป่า = เลือดเหลือครึ่ง
+- แสดงปุ่มควบคุมตอนเริ่มด่าน
+
 ### ภาพตัวอย่าง
 
 <img src="docs/demo1.jpg" width="300">
@@ -28,9 +33,9 @@
 
 ### ลิงก์
 
-- **Clip Demo VDO:** [ดูคลิปบน Google Drive](https://drive.google.com/file/d/14knlkG4zcpGbKzxSQCSyQpvcqndaNKEH/view?usp=sharing)
-- **Play Game (GitHub Pages):** [เล่นเกม](https://ppppppwaqrd.github.io/lab04-a-mothers-walk/)
-- **GitHub Project:** [ppppppwaqrd/lab04-a-mothers-walk](https://github.com/ppppppwaqrd/lab04-a-mothers-walk)
+- **GitHub Project:** [ppppppwaqrd/a-mothers-walk-midterm](https://github.com/ppppppwaqrd/a-mothers-walk-midterm)
+- **Play Game (GitHub Pages):** [เล่นเกม](https://ppppppwaqrd.github.io/a-mothers-walk-midterm/) *(เปิด Pages ที่ `/docs` หลัง push)*
+- **Lab 04 (ส่งแล้ว):** [lab04-a-mothers-walk](https://github.com/ppppppwaqrd/lab04-a-mothers-walk)
 
 ---
 
@@ -42,16 +47,6 @@
 | **D / Right** | เดินขวา |
 | **Space** | กระโดด |
 | **J** | ปาหิน / โจมตี |
-
----
-
-## วิธีเล่นบนเว็บ
-
-1. เปิดลิงก์ Play Game ด้านบน
-2. รอโหลดไฟล์เกม (ครั้งแรกอาจใช้เวลาสักครู่)
-3. กด Start แล้วเล่นด่าน 1–4
-
-ไฟล์ Web Export อยู่ในโฟลเดอร์ [`docs/`](docs/) (`index.html`)
 
 ---
 

@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/portal_gate.tscn" id="11_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="12_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/heart_item.tscn" id="13_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/stone_ammo_item.tscn" id="13_ammo"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_thorns.tscn" id="14_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/jump_board.tscn" id="15_a"]
 [ext_resource type="PackedScene" uid="uid://637k1gnncq4t" path="res://Scenes/Actors/enemy_boar.tscn" id="16_a"]
@@ -31,6 +32,12 @@ position = Vector2(1376, 420)
 
 [node name="HeartItem" parent="Coins" index="2" unique_id=1792594768 instance=ExtResource("13_a")]
 position = Vector2(2240, 356)
+
+[node name="StoneAmmoItem" parent="Coins" index="3" instance=ExtResource("13_ammo")]
+position = Vector2(896, 484)
+
+[node name="StoneAmmoItem2" parent="Coins" index="4" instance=ExtResource("13_ammo")]
+position = Vector2(1600, 484)
 
 [node name="Boar1" parent="Enemies" index="0" unique_id=389991647 instance=ExtResource("16_a")]
 position = Vector2(512, 512)

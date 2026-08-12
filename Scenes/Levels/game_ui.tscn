@@ -80,10 +80,10 @@ stretch_mode = 5
 
 [node name="HpRect" type="ColorRect" parent="GameUI/TopBar" unique_id=987609954]
 layout_mode = 0
-offset_left = 360.0
-offset_top = 62.0
-offset_right = 520.0
-offset_bottom = 94.0
+offset_left = 280.0
+offset_top = 12.0
+offset_right = 460.0
+offset_bottom = 44.0
 color = Color(0.18, 0.12, 0.06, 0.75)
 
 [node name="ProgressBar" type="ProgressBar" parent="GameUI/TopBar/HpRect" unique_id=306194423]
@@ -91,26 +91,69 @@ unique_name_in_owner = true
 layout_mode = 0
 offset_left = 2.0
 offset_top = 2.0
-offset_right = 158.0
+offset_right = 178.0
 offset_bottom = 30.0
 theme = ExtResource("4_fjdxc")
 value = 100.0
 show_percentage = false
 metadata/_edit_lock_ = true
 
-[node name="HPLabel" type="Label" parent="GameUI/TopBar" unique_id=2043418135]
+[node name="PatienceRect" type="ColorRect" parent="GameUI/TopBar"]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 50.0
+offset_right = 460.0
+offset_bottom = 82.0
+color = Color(0.12, 0.08, 0.16, 0.8)
+
+[node name="PatienceBar" type="ProgressBar" parent="GameUI/TopBar/PatienceRect"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 290.0
-offset_top = 58.0
-offset_right = 355.0
-offset_bottom = 100.0
-theme_override_colors/font_color = Color(0.55, 0.78, 0.35, 1)
-theme_override_colors/font_outline_color = Color(0.15, 0.1, 0.04, 1)
-theme_override_constants/outline_size = 6
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 178.0
+offset_bottom = 30.0
+theme = ExtResource("4_fjdxc")
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="PatienceLabel" type="Label" parent="GameUI/TopBar"]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 48.0
+offset_right = 600.0
+offset_bottom = 86.0
+theme_override_colors/font_color = Color(0.95, 0.72, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0.15, 0.08, 0.04, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("3_4yslr")
-theme_override_font_sizes/font_size = 26
-text = "พลัง"
+theme_override_font_sizes/font_size = 20
+text = "ไอ้ทอง"
+
+[node name="AmmoIcon" type="TextureRect" parent="GameUI/TopBar"]
+layout_mode = 0
+offset_left = 470.0
+offset_top = 8.0
+offset_right = 506.0
+offset_bottom = 44.0
+texture = ExtResource("13_stone")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AmmoLabel" type="Label" parent="GameUI/TopBar"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 508.0
+offset_top = 10.0
+offset_right = 620.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.04, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_4yslr")
+theme_override_font_sizes/font_size = 22
+text = "x5"
 
 [node name="btnSave" type="Button" parent="GameUI/TopBar" unique_id=196490803]
 layout_mode = 1

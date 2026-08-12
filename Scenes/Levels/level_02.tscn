@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/moving_platform.tscn" id="12_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="13_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/speed_gourd.tscn" id="14_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/stone_ammo_item.tscn" id="14_ammo"]
 [ext_resource type="PackedScene" uid="uid://bowl33xkoh7en" path="res://Scenes/Actors/enemy_snake.tscn" id="15_a"]
 [ext_resource type="PackedScene" uid="uid://65by6gnncq4t" path="res://Scenes/Actors/enemy_crow.tscn" id="16_a"]
 
@@ -26,6 +27,9 @@ position = Vector2(393, 478)
 
 [node name="SpeedGourd" parent="Coins" index="1" unique_id=827361612 instance=ExtResource("14_a")]
 position = Vector2(1248, 292)
+
+[node name="StoneAmmoItem" parent="Coins" index="2" instance=ExtResource("14_ammo")]
+position = Vector2(768, 484)
 
 [node name="Snake1" parent="Enemies" index="0" unique_id=1789116932 instance=ExtResource("15_a")]
 position = Vector2(1024, 513)

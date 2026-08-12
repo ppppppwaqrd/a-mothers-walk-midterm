@@ -7,6 +7,17 @@ var life: int = 4
 var max_life: int = 5
 var max_hp: int = 100
 
+## Ai Tong patience / hunger (drains over time while playing a level).
+var patience: float = 100.0
+var max_patience: float = 100.0
+## ~3.5 minutes for a full bar (100 / 210 ≈ 0.48 per sec).
+var patience_drain_per_sec: float = 0.48
+var patience_active: bool = false
+
+## Limited stone ammo.
+var ammo: int = 5
+var max_ammo: int = 10
+
 var sfx_on: bool = true
 var music_on: bool = true
 
@@ -16,8 +27,38 @@ var save_path := "user://game.save"
 var save_player_position: Vector2 = Vector2.ZERO
 
 
+func _process(delta: float) -> void:
+	if not patience_active:
+		return
+	if player == null or not is_instance_valid(player):
+		return
+	if patience <= 0.0:
+		return
+	patience = maxf(0.0, patience - patience_drain_per_sec * delta)
+	if patience <= 0.0:
+		patience = 0.0
+		# Ai Tong ran out of patience — mother fails this attempt.
+		death()
+
+
 func add_score(v: int = 1) -> void:
 	score += v
+
+
+func add_ammo(v: int = 3) -> void:
+	ammo = mini(max_ammo, ammo + v)
+
+
+func try_consume_ammo() -> bool:
+	if ammo <= 0:
+		return false
+	ammo -= 1
+	return true
+
+
+func reset_run_resources() -> void:
+	patience = max_patience
+	ammo = 5
 
 
 func load_next_level(next_scene: PackedScene) -> void:
@@ -28,6 +69,7 @@ func new_game() -> void:
 	score = 0
 	hp = max_hp
 	life = 4
+	reset_run_resources()
 	save_player_position = Vector2.ZERO
 	current_level = "res://Scenes/Levels/level_01.tscn"
 	_clear_save()
@@ -42,6 +84,7 @@ func restart() -> void:
 func retry_checkpoint() -> void:
 	hp = max_hp
 	life = 4
+	reset_run_resources()
 	save_player_position = Vector2.ZERO
 	if current_level == "" or not ResourceLoader.exists(current_level):
 		current_level = "res://Scenes/Levels/level_01.tscn"
@@ -52,10 +95,13 @@ func retry_checkpoint() -> void:
 ## Called by each level when it starts.
 func on_level_entered(level_path: String) -> void:
 	if level_path == "" or level_path.begins_with("res://Scenes/Levels/game_"):
+		patience_active = false
 		return
 	if level_path.begins_with("res://Scenes/Levels/menu") or level_path.begins_with("res://Scenes/Levels/credit") or level_path.begins_with("res://Scenes/Levels/options"):
+		patience_active = false
 		return
 	current_level = level_path
+	patience_active = true
 	save_checkpoint()
 	if player != null and save_player_position != Vector2.ZERO:
 		player.global_position = save_player_position
@@ -88,10 +134,13 @@ func add_life() -> void:
 
 
 func death() -> void:
+	patience_active = false
 	if player != null:
 		await player.death_tween()
 	life -= 1
 	hp = max_hp
+	patience = max_patience
+	ammo = mini(max_ammo, maxi(ammo, 3))
 	save_checkpoint()
 	if life <= 0:
 		get_tree().change_scene_to_file("res://Scenes/Levels/game_over.tscn")
@@ -137,6 +186,8 @@ func save_checkpoint() -> void:
 		"score": score,
 		"life": life,
 		"hp": hp,
+		"patience": patience,
+		"ammo": ammo,
 	}
 	file.store_pascal_string(JSON.stringify(payload, "  "))
 	file.close()
@@ -168,6 +219,8 @@ func load_game() -> void:
 	score = int(data.get("score", score))
 	life = int(data.get("life", 4))
 	hp = int(data.get("hp", max_hp))
+	patience = float(data.get("patience", max_patience))
+	ammo = int(data.get("ammo", 5))
 	var pos = data.get("player", [0, 0])
 	if typeof(pos) == TYPE_ARRAY and pos.size() >= 2:
 		save_player_position = Vector2(float(pos[0]), float(pos[1]))
@@ -176,6 +229,7 @@ func load_game() -> void:
 	if life <= 0:
 		life = 4
 		hp = max_hp
+		reset_run_resources()
 	get_tree().change_scene_to_file(current_level)
 
 

@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-signal hit_enemy
+signal hit_enemy(enemy: Node2D)
 signal hit_trap
 
 
@@ -209,16 +209,20 @@ func _on_collision_body_entered(body):
 		else:
 			velocity.x = 300
 		damage_tween()
-		hit_enemy.emit()
+		hit_enemy.emit(body)
 
 
 func handle_shooting():
 	if Input.is_action_just_pressed("Shoot") and movement_enabled and shoot_cooldown_timer <= 0:
+		if GameManager.ammo <= 0:
+			return
 		shoot()
 
 
 func shoot():
 	if bullet_scene == null:
+		return
+	if not GameManager.try_consume_ammo():
 		return
 	is_attacking = true
 	player_sprite.play("Attack")
