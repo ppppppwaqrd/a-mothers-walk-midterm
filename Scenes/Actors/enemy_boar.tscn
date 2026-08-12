@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://637k1gnncq4t"]
+
+[ext_resource type="PackedScene" uid="uid://d27bcsmx82vfa" path="res://Scenes/Actors/enemy.tscn" id="1_base"]
+[ext_resource type="Texture2D" uid="uid://r7oxq3jyagdq" path="res://Assets/Generated/Spritesheet/boar_run.png" id="2_tex"]
+[ext_resource type="Script" path="res://Scenes/Actors/monster_themed.gd" id="3_script"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0"]
+atlas = ExtResource("2_tex")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1"]
+atlas = ExtResource("2_tex")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2"]
+atlas = ExtResource("2_tex")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3"]
+atlas = ExtResource("2_tex")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4"]
+atlas = ExtResource("2_tex")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5"]
+atlas = ExtResource("2_tex")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_boar"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[node name="Enemy" instance=ExtResource("1_base")]
+script = ExtResource("3_script")
+speed = 80.0
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, -22)
+scale = Vector2(1.5, 1.1)
+
+[node name="CollisionShape2D2" parent="HitArea" index="0"]
+position = Vector2(0, -22)
+scale = Vector2(1.5, 1.1)
+
+[node name="AnimateSprite" type="AnimatedSprite2D" parent="Sprite" index="0"]
+position = Vector2(0, -22)
+scale = Vector2(1.6, 1.6)
+sprite_frames = SubResource("SpriteFrames_boar")
+animation = &"run"
+autoplay = "run"

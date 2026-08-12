@@ -1,0 +1,29 @@
+[gd_resource type="Theme" format=3 uid="uid://d3eng5cvycmjf"]
+
+[ext_resource type="FontFile" uid="uid://b3ivysmhcn84h" path="res://Assets/Fonts/Kodchasan-Bold.ttf" id="1_f1dvb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.2, 0.12, 0.06, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill"]
+bg_color = Color(0.45, 0.72, 0.28, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[resource]
+default_font = ExtResource("1_f1dvb")
+default_font_size = 18
+Label/colors/font_color = Color(0.98, 0.93, 0.82, 1)
+Label/colors/font_outline_color = Color(0.15, 0.08, 0.03, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.35)
+Label/constants/outline_size = 4
+Label/font_sizes/font_size = 22
+ProgressBar/constants/outline_size = 0
+ProgressBar/styles/background = SubResource("StyleBoxFlat_bg")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_fill")

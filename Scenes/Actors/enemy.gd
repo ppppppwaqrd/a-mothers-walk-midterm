@@ -1,0 +1,83 @@
+class_name Enemy
+extends CharacterBody2D
+
+@export var speed = 100.0
+@export var direction = 1
+## Art sheets face right (boar/snake/crow). Set false for old left-facing mushrooms.
+@export var sprite_faces_right: bool = true
+
+var alive = true
+@onready var wall_ray: RayCast2D = $Sprite/Ray/wallRay
+@onready var player_ray: RayCast2D = $Sprite/Ray/playerRay
+@onready var floor_ray: RayCast2D = $Sprite/Ray/floorRay
+
+
+func _ready() -> void:
+	$DeathParticles.one_shot = true
+	if direction > 0:
+		direction = 1
+	elif direction < 0:
+		direction = -1
+	_update_facing()
+
+
+func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if alive and is_on_floor():
+		if player_ray.is_colliding():
+			found_player()
+		elif is_on_wall() or wall_ray.is_colliding() or not floor_ray.is_colliding():
+			direction = -direction
+			_update_facing()
+		velocity.x = speed * direction
+	else:
+		velocity.x = 0
+
+	move_and_slide()
+
+
+func _update_facing() -> void:
+	# Keep rays on the Sprite root (unscaled); aim them in move direction.
+	var facing: int = 1 if direction > 0 else -1
+	player_ray.target_position = Vector2(48.0 * facing, 0.0)
+	wall_ray.target_position = Vector2(30.0 * facing, 0.0)
+	floor_ray.position = Vector2(24.0 * facing, floor_ray.position.y)
+
+	var anim: AnimatedSprite2D = null
+	if $Sprite.has_node("AnimateSprite"):
+		anim = $Sprite.get_node("AnimateSprite") as AnimatedSprite2D
+	if anim != null:
+		# Right-facing art: flip when moving left. Left-facing art: opposite.
+		anim.flip_h = (facing < 0) if sprite_faces_right else (facing > 0)
+		$Sprite.scale.x = 1.0
+	else:
+		$Sprite.scale.x = -1.0 if ((facing < 0) == sprite_faces_right) else 1.0
+
+
+func found_player() -> void:
+	var point: Vector2 = player_ray.get_collision_point()
+	var new_dir: int = -1 if position.x > point.x else 1
+	if new_dir != direction:
+		direction = new_dir
+		_update_facing()
+
+
+func _on_hit_area_body_entered(body: Node2D) -> void:
+	if alive and body.is_in_group("Traps"):
+		death_tween()
+	if alive and body.is_in_group("Bullet"):
+		GameManager.add_score()
+		death_tween()
+		body.queue_free()
+
+
+func death_tween() -> void:
+	alive = false
+	collision_layer = 0
+	$Sprite.hide()
+	$DeathParticles.emitting = true
+	$DeathSfx.play()
+	await get_tree().create_timer(1).timeout
+	queue_free()
