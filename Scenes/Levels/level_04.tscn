@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://deeqtr4us2oxc"]
 
 [ext_resource type="PackedScene" uid="uid://bjntpxb1c8jxn" path="res://Scenes/Levels/base_level.tscn" id="1_base"]
-[ext_resource type="PackedScene" uid="uid://b46lxwc5r3dy4" path="res://Scenes/Levels/game_win.tscn" id="2_next"]
+[ext_resource type="PackedScene" uid="uid://level05amotherwalk" path="res://Scenes/Levels/level_05.tscn" id="2_next"]
 [ext_resource type="TileSet" uid="uid://dpk7f214d563s" path="res://Scenes/Prefabs/ground_tile_set_04.tres" id="3_tiles"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/portal_gate.tscn" id="11_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="12_a"]
@@ -50,7 +50,7 @@ direction = -1
 position = Vector2(2304, 192)
 
 [node name="Label" parent="UserInterface" index="1"]
-text = "ด่าน 4 — ทุ่งนาของไอ้ทอง"
+text = "ด่าน 4 — ทุ่งนากลางทาง"
 
 [node name="TrapThorns" parent="." index="9" unique_id=737181106 instance=ExtResource("14_a")]
 position = Vector2(640, 512)
@@ -61,7 +61,3 @@ position = Vector2(1344, 512)
 [node name="PortalGate" parent="." index="11" unique_id=1877817335 instance=ExtResource("11_a")]
 position = Vector2(3174, 503)
 next_scene = ExtResource("2_next")
-
-[node name="AiTong" type="Sprite2D" parent="." index="12" unique_id=896432017]
-position = Vector2(3232, 464)
-texture = ExtResource("19_a")

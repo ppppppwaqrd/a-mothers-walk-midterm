@@ -8,6 +8,8 @@ const LEVEL_BG := {
 	"level_02": "res://Assets/Generated/BG/bg_level_02.png",
 	"level_03": "res://Assets/Generated/BG/bg_level_03.png",
 	"level_04": "res://Assets/Generated/BG/bg_level_04.png",
+	"level_05": "res://Assets/Generated/BG/bg_level_03.png",
+	"level_06": "res://Assets/Generated/BG/bg_level_04.png",
 }
 
 

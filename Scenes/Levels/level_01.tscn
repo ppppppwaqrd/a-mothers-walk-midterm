@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="11_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/heart_item.tscn" id="12_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/stone_ammo_item.tscn" id="13_ammo"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/villager_help.tscn" id="13_vil"]
 [ext_resource type="PackedScene" uid="uid://637k1gnncq4t" path="res://Scenes/Actors/enemy_boar.tscn" id="14_a"]
 [ext_resource type="PackedScene" uid="uid://bowl33xkoh7en" path="res://Scenes/Actors/enemy_snake.tscn" id="15_a"]
 
@@ -31,6 +32,9 @@ position = Vector2(1472, 420)
 
 [node name="StoneAmmoItem" parent="Coins" index="3" instance=ExtResource("13_ammo")]
 position = Vector2(960, 484)
+
+[node name="VillagerHelp" parent="." instance=ExtResource("13_vil")]
+position = Vector2(400, 512)
 
 [node name="Boar1" parent="Enemies" index="0" unique_id=1277050420 instance=ExtResource("14_a")]
 position = Vector2(1071, 497)

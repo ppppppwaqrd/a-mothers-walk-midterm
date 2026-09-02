@@ -5,6 +5,7 @@
 [ext_resource type="TileSet" uid="uid://gtilelevel03amw" path="res://Scenes/Prefabs/ground_tile_set_03.tres" id="3_tiles"]
 
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_blade.tscn" id="10_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_pendulum.tscn" id="11_pend"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/elevator.tscn" id="12_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="14_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/heart_item.tscn" id="15_a"]
@@ -25,6 +26,9 @@ tile_set = ExtResource("3_tiles")
 
 [node name="TrapBlade" parent="." instance=ExtResource("10_a")]
 position = Vector2(1024, 476)
+
+[node name="TrapPendulum" parent="." instance=ExtResource("11_pend")]
+position = Vector2(1408, 320)
 
 [node name="Elevator" parent="." instance=ExtResource("12_a")]
 position = Vector2(1920, 512)

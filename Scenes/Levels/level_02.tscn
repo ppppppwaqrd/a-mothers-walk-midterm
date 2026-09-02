@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="13_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/speed_gourd.tscn" id="14_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/stone_ammo_item.tscn" id="14_ammo"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/checkpoint_shrine.tscn" id="14_cp"]
 [ext_resource type="PackedScene" uid="uid://bowl33xkoh7en" path="res://Scenes/Actors/enemy_snake.tscn" id="15_a"]
 [ext_resource type="PackedScene" uid="uid://65by6gnncq4t" path="res://Scenes/Actors/enemy_crow.tscn" id="16_a"]
 
@@ -51,3 +52,6 @@ position = Vector2(1482, 505)
 
 [node name="TrapThorns" parent="." index="11" unique_id=366007531 instance=ExtResource("11_a")]
 position = Vector2(2011, 513)
+
+[node name="CheckpointShrine" parent="." instance=ExtResource("14_cp")]
+position = Vector2(1152, 512)

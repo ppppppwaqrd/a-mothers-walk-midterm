@@ -1,0 +1,22 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scenes/Prefabs/puzzle_switch.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sw"]
+size = Vector2(48, 16)
+
+[node name="PuzzleSwitch" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Polygon2D" parent="."]
+position = Vector2(0, -4)
+color = Color(0.75, 0.35, 0.2, 1)
+polygon = PackedVector2Array(-24, -8, 24, -8, 24, 8, -24, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_sw")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

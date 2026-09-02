@@ -10,9 +10,13 @@ var max_hp: int = 100
 ## Ai Tong patience / hunger (drains over time while playing a level).
 var patience: float = 100.0
 var max_patience: float = 100.0
-## ~3.5 minutes for a full bar (100 / 210 ≈ 0.48 per sec).
-var patience_drain_per_sec: float = 0.48
+## ~5+ minutes for 6 levels (100 / 320 ≈ 0.31 per sec).
+var patience_drain_per_sec: float = 0.31
 var patience_active: bool = false
+
+## Mid-level shrine checkpoint (survives death within the same level).
+var checkpoint_position: Vector2 = Vector2.ZERO
+var has_level_checkpoint: bool = false
 
 ## Limited stone ammo.
 var ammo: int = 5
@@ -59,9 +63,24 @@ func try_consume_ammo() -> bool:
 func reset_run_resources() -> void:
 	patience = max_patience
 	ammo = 5
+	clear_level_checkpoint()
+
+
+func clear_level_checkpoint() -> void:
+	checkpoint_position = Vector2.ZERO
+	has_level_checkpoint = false
+
+
+func register_checkpoint(pos: Vector2) -> void:
+	checkpoint_position = pos
+	has_level_checkpoint = true
+	if player != null and is_instance_valid(player):
+		player.spawn_point = pos
+	save_checkpoint()
 
 
 func load_next_level(next_scene: PackedScene) -> void:
+	clear_level_checkpoint()
 	get_tree().change_scene_to_packed(next_scene)
 
 
@@ -100,13 +119,20 @@ func on_level_entered(level_path: String) -> void:
 	if level_path.begins_with("res://Scenes/Levels/menu") or level_path.begins_with("res://Scenes/Levels/credit") or level_path.begins_with("res://Scenes/Levels/options"):
 		patience_active = false
 		return
+	# New level (not death reload) → clear mid-level shrine.
+	if current_level != "" and current_level != level_path:
+		clear_level_checkpoint()
 	current_level = level_path
 	patience_active = true
 	save_checkpoint()
-	if player != null and save_player_position != Vector2.ZERO:
-		player.global_position = save_player_position
-		player.spawn_point = save_player_position
-		save_player_position = Vector2.ZERO
+	if player != null:
+		if has_level_checkpoint and checkpoint_position != Vector2.ZERO:
+			player.global_position = checkpoint_position
+			player.spawn_point = checkpoint_position
+		elif save_player_position != Vector2.ZERO:
+			player.global_position = save_player_position
+			player.spawn_point = save_player_position
+			save_player_position = Vector2.ZERO
 
 
 func damage(val: int = 1) -> void:
@@ -143,9 +169,10 @@ func death() -> void:
 	ammo = mini(max_ammo, maxi(ammo, 3))
 	save_checkpoint()
 	if life <= 0:
+		clear_level_checkpoint()
 		get_tree().change_scene_to_file("res://Scenes/Levels/game_over.tscn")
 	else:
-		# Respawn at start of the SAME level
+		# Respawn same level at shrine checkpoint if set.
 		save_player_position = Vector2.ZERO
 		get_tree().change_scene_to_file(current_level)
 
@@ -188,6 +215,8 @@ func save_checkpoint() -> void:
 		"hp": hp,
 		"patience": patience,
 		"ammo": ammo,
+		"has_level_checkpoint": has_level_checkpoint,
+		"checkpoint": [checkpoint_position.x, checkpoint_position.y],
 	}
 	file.store_pascal_string(JSON.stringify(payload, "  "))
 	file.close()
@@ -221,6 +250,12 @@ func load_game() -> void:
 	hp = int(data.get("hp", max_hp))
 	patience = float(data.get("patience", max_patience))
 	ammo = int(data.get("ammo", 5))
+	has_level_checkpoint = bool(data.get("has_level_checkpoint", false))
+	var cp = data.get("checkpoint", [0, 0])
+	if typeof(cp) == TYPE_ARRAY and cp.size() >= 2:
+		checkpoint_position = Vector2(float(cp[0]), float(cp[1]))
+	else:
+		checkpoint_position = Vector2.ZERO
 	var pos = data.get("player", [0, 0])
 	if typeof(pos) == TYPE_ARRAY and pos.size() >= 2:
 		save_player_position = Vector2(float(pos[0]), float(pos[1]))
