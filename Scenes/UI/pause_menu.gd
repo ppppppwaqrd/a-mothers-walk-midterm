@@ -11,12 +11,33 @@ func _ready() -> void:
 	hide()
 	%Music.value = GameManager.music_volume
 	%Sound.value = GameManager.sfx_volume
+	%Fullscreen.set_pressed_no_signal(GameManager.fullscreen)
+	_apply_locale()
+	if not Locale.language_changed.is_connected(_apply_locale):
+		Locale.language_changed.connect(_apply_locale)
+
+
+func _apply_locale() -> void:
+	$Page/Body/Heading.text = Locale.t("pause_title")
+	%Resume.text = Locale.t("pause_resume")
+	$Page/Body/Retry.text = Locale.t("pause_retry")
+	$Page/Body/Menu.text = Locale.t("pause_menu")
+	$Page/Body/MusicRow/MusicLabel.text = Locale.t("opt_music")
+	$Page/Body/SoundRow/SoundLabel.text = Locale.t("opt_sfx")
+	%Fullscreen.text = Locale.t("opt_fullscreen")
+	%LangTitle.text = Locale.t("opt_lang")
+	%LangTh.disabled = Locale.lang == "th"
+	%LangEn.disabled = Locale.lang == "en"
 
 
 func open() -> void:
 	if visible:
 		return
 	AudioManager.play("ui_click")
+	%Music.value = GameManager.music_volume
+	%Sound.value = GameManager.sfx_volume
+	%Fullscreen.set_pressed_no_signal(GameManager.fullscreen)
+	_apply_locale()
 	show()
 	get_tree().paused = true
 	%Resume.grab_focus()
@@ -71,3 +92,18 @@ func _on_sound_value_changed(value: float) -> void:
 	GameManager.update_option()
 	GameManager.save_option()
 	AudioManager.play("ui_click")
+
+
+func _on_fullscreen_toggled(on: bool) -> void:
+	GameManager.set_fullscreen(on)
+	AudioManager.play("ui_click")
+
+
+func _on_lang_th_pressed() -> void:
+	AudioManager.play("ui_click")
+	Locale.set_lang("th")
+
+
+func _on_lang_en_pressed() -> void:
+	AudioManager.play("ui_click")
+	Locale.set_lang("en")

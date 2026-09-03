@@ -102,7 +102,7 @@ position = Vector2(1170, 504)
 position = Vector2(1027, 512)
 gate_paths = Array[NodePath]([NodePath("../PuzzleGate")])
 trigger_pushable = true
-alert_text = "กำแพงไผ่เปิดแล้ว"
+alert_text = "toast_bamboo"
 
 [node name="PuzzleGate" parent="." unique_id=406515547 instance=ExtResource("17_gate")]
 position = Vector2(1286, 498)

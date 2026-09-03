@@ -145,6 +145,7 @@ text = "0"
 vertical_alignment = 1
 
 [node name="HpLabel" type="Label" parent="Hud/Status"]
+unique_name_in_owner = true
 offset_left = 22.0
 offset_top = 50.0
 offset_right = 110.0
@@ -163,6 +164,7 @@ value = 100.0
 show_percentage = false
 
 [node name="PatienceLabel" type="Label" parent="Hud/Status"]
+unique_name_in_owner = true
 offset_left = 22.0
 offset_top = 84.0
 offset_right = 110.0
@@ -313,10 +315,11 @@ texture = ExtResource("19_god")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Text" type="Label" parent="Hud/GodBadge"]
+[node name="GodBadgeText" type="Label" parent="Hud/GodBadge"]
+unique_name_in_owner = true
 theme_type_variation = &"StorybookHeading"
 theme_override_font_sizes/font_size = 20
-text = "โหมดทดลอง"
+text = "โหมดซน"
 
 [node name="Toast" type="Panel" parent="Hud"]
 unique_name_in_owner = true

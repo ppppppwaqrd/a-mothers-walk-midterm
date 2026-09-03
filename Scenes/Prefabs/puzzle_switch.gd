@@ -4,7 +4,7 @@ extends Area2D
 @export var gate_paths: Array[NodePath] = []
 @export var one_shot := true
 @export var trigger_pushable := false
-@export var alert_text := "สะพานเปิดแล้ว"
+@export var alert_text := "toast_bridge"
 
 var activated := false
 
@@ -25,4 +25,4 @@ func _on_body_entered(body: Node2D) -> void:
 			gate.open_gate()
 	var ui := get_tree().current_scene.get_node_or_null("UserInterface")
 	if ui and ui.has_method("alert"):
-		ui.alert(alert_text)
+		ui.alert(Locale.t(alert_text) if alert_text.begins_with("toast_") else alert_text)

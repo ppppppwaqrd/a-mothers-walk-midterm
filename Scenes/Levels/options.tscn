@@ -32,9 +32,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -300.0
-offset_top = -260.0
+offset_top = -330.0
 offset_right = 300.0
-offset_bottom = 260.0
+offset_bottom = 330.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -49,9 +49,9 @@ offset_bottom = -40.0
 theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="CanvasLayer/UI/Page/Body"]
-theme_type_variation = &"StorybookTitle"
+unique_name_in_owner = true
 theme_override_font_sizes/font_size = 40
-text = "ตั้งค่าเสียง"
+text = "ตั้งค่า"
 horizontal_alignment = 1
 
 [node name="Rule" type="ColorRect" parent="CanvasLayer/UI/Page/Body"]
@@ -62,9 +62,10 @@ color = Color(0.42, 0.32, 0.22, 0.45)
 theme_override_constants/separation = 14
 
 [node name="MusicLabel" type="Label" parent="CanvasLayer/UI/Page/Body/MusicRow"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 0)
 theme_override_font_sizes/font_size = 21
-text = "เสียงเพลง"
+text = "เพลง"
 vertical_alignment = 1
 
 [node name="Music" type="HSlider" parent="CanvasLayer/UI/Page/Body/MusicRow"]
@@ -86,7 +87,7 @@ vertical_alignment = 1
 
 [node name="MusicOn" type="CheckBox" parent="CanvasLayer/UI/Page/Body"]
 unique_name_in_owner = true
-text = "เปิดเสียงเพลง"
+text = "เปิดเพลง"
 
 [node name="Gap" type="Control" parent="CanvasLayer/UI/Page/Body"]
 custom_minimum_size = Vector2(0, 10)
@@ -95,9 +96,10 @@ custom_minimum_size = Vector2(0, 10)
 theme_override_constants/separation = 14
 
 [node name="SoundLabel" type="Label" parent="CanvasLayer/UI/Page/Body/SoundRow"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 0)
 theme_override_font_sizes/font_size = 21
-text = "เสียงประกอบ"
+text = "เสียง"
 vertical_alignment = 1
 
 [node name="Sound" type="HSlider" parent="CanvasLayer/UI/Page/Body/SoundRow"]
@@ -119,7 +121,41 @@ vertical_alignment = 1
 
 [node name="SoundOn" type="CheckBox" parent="CanvasLayer/UI/Page/Body"]
 unique_name_in_owner = true
-text = "เปิดเสียงประกอบ"
+text = "เปิดเสียง"
+
+[node name="DisplayGap" type="Control" parent="CanvasLayer/UI/Page/Body"]
+custom_minimum_size = Vector2(0, 10)
+
+[node name="DisplayTitle" type="Label" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 21
+text = "หน้าจอ"
+
+[node name="Fullscreen" type="CheckBox" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
+text = "เต็มจอ"
+
+[node name="LangGap" type="Control" parent="CanvasLayer/UI/Page/Body"]
+custom_minimum_size = Vector2(0, 10)
+
+[node name="LangTitle" type="Label" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 21
+text = "ภาษา"
+
+[node name="LangRow" type="HBoxContainer" parent="CanvasLayer/UI/Page/Body"]
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="LangTh" type="Button" parent="CanvasLayer/UI/Page/Body/LangRow"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+text = "ไทย"
+
+[node name="LangEn" type="Button" parent="CanvasLayer/UI/Page/Body/LangRow"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+text = "English"
 
 [node name="btnBack" type="Button" parent="CanvasLayer/UI"]
 anchors_preset = 0
@@ -133,4 +169,7 @@ text = "กลับ"
 [connection signal="toggled" from="CanvasLayer/UI/Page/Body/MusicOn" to="." method="_on_music_on_toggled"]
 [connection signal="value_changed" from="CanvasLayer/UI/Page/Body/SoundRow/Sound" to="." method="_on_sound_value_changed"]
 [connection signal="toggled" from="CanvasLayer/UI/Page/Body/SoundOn" to="." method="_on_sound_on_toggled"]
+[connection signal="toggled" from="CanvasLayer/UI/Page/Body/Fullscreen" to="." method="_on_fullscreen_toggled"]
+[connection signal="pressed" from="CanvasLayer/UI/Page/Body/LangRow/LangTh" to="." method="_on_lang_th_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Page/Body/LangRow/LangEn" to="." method="_on_lang_en_pressed"]
 [connection signal="pressed" from="CanvasLayer/UI/btnBack" to="." method="_on_btn_back_pressed"]

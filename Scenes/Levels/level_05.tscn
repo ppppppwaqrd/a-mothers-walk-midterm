@@ -113,7 +113,7 @@ open_offset = Vector2(384, 0)
 [node name="PuzzleSwitch" parent="." unique_id=997582676 instance=ExtResource("17_a")]
 position = Vector2(576, 320)
 gate_paths = Array[NodePath]([NodePath("../PuzzleBridge")])
-alert_text = "สะพานข้ามคูเปิดแล้ว"
+alert_text = "toast_canal"
 
 [node name="CheckpointShrine" parent="." unique_id=1491318582 instance=ExtResource("15_a")]
 position = Vector2(-28, 459)

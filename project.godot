@@ -32,6 +32,7 @@ buses/default_bus_layout="uid://dly2dgklf0sh1"
 [autoload]
 
 GameManager="*res://Scenes/Managers/game_manager.gd"
+Locale="*res://Scenes/Managers/locale.gd"
 SceneTransition="*res://Scenes/Managers/scene_transition.tscn"
 AudioManager="*res://Scenes/Managers/audio_manager.tscn"
 

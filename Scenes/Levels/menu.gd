@@ -3,10 +3,23 @@ extends Node2D
 
 
 func _ready() -> void:
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	%btnContinue.disabled = not GameManager.has_gamesaved()
 	GameManager.load_option()
+	GameManager.apply_display()
 	AudioManager.play_music("menu_theme")
+	_apply_locale()
+	if not Locale.language_changed.is_connected(_apply_locale):
+		Locale.language_changed.connect(_apply_locale)
+
+
+func _apply_locale() -> void:
+	$CanvasLayer/UI/Cover/Body/Title.text = Locale.t("menu_title")
+	$CanvasLayer/UI/Cover/Body/Subtitle.text = Locale.t("menu_sub")
+	$CanvasLayer/UI/Cover/Body/Buttons/btnStart.text = Locale.t("menu_new")
+	%btnContinue.text = Locale.t("menu_continue")
+	$CanvasLayer/UI/Cover/Body/Buttons/btnOption.text = Locale.t("menu_options")
+	$CanvasLayer/UI/Cover/Body/Buttons/btnCredit.text = Locale.t("menu_credits")
+	$CanvasLayer/UI/Cover/Body/Buttons/btnExit.text = Locale.t("menu_quit")
 
 
 func _on_btn_start_pressed() -> void:

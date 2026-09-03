@@ -116,7 +116,7 @@ position = Vector2(608, 512)
 [node name="PuzzleSwitch" parent="." unique_id=368521740 instance=ExtResource("12_sw")]
 position = Vector2(384, 512)
 gate_paths = Array[NodePath]([NodePath("../PuzzleBridge")])
-alert_text = "สะพานไม้ไผ่ยื่นแล้ว"
+alert_text = "toast_bridge"
 
 [node name="CheckpointShrine" parent="." unique_id=477054685 instance=ExtResource("12_cp")]
 position = Vector2(-41, 459)

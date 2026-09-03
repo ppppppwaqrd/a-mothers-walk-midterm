@@ -9,14 +9,11 @@ extends Node2D
 ## Shown on the chapter page that opens the level.
 @export var level_title: String = "ออกจากหมู่บ้าน"
 
-const CONTROLS_HINT := "เก็บกระติบให้ครบ 8 ใบ · อย่าให้หลอดไอ้ทองหมด"
-
 
 func level_scene_path() -> String:
 	return "res://Scenes/Levels/%s.tscn" % level_id
 
 
-## "level_03" -> 3
 func level_number() -> int:
 	return int(level_id.trim_prefix("level_"))
 
@@ -30,7 +27,14 @@ func _ready() -> void:
 	if %Player:
 		%Player.spawn_point = %Player.global_position
 	AudioManager.play_music_for(level_id)
-	$UserInterface.show_level_page("บทที่ %d" % level_number(), level_title, CONTROLS_HINT, level_id)
+	var key := str(level_number())
+	$UserInterface.show_level_page(
+		Locale.chapter_label(level_number()),
+		Locale.t("lv%s_title" % key),
+		Locale.t("lv%s_verse" % key),
+		Locale.t("level_hint"),
+		level_id
+	)
 
 
 func _on_player_hit_enemy(enemy: Node2D = null) -> void:

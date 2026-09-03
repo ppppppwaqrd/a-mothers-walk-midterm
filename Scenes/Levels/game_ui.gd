@@ -22,14 +22,23 @@ func _ready() -> void:
 	# The touch pad only earns its screen space on a device without a keyboard.
 	%TouchPad.visible = DisplayServer.is_touchscreen_available()
 	GameManager.god_mode_changed.connect(_on_god_mode_changed)
+	_apply_locale()
+	if not Locale.language_changed.is_connected(_apply_locale):
+		Locale.language_changed.connect(_apply_locale)
 	_on_god_mode_changed(GameManager.god_mode)
+
+
+func _apply_locale() -> void:
+	%HpLabel.text = Locale.t("hud_hp")
+	%PatienceLabel.text = Locale.t("hud_patience")
+	%GodBadgeText.text = Locale.t("hud_god")
 
 
 func _on_god_mode_changed(on: bool) -> void:
 	if has_node("%GodBadge"):
 		%GodBadge.visible = on
 	if on:
-		alert("โหมดทดลอง — F10 ปิด")
+		alert(Locale.t("toast_god"))
 
 
 func _process(delta: float) -> void:
@@ -112,9 +121,9 @@ func open_minigame(game_id: String, hard: bool = false) -> void:
 
 func _on_minigame_finished(won: bool) -> void:
 	if won:
-		alert("ได้ความอดทน +20 และก้อนหิน +3")
+		alert(Locale.t("toast_mini_win"))
 	else:
-		alert("เทวดาไม่พอใจ — ไอ้ทองรอไม่ไหวเร็วขึ้น")
+		alert(Locale.t("toast_mini_lose"))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -126,9 +135,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 ## Open the chapter page for a level. The level stays paused behind it.
-func show_level_page(chapter: String, title: String, hint: String, level_id: String = "") -> void:
+func show_level_page(chapter: String, title: String, verse: String, hint: String, level_id: String = "") -> void:
 	get_tree().paused = true
-	%LevelPage.open(chapter, title, hint, level_id)
+	%LevelPage.open(chapter, title, verse, hint, level_id)
 
 
 func _on_level_page_dismissed() -> void:
@@ -190,7 +199,7 @@ func _on_btn_music_pressed() -> void:
 func _on_btn_save_pressed() -> void:
 	GameManager.save_game()
 	AudioManager.play("ui_click")
-	alert("คัดลอกหน้านี้ไว้แล้ว")
+	alert(Locale.t("toast_save"))
 
 
 func _on_btn_pause_pressed() -> void:

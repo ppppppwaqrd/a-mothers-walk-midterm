@@ -32,7 +32,7 @@ func _on_body_entered(body: Node2D) -> void:
 		if ui == null:
 			ui = get_tree().current_scene.get_node_or_null("UserInterface")
 		if ui and ui.has_method("alert"):
-			ui.alert("จุดพัก — บันทึกแล้ว")
+			ui.alert(Locale.t("toast_checkpoint"))
 
 
 func _flash() -> void:

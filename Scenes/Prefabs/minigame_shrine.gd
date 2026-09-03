@@ -3,9 +3,24 @@ extends Area2D
 
 @export_enum("crow_scare", "buffalo_herd", "rice_guard") var game_id: String = "crow_scare"
 @export var hard := false
-@export var hint := "เดินเข้ามาคุย"
+@export var hint := ""
 
 var used := false
+
+
+func _ready() -> void:
+	_apply_locale()
+	if not Locale.language_changed.is_connected(_apply_locale):
+		Locale.language_changed.connect(_apply_locale)
+
+
+func _apply_locale() -> void:
+	if $Hint == null:
+		return
+	if hint != "":
+		$Hint.text = hint
+	else:
+		$Hint.text = Locale.t("shrine_" + game_id)
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -16,5 +31,5 @@ func _on_body_entered(body: Node2D) -> void:
 	if ui and ui.has_method("open_minigame"):
 		ui.open_minigame(game_id, hard)
 	elif ui and ui.has_method("alert"):
-		ui.alert(hint)
+		ui.alert($Hint.text if $Hint else Locale.t("shrine_crow_scare"))
 	$Sprite2D.modulate = Color(0.7, 0.9, 0.7, 1)

@@ -106,11 +106,11 @@ move_offset = Vector2(448, 0)
 move_duration = 2.8
 
 [node name="MinigameShrine" parent="." unique_id=137162480 instance=ExtResource("19_mini")]
-position = Vector2(2432, 512)
+position = Vector2(733, 491)
 game_id = "buffalo_herd"
 
 [node name="CheckpointShrine" parent="." unique_id=1499200322 instance=ExtResource("20_cp")]
-position = Vector2(-6, 442)
+position = Vector2(-23, 457)
 
 [connection signal="hit_enemy" from="Player" to="." method="_on_player_hit_enemy"]
 [connection signal="hit_trap" from="Player" to="." method="_on_player_hit_trap"]

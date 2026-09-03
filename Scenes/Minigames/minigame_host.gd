@@ -1,28 +1,7 @@
 extends Control
-## Overlay for the three Isan rest-stop minigames: read first, then play.
+## Overlay for the three rest-stop minigames: read first, then play.
 
 signal finished(won: bool)
-
-const TITLES := {
-	"crow_scare": "ไล่อีกาจากนาข้าว",
-	"buffalo_herd": "ไล่ควายออกจากลาน",
-	"rice_guard": "อย่าให้ไก่คุ้ยข้าวตาก",
-}
-const STORIES := {
-	"crow_scare": "เทวดาลองใจแม่ที่จุดนี้ ไล่อีกาจากนาเพื่อช่วยชาวบ้าน แล้วไอ้ทองจะรอได้ ถ้าไม่ทันเทวดาจะเร่งความหิว",
-	"buffalo_herd": "เทวดาลองใจแม่ที่จุดนี้ ขวางควายอย่าให้ชนชาวบ้าน แล้วไอ้ทองจะรอได้ ถ้าไม่ทันเทวดาจะเร่งความหิว",
-	"rice_guard": "เทวดาลองใจแม่ที่จุดนี้ ไล่ไก่ไม่ให้คุ้ยข้าวตาก แล้วไอ้ทองจะรอได้ ถ้าไม่ทันเทวดาจะเร่งความหิว",
-}
-const HOW := {
-	"crow_scare": "A/D เลื่อนแม่ · J ปาหินขึ้นไปโดนอีกา · หินมีจำกัด",
-	"buffalo_herd": "เดินได้ทั่วลาน ขวางควายอย่าให้ชนชาวบ้านจนหมดเวลา",
-	"rice_guard": "A/D เดินชนไก่ให้ถอยจนกว่าเวลาจะหมด",
-}
-const PLAY_HINTS := {
-	"crow_scare": "A/D เดิน · J ปาหินไล่อีกา",
-	"buffalo_herd": "WASD เดินขวางควาย",
-	"rice_guard": "A/D เดินชนไก่",
-}
 
 var _game := ""
 var _hard := false
@@ -50,12 +29,16 @@ func open(game_id: String, hard: bool = false) -> void:
 	_briefing = true
 	_running = false
 	_clear_field()
-	%Title.text = str(TITLES.get(game_id, game_id))
-	%Story.text = str(STORIES.get(game_id, ""))
-	var how: String = str(HOW.get(game_id, ""))
+	var p := Locale.mini_prefix(game_id)
+	%Deity.text = Locale.t(p + "_deity")
+	%Title.text = Locale.t(p + "_title")
+	%Story.text = Locale.t(p + "_story")
+	var how: String = Locale.t(p + "_how")
 	if game_id == "crow_scare" and hard:
-		how += "  · รอบนี้อีกาเยอะขึ้น เวลาสั้นลง"
+		how += "\n" + Locale.t("mini_crow_hard")
 	%How.text = how
+	%StartButton.text = Locale.t("mini_start")
+	%StartHint.text = Locale.t("mini_space")
 	%PlayBar.hide()
 	%Result.hide()
 	%Field.hide()
@@ -76,7 +59,7 @@ func _begin_play() -> void:
 	%Brief.hide()
 	%Field.show()
 	%PlayBar.show()
-	%Hint.text = str(PLAY_HINTS.get(_game, ""))
+	%Hint.text = Locale.t(Locale.mini_prefix(_game) + "_play")
 	_setup_game()
 	_running = true
 	AudioManager.play("ui_click")
@@ -190,7 +173,7 @@ func _sprite(parent: Control, path: String, pos: Vector2, size: Vector2) -> Text
 func _mark_mother(who: Control) -> void:
 	who.modulate = Color(0.98, 0.78, 0.42, 1)
 	var tag := Label.new()
-	tag.text = "แม่"
+	tag.text = Locale.t("mini_mother")
 	tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tag.position = Vector2(-6, -22)
 	tag.size = Vector2(44, 20)
@@ -215,7 +198,7 @@ func _spawn_crows(count: int) -> void:
 
 
 func _refresh_crow_hint() -> void:
-	%Hint.text = "A/D เดิน · J ปาหิน  ·  หิน x%d" % _shots_left
+	%Hint.text = Locale.tf("mini_crow_ammo", [_shots_left])
 
 
 func _throw_stone() -> void:
@@ -377,7 +360,7 @@ func _end(won: bool) -> void:
 	if not _running:
 		return
 	_running = false
-	%Result.text = "สำเร็จ — ได้ความอดทนและก้อนหิน" if won else "เทวดาไม่พอใจ — ไอ้ทองรอไม่ไหวเร็วขึ้น"
+	%Result.text = Locale.t(Locale.mini_prefix(_game) + ("_win" if won else "_lose"))
 	%Result.show()
 	if won:
 		GameManager.patience = minf(GameManager.max_patience, GameManager.patience + 20.0)

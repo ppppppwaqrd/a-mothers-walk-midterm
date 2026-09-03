@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3]
+
+[ext_resource type="FontFile" path="res://Assets/Fonts/Mali-SemiBold.ttf" id="1_font"]
+
+[resource]
+font = ExtResource("1_font")
+font_size = 15
+font_color = Color(0.98, 0.94, 0.86, 1)
+outline_size = 6
+outline_color = Color(0.16, 0.1, 0.05, 0.92)

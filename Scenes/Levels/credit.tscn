@@ -26,15 +26,16 @@ script = ExtResource("3_backdrop")
 plate = ExtResource("4_plate")
 
 [node name="Page" type="Panel" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -380.0
-offset_top = -280.0
+offset_top = -292.0
 offset_right = 380.0
-offset_bottom = 280.0
+offset_bottom = 292.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -43,22 +44,26 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 46.0
-offset_top = 40.0
+offset_top = 36.0
 offset_right = -46.0
-offset_bottom = -40.0
-theme_override_constants/separation = 12
+offset_bottom = -36.0
+theme_override_constants/separation = 10
+alignment = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/UI/Page/Body"]
-theme_type_variation = &"StorybookTitle"
-theme_override_font_sizes/font_size = 40
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 36
 text = "ผู้จัดทำ"
 horizontal_alignment = 1
 
 [node name="Rule" type="ColorRect" parent="CanvasLayer/UI/Page/Body"]
-custom_minimum_size = Vector2(0, 2)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 2)
+size_flags_horizontal = 4
 color = Color(0.42, 0.32, 0.22, 0.45)
 
 [node name="Members" type="Label" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
 theme_override_constants/line_spacing = 8
 theme_override_font_sizes/font_size = 21
 text = "673380348-4  นายสรวิศ สำราญบึงแก
@@ -67,28 +72,35 @@ text = "673380348-4  นายสรวิศ สำราญบึงแก
 horizontal_alignment = 1
 
 [node name="Group" type="Label" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
 theme_override_colors/font_color = Color(0.42, 0.31, 0.2, 1)
 theme_override_font_sizes/font_size = 19
-text = "กลุ่มที่ 4 — AI Section 1"
+text = "กลุ่มที่ 4  —  ปัญญาประดิษฐ์ ตอนที่ 1"
 horizontal_alignment = 1
 
-[node name="Gap" type="Control" parent="CanvasLayer/UI/Page/Body"]
-custom_minimum_size = Vector2(0, 6)
-
 [node name="Course" type="Label" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
 theme_override_colors/font_color = Color(0.42, 0.31, 0.2, 1)
 theme_override_font_sizes/font_size = 18
-text = "Computer Game Development Course 2026
-College of Computing, Khon Kaen University"
+text = "วิชา Computer Game Development
+วิทยาลัยการคอมพิวเตอร์ มหาวิทยาลัยขอนแก่น"
 horizontal_alignment = 1
 
 [node name="Craft" type="Label" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
 theme_override_colors/font_color = Color(0.45, 0.34, 0.23, 1)
 theme_override_font_sizes/font_size = 17
-text = "ภาพพื้นหลัง ไทล์ ไอคอน เพลง และเสียงประกอบทั้งหมด
-สร้างขึ้นเองด้วยสคริปต์ในโฟลเดอร์ scripts/"
+text = "ภาพพื้นหลัง กระเบื้อง ไอคอน เพลง และเสียงประกอบ
+วาดและสังเคราะห์ขึ้นสำหรับเรื่องนี้โดยเฉพาะ"
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="Colophon" type="Label" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
+theme_override_colors/font_color = Color(0.38, 0.27, 0.16, 1)
+theme_override_font_sizes/font_size = 16
+text = "กล่องข้าวน้อย  ·  A Mother's Walk"
+horizontal_alignment = 1
 
 [node name="btnBack" type="Button" parent="CanvasLayer/UI"]
 anchors_preset = 0

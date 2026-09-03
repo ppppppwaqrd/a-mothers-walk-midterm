@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Prefabs/minigame_shrine.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://Assets/Generated/Spritesheet/deva.png" id="2_tex"]
+[ext_resource type="LabelSettings" path="res://Scenes/UI/world_label.tres" id="3_label"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mg"]
 size = Vector2(56, 88)
@@ -16,12 +17,12 @@ position = Vector2(0, -48)
 texture = ExtResource("2_tex")
 
 [node name="Hint" type="Label" parent="."]
-offset_left = -88.0
-offset_top = -112.0
-offset_right = 88.0
-offset_bottom = -86.0
-theme_override_font_sizes/font_size = 14
-text = "เดินเข้ามาคุย"
+offset_left = -110.0
+offset_top = -122.0
+offset_right = 110.0
+offset_bottom = -90.0
+label_settings = ExtResource("3_label")
+text = "ศาลเทวดา"
 horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

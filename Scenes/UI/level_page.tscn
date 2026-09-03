@@ -24,55 +24,71 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -268.0
-offset_right = 400.0
-offset_bottom = 268.0
+offset_left = -390.0
+offset_top = -300.0
+offset_right = 390.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Illustration" type="TextureRect" parent="Page"]
+[node name="Layout" type="VBoxContainer" parent="Page"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 28.0
+offset_right = -40.0
+offset_bottom = -28.0
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Illustration" type="TextureRect" parent="Page/Layout"]
 unique_name_in_owner = true
-offset_left = 28.0
-offset_top = 24.0
-offset_right = 772.0
-offset_bottom = 248.0
+custom_minimum_size = Vector2(0, 168)
+size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 6
 visible = false
 
-[node name="Body" type="VBoxContainer" parent="Page"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 46.0
-offset_top = 256.0
-offset_right = -46.0
-offset_bottom = -28.0
-alignment = 1
-theme_override_constants/separation = 10
-
-[node name="Chapter" type="Label" parent="Page/Body"]
+[node name="Chapter" type="Label" parent="Page/Layout"]
 unique_name_in_owner = true
-theme_type_variation = &"StorybookHeading"
-theme_override_font_sizes/font_size = 26
-text = "บทที่ 1"
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.42, 0.31, 0.2, 1)
+text = "บทที่ ๑"
 horizontal_alignment = 1
 
-[node name="Rule" type="ColorRect" parent="Page/Body"]
-custom_minimum_size = Vector2(0, 2)
+[node name="Rule" type="ColorRect" parent="Page/Layout"]
+custom_minimum_size = Vector2(180, 2)
+size_flags_horizontal = 4
 color = Color(0.42, 0.32, 0.22, 0.45)
 
-[node name="Title" type="Label" parent="Page/Body"]
+[node name="Title" type="Label" parent="Page/Layout"]
 unique_name_in_owner = true
-theme_type_variation = &"StorybookTitle"
+theme_override_font_sizes/font_size = 32
 text = "ออกจากหมู่บ้าน"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Hint" type="Label" parent="Page/Body"]
+[node name="Verse" type="Label" parent="Page/Layout"]
 unique_name_in_owner = true
+theme_override_constants/line_spacing = 6
 theme_override_font_sizes/font_size = 20
-text = "A/D เดิน · Space กระโดด · J ปาหิน"
+theme_override_colors/font_color = Color(0.28, 0.2, 0.12, 1)
+text = ""
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="Hint" type="Label" parent="Page/Layout"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.45, 0.34, 0.22, 1)
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Skip" type="Label" parent="Page/Layout"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.52, 0.42, 0.3, 1)
+text = "แตะจอหรือกดปุ่มใดก็ได้เพื่อพลิกหน้า"
+horizontal_alignment = 1

@@ -1,12 +1,9 @@
 extends Control
 ## The page that turns over at the start of a level, naming the chapter.
-##
-## Runs on its own while the game is paused, then hands control back. Any input
-## skips it, so a replay is never held up by it.
 
 signal dismissed
 
-const HOLD := 2.6
+const HOLD := 3.4
 const FADE := 0.45
 
 var _dismissing := false
@@ -17,12 +14,13 @@ func _ready() -> void:
 	hide()
 
 
-## `chapter` is the small line above the title, e.g. "บทที่ 3".
-## `level_id` loads the matching watercolor plate when one exists.
-func open(chapter: String, title: String, hint: String, level_id: String = "") -> void:
+func open(chapter: String, title: String, verse: String, hint: String, level_id: String = "") -> void:
 	%Chapter.text = chapter
 	%Title.text = title
+	%Verse.text = verse
 	%Hint.text = hint
+	if has_node("%Skip"):
+		%Skip.text = Locale.t("level_skip")
 	_show_art(level_id)
 	_dismissing = false
 	show()

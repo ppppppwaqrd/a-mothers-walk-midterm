@@ -9,6 +9,17 @@ extends Area2D
 var helped := false
 
 
+func _ready() -> void:
+	_apply_locale()
+	if not Locale.language_changed.is_connected(_apply_locale):
+		Locale.language_changed.connect(_apply_locale)
+
+
+func _apply_locale() -> void:
+	if has_node("Hint"):
+		$Hint.text = Locale.t("help")
+
+
 func _on_body_entered(body: Node2D) -> void:
 	if helped or not body.is_in_group("Player"):
 		return
@@ -19,7 +30,7 @@ func _on_body_entered(body: Node2D) -> void:
 	AudioManager.play("checkpoint_bell")
 	var ui := get_tree().current_scene.get_node_or_null("UserInterface")
 	if ui and ui.has_method("alert"):
-		ui.alert(help_message)
+		ui.alert(Locale.t("toast_villager"))
 	var spr := get_node_or_null("Sprite2D")
 	if spr:
 		spr.modulate = Color(0.6, 0.9, 0.6, 1)

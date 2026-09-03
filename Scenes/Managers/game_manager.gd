@@ -36,6 +36,7 @@ var music_on: bool = true
 ## Bus levels, 0..1 linear, set from the pause menu sliders.
 var music_volume: float = 0.8
 var sfx_volume: float = 0.9
+var fullscreen: bool = false
 
 var player: Player = null
 var current_level: String = "res://Scenes/Levels/level_01.tscn"
@@ -49,6 +50,12 @@ signal god_mode_changed(on: bool)
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	call_deferred("_boot_settings")
+
+
+func _boot_settings() -> void:
+	load_option()
+	apply_display()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -225,6 +232,19 @@ func update_option() -> void:
 	# toggle wins regardless of where the slider sits.
 	AudioManager.set_bus_volume(&"music", music_volume if music_on else 0.0)
 	AudioManager.set_bus_volume(&"sfx", sfx_volume if sfx_on else 0.0)
+	apply_display()
+
+
+func apply_display() -> void:
+	var mode := DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen else DisplayServer.WINDOW_MODE_WINDOWED
+	if DisplayServer.window_get_mode() != mode:
+		DisplayServer.window_set_mode(mode)
+
+
+func set_fullscreen(on: bool) -> void:
+	fullscreen = on
+	apply_display()
+	save_option()
 
 
 func add_life() -> void:
@@ -277,6 +297,8 @@ func save_option() -> void:
 			"sound": sfx_on,
 			"music_volume": music_volume,
 			"sfx_volume": sfx_volume,
+			"fullscreen": fullscreen,
+			"lang": Locale.lang,
 		}
 		file.store_pascal_string(JSON.stringify(payload, "  "))
 		file.close()
@@ -293,6 +315,8 @@ func load_option() -> void:
 			sfx_on = data.get("sound", true)
 			music_volume = float(data.get("music_volume", music_volume))
 			sfx_volume = float(data.get("sfx_volume", sfx_volume))
+			fullscreen = bool(data.get("fullscreen", false))
+			Locale.set_lang(str(data.get("lang", "th")), false)
 	update_option()
 
 

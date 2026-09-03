@@ -75,7 +75,7 @@ unique_name_in_owner = true
 text = "อ่านต่อจากเดิม"
 
 [node name="btnOption" type="Button" parent="CanvasLayer/UI/Cover/Body/Buttons"]
-text = "ตั้งค่าเสียง"
+text = "ตั้งค่า"
 
 [node name="btnCredit" type="Button" parent="CanvasLayer/UI/Cover/Body/Buttons"]
 text = "ผู้จัดทำ"
