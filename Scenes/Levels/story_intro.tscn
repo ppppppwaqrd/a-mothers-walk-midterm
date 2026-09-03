@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://bcjdregqj85fg"]
+
+[ext_resource type="Script" path="res://Scenes/Levels/story_intro.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://cs7bk1storybk0" path="res://Scenes/UI/storybook_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://Scenes/UI/page_backdrop.gd" id="3_backdrop"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/Story/cover_menu.png" id="4_plate"]
+
+[node name="StoryIntro" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+
+[node name="Backdrop" type="Control" parent="CanvasLayer/UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("3_backdrop")
+plate = ExtResource("4_plate")
+scrim = Color(0.07, 0.045, 0.025, 0.42)
+
+[node name="Page" type="Panel" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -430.0
+offset_top = -318.0
+offset_right = 430.0
+offset_bottom = 318.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Illustration" type="TextureRect" parent="CanvasLayer/UI/Page"]
+unique_name_in_owner = true
+offset_left = 36.0
+offset_top = 28.0
+offset_right = 824.0
+offset_bottom = 196.0
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BodyBox" type="VBoxContainer" parent="CanvasLayer/UI/Page"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 208.0
+offset_right = -48.0
+offset_bottom = -88.0
+theme_override_constants/separation = 8
+
+[node name="Chapter" type="Label" parent="CanvasLayer/UI/Page/BodyBox"]
+unique_name_in_owner = true
+theme_type_variation = &"StorybookHeading"
+theme_override_font_sizes/font_size = 24
+text = "กล่องข้าวน้อย"
+horizontal_alignment = 1
+
+[node name="Rule" type="ColorRect" parent="CanvasLayer/UI/Page/BodyBox"]
+custom_minimum_size = Vector2(0, 2)
+color = Color(0.42, 0.32, 0.22, 0.45)
+
+[node name="Title" type="Label" parent="CanvasLayer/UI/Page/BodyBox"]
+unique_name_in_owner = true
+theme_type_variation = &"StorybookTitle"
+theme_override_font_sizes/font_size = 36
+text = "กาลครั้งหนึ่ง"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Body" type="Label" parent="CanvasLayer/UI/Page/BodyBox"]
+unique_name_in_owner = true
+theme_override_constants/line_spacing = 4
+theme_override_font_sizes/font_size = 20
+text = "เนื้อเรื่อง"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Folio" type="Label" parent="CanvasLayer/UI/Page"]
+unique_name_in_owner = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = -78.0
+offset_right = -48.0
+offset_bottom = -54.0
+theme_override_colors/font_color = Color(0.42, 0.31, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "แผ่น 1 จาก 6"
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="CanvasLayer/UI/Page"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -52.0
+offset_right = -40.0
+offset_bottom = -12.0
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="btnPrev" type="Button" parent="CanvasLayer/UI/Page/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+text = "หน้าก่อน"
+
+[node name="btnNext" type="Button" parent="CanvasLayer/UI/Page/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 0)
+text = "พลิกหน้าถัดไป"
+
+[node name="btnSkip" type="Button" parent="CanvasLayer/UI"]
+offset_left = 28.0
+offset_top = 24.0
+offset_right = 168.0
+offset_bottom = 76.0
+text = "ข้ามเรื่อง"
+
+[connection signal="pressed" from="CanvasLayer/UI/Page/Buttons/btnPrev" to="." method="_on_prev_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Page/Buttons/btnNext" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/btnSkip" to="." method="_on_skip_pressed"]

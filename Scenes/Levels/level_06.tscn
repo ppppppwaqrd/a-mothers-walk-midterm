@@ -1,55 +1,108 @@
 [gd_scene format=4 uid="uid://dgeqtr4us2oxc"]
 
-[ext_resource type="PackedScene" uid="uid://bjntpxb1c8jxn" path="res://Scenes/Levels/base_level.tscn" id="1_base"]
-[ext_resource type="PackedScene" uid="uid://b46lxwc5r3dy4" path="res://Scenes/Levels/game_win.tscn" id="2_next"]
-[ext_resource type="TileSet" uid="uid://dpk7f214d563s" path="res://Scenes/Prefabs/ground_tile_set_04.tres" id="3_tiles"]
-[ext_resource type="PackedScene" path="res://Scenes/Prefabs/portal_gate.tscn" id="10_a"]
+[ext_resource type="Script" uid="uid://c7w5vtdg0leb7" path="res://Scenes/Levels/level_background.gd" id="1_bg"]
+[ext_resource type="PackedScene" uid="uid://cyti38f0lagf2" path="res://Scenes/Prefabs/level_finish_door.tscn" id="1_door"]
+[ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Actors/player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://cwm5w1bxx3js3" path="res://Scenes/Levels/base_level.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cdwabmqtlxr1y" path="res://Scenes/Levels/game_ui.tscn" id="1_ui"]
+[ext_resource type="PackedScene" uid="uid://c1yqm7xd80o0v" path="res://Scenes/Levels/game_win.tscn" id="2_next"]
+[ext_resource type="TileSet" uid="uid://dpk7f214d763s" path="res://Scenes/Prefabs/ground_tile_set_06.tres" id="3_tiles"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="11_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/heart_item.tscn" id="12_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/stone_ammo_item.tscn" id="13_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_thorns.tscn" id="14_a"]
-[ext_resource type="PackedScene" path="res://Scenes/Actors/enemy_buffalo.tscn" id="15_a"]
-[ext_resource type="PackedScene" path="res://Scenes/Actors/enemy_crow.tscn" id="16_a"]
-[ext_resource type="Texture2D" path="res://Assets/Generated/Spritesheet/aitong.png" id="17_a"]
+[ext_resource type="PackedScene" uid="uid://bkqb3svra7a7n" path="res://Scenes/Actors/enemy_buffalo.tscn" id="15_a"]
+[ext_resource type="PackedScene" uid="uid://65by6gnncq4t" path="res://Scenes/Actors/enemy_crow.tscn" id="16_a"]
+[ext_resource type="Texture2D" uid="uid://cpl1lx4260w83" path="res://Assets/Generated/Spritesheet/aitong.png" id="17_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/checkpoint_shrine.tscn" id="18_cp"]
 
-[node name="BaseLevel" instance=ExtResource("1_base")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fall"]
+size = Vector2(4200, 140)
 
-[node name="LevelFinishDoor" parent="." index="1"]
-position = Vector2(2304, 448)
+[node name="BaseLevel" type="Node2D" unique_id=2023595174]
+script = ExtResource("1_script")
+level_id = "level_06"
+level_title = "ส่งกล่องข้าวให้อ้ายทอง"
+
+[node name="LevelBackground" type="Node2D" parent="." unique_id=1875648600]
+z_index = -100
+z_as_relative = false
+script = ExtResource("1_bg")
+
+[node name="Sky" type="Sprite2D" parent="LevelBackground" unique_id=1656063997]
+centered = false
+
+[node name="Far" type="Sprite2D" parent="LevelBackground" unique_id=511044815]
+centered = false
+
+[node name="Mid" type="Sprite2D" parent="LevelBackground" unique_id=309563696]
+centered = false
+
+[node name="Near" type="Sprite2D" parent="LevelBackground" unique_id=833481639]
+centered = false
+
+[node name="LevelFinishDoor" parent="." unique_id=1312672729 instance=ExtResource("1_door")]
+z_index = 1
+position = Vector2(2304, 512)
 next_scene = ExtResource("2_next")
 
-[node name="Ground" type="TileMapLayer" parent="Level" index="1"]
-tile_map_data = PackedByteArray("AAD+/wgAAAADAAEAAAD//wgAAAADAAEAAAAAAAgAAAADAAEAAAABAAgAAAADAAEAAAACAAgAAAADAAEAAAADAAgAAAADAAEAAAAEAAgAAAADAAEAAAAFAAgAAAADAAEAAAAGAAgAAAADAAEAAAAHAAgAAAADAAEAAAAIAAgAAAADAAEAAAAJAAgAAAADAAEAAAAKAAgAAAADAAEAAAALAAgAAAADAAEAAAAMAAgAAAADAAEAAAANAAgAAAADAAEAAAD+/wkAAAADAAEAAAD//wkAAAADAAEAAAAAAAkAAAADAAEAAAABAAkAAAADAAEAAAACAAkAAAADAAEAAAADAAkAAAADAAEAAAAEAAkAAAADAAEAAAAFAAkAAAADAAEAAAAGAAkAAAADAAEAAAAHAAkAAAADAAEAAAAIAAkAAAADAAEAAAAJAAkAAAADAAEAAAAKAAkAAAADAAEAAAALAAkAAAADAAEAAAAMAAkAAAADAAEAAAANAAkAAAADAAEAAAD+/woAAAADAAEAAAD//woAAAADAAEAAAAAAAoAAAADAAEAAAABAAoAAAADAAEAAAACAAoAAAADAAEAAAADAAoAAAADAAEAAAAEAAoAAAADAAEAAAAFAAoAAAADAAEAAAAGAAoAAAADAAEAAAAHAAoAAAADAAEAAAAIAAoAAAADAAEAAAAJAAoAAAADAAEAAAAKAAoAAAADAAEAAAALAAoAAAADAAEAAAAMAAoAAAADAAEAAAANAAoAAAADAAEAAAD+/wsAAAADAAEAAAD//wsAAAADAAEAAAAAAAsAAAADAAEAAAABAAsAAAADAAEAAAACAAsAAAADAAEAAAADAAsAAAADAAEAAAAEAAsAAAADAAEAAAAFAAsAAAADAAEAAAAGAAsAAAADAAEAAAAHAAsAAAADAAEAAAAIAAsAAAADAAEAAAAJAAsAAAADAAEAAAAKAAsAAAADAAEAAAALAAsAAAADAAEAAAAMAAsAAAADAAEAAAANAAsAAAADAAEAAAAKAAcAAAADAAEAAAALAAcAAAADAAEAAAAMAAcAAAADAAEAAAANAAcAAAADAAEAAAAQAAgAAAADAAEAAAARAAgAAAADAAEAAAASAAgAAAADAAEAAAATAAgAAAADAAEAAAAUAAgAAAADAAEAAAAVAAgAAAADAAEAAAAWAAgAAAADAAEAAAAXAAgAAAADAAEAAAAYAAgAAAADAAEAAAAZAAgAAAADAAEAAAAQAAkAAAADAAEAAAARAAkAAAADAAEAAAASAAkAAAADAAEAAAATAAkAAAADAAEAAAAUAAkAAAADAAEAAAAVAAkAAAADAAEAAAAWAAkAAAADAAEAAAAXAAkAAAADAAEAAAAYAAkAAAADAAEAAAAZAAkAAAADAAEAAAAQAAoAAAADAAEAAAARAAoAAAADAAEAAAASAAoAAAADAAEAAAATAAoAAAADAAEAAAAUAAoAAAADAAEAAAAVAAoAAAADAAEAAAAWAAoAAAADAAEAAAAXAAoAAAADAAEAAAAYAAoAAAADAAEAAAAZAAoAAAADAAEAAAAQAAsAAAADAAEAAAARAAsAAAADAAEAAAASAAsAAAADAAEAAAATAAsAAAADAAEAAAAUAAsAAAADAAEAAAAVAAsAAAADAAEAAAAWAAsAAAADAAEAAAAXAAsAAAADAAEAAAAYAAsAAAADAAEAAAAZAAsAAAADAAEAAAAWAAYAAAADAAEAAAAXAAYAAAADAAEAAAAYAAYAAAADAAEAAAAcAAgAAAADAAEAAAAdAAgAAAADAAEAAAAeAAgAAAADAAEAAAAfAAgAAAADAAEAAAAgAAgAAAADAAEAAAAhAAgAAAADAAEAAAAiAAgAAAADAAEAAAAjAAgAAAADAAEAAAAkAAgAAAADAAEAAAAlAAgAAAADAAEAAAAmAAgAAAADAAEAAAAnAAgAAAADAAEAAAAoAAgAAAADAAEAAAApAAgAAAADAAEAAAAcAAkAAAADAAEAAAAdAAkAAAADAAEAAAAeAAkAAAADAAEAAAAfAAkAAAADAAEAAAAgAAkAAAADAAEAAAAhAAkAAAADAAEAAAAiAAkAAAADAAEAAAAjAAkAAAADAAEAAAAkAAkAAAADAAEAAAAlAAkAAAADAAEAAAAmAAkAAAADAAEAAAAnAAkAAAADAAEAAAAoAAkAAAADAAEAAAApAAkAAAADAAEAAAAcAAoAAAADAAEAAAAdAAoAAAADAAEAAAAeAAoAAAADAAEAAAAfAAoAAAADAAEAAAAgAAoAAAADAAEAAAAhAAoAAAADAAEAAAAiAAoAAAADAAEAAAAjAAoAAAADAAEAAAAkAAoAAAADAAEAAAAlAAoAAAADAAEAAAAmAAoAAAADAAEAAAAnAAoAAAADAAEAAAAoAAoAAAADAAEAAAApAAoAAAADAAEAAAAcAAsAAAADAAEAAAAdAAsAAAADAAEAAAAeAAsAAAADAAEAAAAfAAsAAAADAAEAAAAgAAsAAAADAAEAAAAhAAsAAAADAAEAAAAiAAsAAAADAAEAAAAjAAsAAAADAAEAAAAkAAsAAAADAAEAAAAlAAsAAAADAAEAAAAmAAsAAAADAAEAAAAnAAsAAAADAAEAAAAoAAsAAAADAAEAAAApAAsAAAADAAEAAAA=")
+[node name="Level" type="Node2D" parent="." unique_id=1060287247]
+
+[node name="Ground" type="TileMapLayer" parent="Level" unique_id=1815312280]
+tile_map_data = PackedByteArray("AAD+/wgAAAAGAAAAAAD//wgAAAAEAAAAAAAAAAgAAAAGAAAAAAABAAgAAAAFAAAAAAACAAgAAAADAAAAAAADAAgAAAAFAAAAAAAEAAgAAAADAAAAAAAFAAgAAAAFAAAAAAAGAAgAAAAEAAAAAAAHAAgAAAAGAAAAAAAIAAgAAAAEAAAAAAAJAAgAAAAGAAAAAAAKAAgAAAAEAAEAAAALAAgAAAADAAEAAAAMAAgAAAAFAAEAAAANAAgAAAADAAEAAAD+/wkAAAAEAAEAAAD//wkAAAAGAAEAAAAAAAkAAAAEAAEAAAABAAkAAAADAAEAAAACAAkAAAAFAAEAAAADAAkAAAADAAEAAAAEAAkAAAAFAAEAAAAFAAkAAAADAAEAAAAGAAkAAAAGAAEAAAAHAAkAAAAEAAEAAAAIAAkAAAAGAAEAAAAJAAkAAAAEAAEAAAAKAAkAAAAGAAEAAAALAAkAAAAFAAEAAAAMAAkAAAADAAEAAAANAAkAAAAFAAEAAAD+/woAAAAGAAEAAAD//woAAAAEAAEAAAAAAAoAAAAGAAEAAAABAAoAAAAFAAEAAAACAAoAAAADAAEAAAADAAoAAAAFAAEAAAAEAAoAAAADAAEAAAAFAAoAAAAFAAEAAAAGAAoAAAAEAAEAAAAHAAoAAAAGAAEAAAAIAAoAAAAEAAEAAAAJAAoAAAAGAAEAAAAKAAoAAAAEAAEAAAALAAoAAAADAAEAAAAMAAoAAAAFAAEAAAANAAoAAAADAAEAAAD+/wsAAAAEAAEAAAD//wsAAAAGAAEAAAAAAAsAAAAEAAEAAAABAAsAAAADAAEAAAACAAsAAAAFAAEAAAADAAsAAAADAAEAAAAEAAsAAAAFAAEAAAAFAAsAAAADAAEAAAAGAAsAAAAGAAEAAAAHAAsAAAAEAAEAAAAIAAsAAAAGAAEAAAAJAAsAAAAEAAEAAAAKAAsAAAAGAAEAAAALAAsAAAAFAAEAAAAMAAsAAAADAAEAAAANAAsAAAAFAAEAAAAKAAcAAAAGAAAAAAALAAcAAAAFAAAAAAAMAAcAAAADAAAAAAANAAcAAAAFAAAAAAAQAAgAAAAFAAAAAAARAAgAAAAEAAAAAAASAAgAAAAGAAAAAAATAAgAAAAEAAAAAAAUAAgAAAAGAAAAAAAVAAgAAAAEAAAAAAAWAAgAAAADAAAAAAAXAAgAAAAFAAAAAAAYAAgAAAADAAAAAAAZAAgAAAAFAAAAAAAQAAkAAAADAAEAAAARAAkAAAAGAAEAAAASAAkAAAAEAAEAAAATAAkAAAAGAAEAAAAUAAkAAAAEAAEAAAAVAAkAAAAGAAEAAAAWAAkAAAAFAAEAAAAXAAkAAAADAAEAAAAYAAkAAAAFAAEAAAAZAAkAAAADAAEAAAAQAAoAAAAFAAEAAAARAAoAAAAEAAEAAAASAAoAAAAGAAEAAAATAAoAAAAEAAEAAAAUAAoAAAAGAAEAAAAVAAoAAAAEAAEAAAAWAAoAAAADAAEAAAAXAAoAAAAFAAEAAAAYAAoAAAADAAEAAAAZAAoAAAAFAAEAAAAQAAsAAAADAAEAAAARAAsAAAAGAAEAAAASAAsAAAAEAAEAAAATAAsAAAAGAAEAAAAUAAsAAAAEAAEAAAAVAAsAAAAGAAEAAAAWAAsAAAAFAAEAAAAXAAsAAAADAAEAAAAYAAsAAAAFAAEAAAAZAAsAAAADAAEAAAAWAAYAAAADAAAAAAAXAAYAAAAFAAAAAAAYAAYAAAADAAAAAAAcAAgAAAAEAAAAAAAdAAgAAAAGAAAAAAAeAAgAAAAEAAAAAAAfAAgAAAAGAAAAAAAgAAgAAAAEAAAAAAAhAAgAAAADAAAAAAAiAAgAAAAFAAAAAAAjAAgAAAADAAAAAAAkAAgAAAAFAAAAAAAlAAgAAAADAAAAAAAmAAgAAAAGAAAAAAAnAAgAAAAEAAAAAAAoAAgAAAAGAAAAAAApAAgAAAAEAAAAAAAcAAkAAAAGAAEAAAAdAAkAAAAEAAEAAAAeAAkAAAAGAAEAAAAfAAkAAAAEAAEAAAAgAAkAAAAGAAEAAAAhAAkAAAAFAAEAAAAiAAkAAAADAAEAAAAjAAkAAAAFAAEAAAAkAAkAAAADAAEAAAAlAAkAAAAFAAEAAAAmAAkAAAAEAAEAAAAnAAkAAAAGAAEAAAAoAAkAAAAEAAEAAAApAAkAAAAGAAEAAAAcAAoAAAAEAAEAAAAdAAoAAAAGAAEAAAAeAAoAAAAEAAEAAAAfAAoAAAAGAAEAAAAgAAoAAAAEAAEAAAAhAAoAAAADAAEAAAAiAAoAAAAFAAEAAAAjAAoAAAADAAEAAAAkAAoAAAAFAAEAAAAlAAoAAAADAAEAAAAmAAoAAAAGAAEAAAAnAAoAAAAEAAEAAAAoAAoAAAAGAAEAAAApAAoAAAAEAAEAAAAcAAsAAAAGAAEAAAAdAAsAAAAEAAEAAAAeAAsAAAAGAAEAAAAfAAsAAAAEAAEAAAAgAAsAAAAGAAEAAAAhAAsAAAAFAAEAAAAiAAsAAAADAAEAAAAjAAsAAAAFAAEAAAAkAAsAAAADAAEAAAAlAAsAAAAFAAEAAAAmAAsAAAAEAAEAAAAnAAsAAAAGAAEAAAAoAAsAAAAEAAEAAAApAAsAAAAGAAEAAAA=")
 tile_set = ExtResource("3_tiles")
 
-[node name="TrapThorns" parent="." instance=ExtResource("14_a")]
-position = Vector2(896, 512)
+[node name="Player" parent="." unique_id=1055688358 instance=ExtResource("1_player")]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(80, 300)
 
-[node name="KratibItem" parent="Coins" index="0" instance=ExtResource("11_a")]
-position = Vector2(384, 484)
+[node name="Coins" type="Node2D" parent="." unique_id=1884118759]
+z_index = 2
 
-[node name="HeartItem" parent="Coins" index="1" instance=ExtResource("12_a")]
+[node name="KratibItem" parent="Coins" unique_id=2091719385 instance=ExtResource("11_a")]
+position = Vector2(1078, 492)
+
+[node name="HeartItem" parent="Coins" unique_id=315495362 instance=ExtResource("12_a")]
 position = Vector2(1408, 364)
 give_extra_life = true
 
-[node name="StoneAmmoItem" parent="Coins" index="2" instance=ExtResource("13_a")]
+[node name="StoneAmmoItem" parent="Coins" unique_id=438952975 instance=ExtResource("13_a")]
 position = Vector2(768, 428)
 
-[node name="Buffalo1" parent="Enemies" index="0" instance=ExtResource("15_a")]
+[node name="Enemies" type="Node2D" parent="." unique_id=1672907602]
+
+[node name="Buffalo1" parent="Enemies" unique_id=629691420 instance=ExtResource("15_a")]
 position = Vector2(1152, 512)
 direction = -1
 
-[node name="Crow1" parent="Enemies" index="1" instance=ExtResource("16_a")]
+[node name="Crow1" parent="Enemies" unique_id=1933269790 instance=ExtResource("16_a")]
 position = Vector2(1664, 256)
 patrol_width = 200.0
 
-[node name="PortalGate" parent="." instance=ExtResource("10_a")]
-position = Vector2(2432, 512)
-next_scene = ExtResource("2_next")
+[node name="UserInterface" parent="." unique_id=139120600 instance=ExtResource("1_ui")]
 
-[node name="AiTong" type="Sprite2D" parent="."]
-position = Vector2(2496, 464)
+[node name="Text" type="Node2D" parent="." unique_id=115128695]
+
+[node name="FallKill" type="Area2D" parent="." unique_id=1391411743]
+position = Vector2(1600, 760)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallKill" unique_id=1495798845]
+shape = SubResource("RectangleShape2D_fall")
+
+[node name="TrapThorns" parent="." unique_id=993764947 instance=ExtResource("14_a")]
+position = Vector2(896, 512)
+
+[node name="AiTong" type="Sprite2D" parent="." unique_id=103774100]
+position = Vector2(2209, 458)
 texture = ExtResource("17_a")
 
-[node name="Label" parent="UserInterface" index="1"]
-text = "ด่าน 6 — ส่งกล่องข้าวให้อ้ายทอง"
+[node name="CheckpointShrine" parent="." unique_id=470942734 instance=ExtResource("18_cp")]
+position = Vector2(-30, 453)
+
+[connection signal="hit_enemy" from="Player" to="." method="_on_player_hit_enemy"]
+[connection signal="hit_trap" from="Player" to="." method="_on_player_hit_trap"]
+[connection signal="body_entered" from="FallKill" to="." method="_on_fall_kill_body_entered"]

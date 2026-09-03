@@ -1,320 +1,367 @@
 [gd_scene format=3 uid="uid://cdwabmqtlxr1y"]
 
-[ext_resource type="Script" uid="uid://domyi75bwl5ad" path="res://Scenes/Levels/game_ui.gd" id="1_6pfiu"]
-[ext_resource type="FontFile" uid="uid://b3ivysmhcn84h" path="res://Assets/Fonts/Kodchasan-Bold.ttf" id="3_4yslr"]
-[ext_resource type="Theme" uid="uid://d3eng5cvycmjf" path="res://Scenes/Prefabs/theme.tres" id="4_fjdxc"]
-[ext_resource type="Texture2D" uid="uid://2wfiy300hbbt" path="res://Assets/Icons/icons8-save-50.png" id="5_fpocv"]
-[ext_resource type="Texture2D" uid="uid://ddv4aoj15q5pe" path="res://Assets/Icons/icons8-audio-48.png" id="6_da6bi"]
-[ext_resource type="Texture2D" uid="uid://i80o4wno5dnx" path="res://Assets/Icons/icons8-mute-48.png" id="7_qwp1t"]
-[ext_resource type="Texture2D" uid="uid://ctp5xew3mi5hs" path="res://Assets/Icons/icons8-music-48.png" id="7_r4nak"]
-[ext_resource type="Texture2D" uid="uid://c14r70talvlty" path="res://Assets/Icons/icons8-arrow-left-50.png" id="8_fouhp"]
-[ext_resource type="Texture2D" uid="uid://djscvie6h1kd5" path="res://Assets/Icons/icons8-cancel-48.png" id="8_nvrsl"]
-[ext_resource type="Texture2D" path="res://Assets/Generated/Spritesheet/heart_item.png" id="9_nvrsl"]
-[ext_resource type="Texture2D" uid="uid://dbdk5x30xx2t4" path="res://Assets/Icons/icons8-up-50.png" id="9_qi3vf"]
-[ext_resource type="Texture2D" uid="uid://m44t4aut6o62" path="res://Assets/Icons/icons8-arrow-right-50.png" id="10_ioybj"]
-[ext_resource type="Texture2D" path="res://Assets/Generated/Spritesheet/kratib.png" id="13_kratib"]
-[ext_resource type="Texture2D" path="res://Assets/Generated/Spritesheet/stone.png" id="13_stone"]
-[ext_resource type="PackedScene" uid="uid://puc4l62gx6et" path="res://Scenes/Prefabs/button_exit.tscn" id="14_b47np"]
+[ext_resource type="Script" uid="uid://domyi75bwl5ad" path="res://Scenes/Levels/game_ui.gd" id="1_ui"]
+[ext_resource type="Theme" uid="uid://cs7bk1storybk0" path="res://Scenes/UI/storybook_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_heart_full.png" id="3_heart"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_kratib.png" id="4_kratib"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_stone.png" id="5_stone"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_music_on.png" id="6_music"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_sound_on.png" id="7_sound"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_save.png" id="8_save"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_pause.png" id="9_pause"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_arrow_left.png" id="10_left"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_arrow_up.png" id="11_up"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_arrow_right.png" id="12_right"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_throw.png" id="13_throw"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/bar_fill_patience.png" id="14_fill_pat"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/page_frame.png" id="15_frame"]
+[ext_resource type="PackedScene" uid="uid://blevelpage001" path="res://Scenes/UI/level_page.tscn" id="16_levelpage"]
+[ext_resource type="PackedScene" uid="uid://bpausemenu001" path="res://Scenes/UI/pause_menu.tscn" id="17_pause"]
+[ext_resource type="Shader" path="res://Scenes/UI/paper_grain.gdshader" id="18_grain"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/icon_godmode.png" id="19_god"]
+[ext_resource type="PackedScene" path="res://Scenes/Minigames/minigame_host.tscn" id="20_mini"]
 
-[sub_resource type="Animation" id="Animation_3cagf"]
-length = 0.001
+[sub_resource type="StyleBoxTexture" id="SB_patience"]
+texture = ExtResource("14_fill_pat")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
 
-[sub_resource type="Animation" id="Animation_5vjlm"]
-resource_name = "welcome"
-length = 5.0
-loop_mode = 2
+[sub_resource type="ShaderMaterial" id="Mat_grain"]
+shader = ExtResource("18_grain")
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6pfiu"]
-_data = {
-&"RESET": SubResource("Animation_3cagf"),
-&"welcome": SubResource("Animation_5vjlm")
-}
+; ALWAYS so Esc can lift the pause it just applied, and so the chapter page can
+; animate while the level behind it is held still.
+[node name="UserInterface" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_ui")
 
-[node name="UserInterface" type="CanvasLayer" unique_id=1799764374]
-script = ExtResource("1_6pfiu")
-
-[node name="GameUI" type="Control" parent="." unique_id=1771747675]
-layout_mode = 3
+[node name="PageFrame" type="NinePatchRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_lock_ = true
+mouse_filter = 2
+texture = ExtResource("15_frame")
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
 
-[node name="TopBar" type="Control" parent="GameUI" unique_id=1540824613]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 10
+[node name="PaperGrain" type="ColorRect" parent="."]
+material = SubResource("Mat_grain")
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 84.0
-grow_horizontal = 2
+anchor_bottom = 1.0
+mouse_filter = 2
 
-[node name="ScoreLabel" type="Label" parent="GameUI/TopBar" unique_id=1067951808]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 56.0
-offset_top = 58.0
-offset_right = 280.0
-offset_bottom = 100.0
-theme_override_colors/font_color = Color(0.92, 0.78, 0.35, 1)
-theme_override_colors/font_outline_color = Color(0.22, 0.12, 0.05, 1)
-theme_override_constants/outline_size = 6
-theme_override_fonts/font = ExtResource("3_4yslr")
-theme_override_font_sizes/font_size = 26
-text = "คะแนน: 0"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GameUI/TopBar" unique_id=1609764920]
-libraries/ = SubResource("AnimationLibrary_6pfiu")
-autoplay = &"welcome"
-
-[node name="ScoreIcon" type="TextureRect" parent="GameUI/TopBar"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 56.0
-offset_right = 52.0
-offset_bottom = 96.0
-texture = ExtResource("13_kratib")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="HpRect" type="ColorRect" parent="GameUI/TopBar" unique_id=987609954]
-layout_mode = 0
-offset_left = 280.0
-offset_top = 12.0
-offset_right = 460.0
-offset_bottom = 44.0
-color = Color(0.18, 0.12, 0.06, 0.75)
-
-[node name="ProgressBar" type="ProgressBar" parent="GameUI/TopBar/HpRect" unique_id=306194423]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 178.0
-offset_bottom = 30.0
-theme = ExtResource("4_fjdxc")
-value = 100.0
-show_percentage = false
-metadata/_edit_lock_ = true
-
-[node name="PatienceRect" type="ColorRect" parent="GameUI/TopBar"]
-layout_mode = 0
-offset_left = 280.0
-offset_top = 50.0
-offset_right = 460.0
-offset_bottom = 82.0
-color = Color(0.12, 0.08, 0.16, 0.8)
-
-[node name="PatienceBar" type="ProgressBar" parent="GameUI/TopBar/PatienceRect"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 2.0
-offset_top = 2.0
-offset_right = 178.0
-offset_bottom = 30.0
-theme = ExtResource("4_fjdxc")
-max_value = 100.0
-value = 100.0
-show_percentage = false
-
-[node name="PatienceLabel" type="Label" parent="GameUI/TopBar"]
-layout_mode = 0
-offset_left = 470.0
-offset_top = 48.0
-offset_right = 600.0
-offset_bottom = 86.0
-theme_override_colors/font_color = Color(0.95, 0.72, 0.35, 1)
-theme_override_colors/font_outline_color = Color(0.15, 0.08, 0.04, 1)
-theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("3_4yslr")
-theme_override_font_sizes/font_size = 20
-text = "ไอ้ทอง"
-
-[node name="AmmoIcon" type="TextureRect" parent="GameUI/TopBar"]
-layout_mode = 0
-offset_left = 470.0
-offset_top = 8.0
-offset_right = 506.0
-offset_bottom = 44.0
-texture = ExtResource("13_stone")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="AmmoLabel" type="Label" parent="GameUI/TopBar"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 508.0
-offset_top = 10.0
-offset_right = 620.0
-offset_bottom = 46.0
-theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
-theme_override_colors/font_outline_color = Color(0.12, 0.08, 0.04, 1)
-theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("3_4yslr")
-theme_override_font_sizes/font_size = 22
-text = "x5"
-
-[node name="btnSave" type="Button" parent="GameUI/TopBar" unique_id=196490803]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+[node name="Hud" type="Control" parent="."]
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = -195.0
-offset_top = 5.0
-offset_right = -131.0
-offset_bottom = 63.0
-grow_horizontal = 0
-focus_mode = 0
-icon = ExtResource("5_fpocv")
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource("2_theme")
 
-[node name="btnSound" type="Button" parent="GameUI/TopBar" unique_id=167811641]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -255.0
-offset_top = 5.0
-offset_right = -197.0
-offset_bottom = 63.0
-grow_horizontal = 0
-focus_mode = 0
-
-[node name="on" type="Sprite2D" parent="GameUI/TopBar/btnSound" unique_id=532436065]
-position = Vector2(32, 29)
-texture = ExtResource("6_da6bi")
-
-[node name="mute" type="Sprite2D" parent="GameUI/TopBar/btnSound" unique_id=1162638177]
-visible = false
-position = Vector2(32, 29)
-texture = ExtResource("7_qwp1t")
-
-[node name="btnMusic" type="Button" parent="GameUI/TopBar" unique_id=797138490]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -320.0
-offset_top = 5.0
-offset_right = -257.0
-offset_bottom = 63.0
-grow_horizontal = 0
-focus_mode = 0
-
-[node name="on" type="Sprite2D" parent="GameUI/TopBar/btnMusic" unique_id=1371475802]
-position = Vector2(5, 5)
-texture = ExtResource("7_r4nak")
-centered = false
-
-[node name="mute" type="Sprite2D" parent="GameUI/TopBar/btnMusic" unique_id=2050570364]
-position = Vector2(23, 24.999998)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_nvrsl")
-centered = false
-
-[node name="LifeLabel" type="Label" parent="GameUI/TopBar" unique_id=1814812566]
-visible = false
-layout_mode = 0
-offset_left = 216.0
-offset_top = 63.0
-offset_right = 261.0
-offset_bottom = 105.0
-text = ""
-
-[node name="LifeRect" type="TextureRect" parent="GameUI/TopBar" unique_id=1631342937]
-layout_mode = 0
+[node name="Status" type="Panel" parent="Hud"]
 offset_left = 16.0
-offset_top = 8.0
-offset_right = 256.0
-offset_bottom = 52.0
-texture = ExtResource("9_nvrsl")
-expand_mode = 1
-stretch_mode = 1
+offset_top = 12.0
+offset_right = 516.0
+offset_bottom = 140.0
 
-[node name="BottomBar" type="ColorRect" parent="GameUI" unique_id=1990197770]
-layout_mode = 1
-anchors_preset = 12
+[node name="Lives" type="HBoxContainer" parent="Hud/Status"]
+unique_name_in_owner = true
+offset_left = 22.0
+offset_top = 14.0
+offset_right = 176.0
+offset_bottom = 42.0
+theme_override_constants/separation = 4
+
+[node name="Heart1" type="TextureRect" parent="Hud/Status/Lives"]
+custom_minimum_size = Vector2(26, 26)
+texture = ExtResource("3_heart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Heart2" type="TextureRect" parent="Hud/Status/Lives"]
+custom_minimum_size = Vector2(26, 26)
+texture = ExtResource("3_heart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Heart3" type="TextureRect" parent="Hud/Status/Lives"]
+custom_minimum_size = Vector2(26, 26)
+texture = ExtResource("3_heart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Heart4" type="TextureRect" parent="Hud/Status/Lives"]
+custom_minimum_size = Vector2(26, 26)
+texture = ExtResource("3_heart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Heart5" type="TextureRect" parent="Hud/Status/Lives"]
+custom_minimum_size = Vector2(26, 26)
+texture = ExtResource("3_heart")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScoreIcon" type="TextureRect" parent="Hud/Status"]
+offset_left = 198.0
+offset_top = 12.0
+offset_right = 228.0
+offset_bottom = 42.0
+texture = ExtResource("4_kratib")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScoreLabel" type="Label" parent="Hud/Status"]
+unique_name_in_owner = true
+offset_left = 232.0
+offset_top = 14.0
+offset_right = 322.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 21
+text = "0/8"
+vertical_alignment = 1
+
+[node name="AmmoIcon" type="TextureRect" parent="Hud/Status"]
+offset_left = 336.0
+offset_top = 12.0
+offset_right = 366.0
+offset_bottom = 42.0
+texture = ExtResource("5_stone")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AmmoLabel" type="Label" parent="Hud/Status"]
+unique_name_in_owner = true
+offset_left = 370.0
+offset_top = 14.0
+offset_right = 470.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 21
+text = "0"
+vertical_alignment = 1
+
+[node name="HpLabel" type="Label" parent="Hud/Status"]
+offset_left = 22.0
+offset_top = 50.0
+offset_right = 110.0
+offset_bottom = 76.0
+theme_override_font_sizes/font_size = 17
+text = "แรงกาย"
+vertical_alignment = 1
+
+[node name="HpBar" type="ProgressBar" parent="Hud/Status"]
+unique_name_in_owner = true
+offset_left = 112.0
+offset_top = 52.0
+offset_right = 478.0
+offset_bottom = 76.0
+value = 100.0
+show_percentage = false
+
+[node name="PatienceLabel" type="Label" parent="Hud/Status"]
+offset_left = 22.0
+offset_top = 84.0
+offset_right = 110.0
+offset_bottom = 110.0
+theme_override_font_sizes/font_size = 17
+text = "ไอ้ทอง"
+vertical_alignment = 1
+
+[node name="PatienceBar" type="ProgressBar" parent="Hud/Status"]
+unique_name_in_owner = true
+offset_left = 112.0
+offset_top = 86.0
+offset_right = 478.0
+offset_bottom = 110.0
+theme_override_styles/fill = SubResource("SB_patience")
+value = 100.0
+show_percentage = false
+
+[node name="Tools" type="Control" parent="Hud"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -260.0
+offset_top = 14.0
+offset_bottom = 66.0
+grow_horizontal = 0
+
+[node name="btnMusic" type="Button" parent="Hud/Tools"]
+unique_name_in_owner = true
+offset_right = 52.0
+offset_bottom = 52.0
+focus_mode = 0
+theme_type_variation = &"StorybookIconButton"
+icon = ExtResource("6_music")
+expand_icon = true
+
+[node name="btnSound" type="Button" parent="Hud/Tools"]
+unique_name_in_owner = true
+offset_left = 60.0
+offset_right = 112.0
+offset_bottom = 52.0
+focus_mode = 0
+theme_type_variation = &"StorybookIconButton"
+icon = ExtResource("7_sound")
+expand_icon = true
+
+[node name="btnSave" type="Button" parent="Hud/Tools"]
+offset_left = 120.0
+offset_right = 172.0
+offset_bottom = 52.0
+focus_mode = 0
+theme_type_variation = &"StorybookIconButton"
+icon = ExtResource("8_save")
+expand_icon = true
+
+[node name="btnPause" type="Button" parent="Hud/Tools"]
+offset_left = 180.0
+offset_right = 232.0
+offset_bottom = 52.0
+focus_mode = 0
+theme_type_variation = &"StorybookIconButton"
+icon = ExtResource("9_pause")
+expand_icon = true
+
+[node name="TouchPad" type="Control" parent="Hud"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+modulate = Color(1, 1, 1, 0.62)
+
+[node name="btnLeft" type="Button" parent="Hud/TouchPad"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -112.0
+offset_right = 112.0
+offset_bottom = -24.0
+grow_vertical = 0
+focus_mode = 0
+flat = true
+icon = ExtResource("10_left")
+expand_icon = true
+
+[node name="btnUp" type="Button" parent="Hud/TouchPad"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 118.0
+offset_top = -112.0
+offset_right = 206.0
+offset_bottom = -24.0
+grow_vertical = 0
+focus_mode = 0
+flat = true
+icon = ExtResource("11_up")
+expand_icon = true
+
+[node name="btnRight" type="Button" parent="Hud/TouchPad"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 212.0
+offset_top = -112.0
+offset_right = 300.0
+offset_bottom = -24.0
+grow_vertical = 0
+focus_mode = 0
+flat = true
+icon = ExtResource("12_right")
+expand_icon = true
+
+[node name="btnThrow" type="Button" parent="Hud/TouchPad"]
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -103.0
-grow_horizontal = 2
+offset_left = -128.0
+offset_top = -122.0
+offset_right = -24.0
+offset_bottom = -18.0
+grow_horizontal = 0
 grow_vertical = 0
-color = Color(0, 0.011764706, 0, 0.28235295)
-
-[node name="btnLeft" type="Button" parent="GameUI/BottomBar" unique_id=755149458]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 10.0
-offset_right = 134.0
-offset_bottom = 99.0
 focus_mode = 0
-icon = ExtResource("8_fouhp")
 flat = true
-
-[node name="btnUp" type="Button" parent="GameUI/BottomBar" unique_id=1894149077]
-layout_mode = 0
-offset_left = 134.0
-offset_right = 237.0
-offset_bottom = 89.0
-focus_mode = 0
-icon = ExtResource("9_qi3vf")
-flat = true
-
-[node name="btnRight" type="Button" parent="GameUI/BottomBar" unique_id=605126403]
-layout_mode = 0
-offset_left = 237.0
-offset_top = 10.0
-offset_right = 340.0
-offset_bottom = 99.0
-focus_mode = 0
-icon = ExtResource("10_ioybj")
-flat = true
-
-[node name="btnShoot" type="Button" parent="GameUI/BottomBar" unique_id=235653240]
-layout_mode = 0
-offset_left = 997.0
-offset_top = 10.0
-offset_right = 1100.0
-offset_bottom = 99.0
-focus_mode = 0
-icon = ExtResource("13_stone")
-flat = true
+icon = ExtResource("13_throw")
 expand_icon = true
 
-[node name="btnExit" parent="GameUI/BottomBar" unique_id=1633606001 instance=ExtResource("14_b47np")]
-layout_mode = 0
-offset_left = 1074.0
-offset_top = -535.0
-offset_right = 1147.0
-offset_bottom = -481.0
-text = "Exit"
-
-[node name="AlertLabel" type="Label" parent="GameUI/BottomBar" unique_id=1518313051]
+[node name="GodBadge" type="HBoxContainer" parent="Hud"]
+unique_name_in_owner = true
 visible = false
-layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -19.0
-offset_top = -11.5
-offset_right = 19.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("4_fjdxc")
-text = "Alert"
+offset_left = -120.0
+offset_top = 10.0
+offset_right = 120.0
+offset_bottom = 44.0
+theme_override_constants/separation = 8
+alignment = 1
 
-[connection signal="pressed" from="GameUI/TopBar/btnSave" to="." method="_on_btn_save_pressed"]
-[connection signal="pressed" from="GameUI/TopBar/btnSound" to="." method="_on_btn_sound_pressed"]
-[connection signal="pressed" from="GameUI/TopBar/btnMusic" to="." method="_on_btn_music_pressed"]
-[connection signal="button_down" from="GameUI/BottomBar/btnLeft" to="." method="_on_btn_left_pressed"]
-[connection signal="button_up" from="GameUI/BottomBar/btnLeft" to="." method="_on_btn_left_released"]
-[connection signal="button_down" from="GameUI/BottomBar/btnUp" to="." method="_on_btn_up_pressed"]
-[connection signal="button_up" from="GameUI/BottomBar/btnUp" to="." method="_on_btn_up_released"]
-[connection signal="button_down" from="GameUI/BottomBar/btnRight" to="." method="_on_btn_right_pressed"]
-[connection signal="button_up" from="GameUI/BottomBar/btnRight" to="." method="_on_btn_right_released"]
-[connection signal="button_down" from="GameUI/BottomBar/btnShoot" to="." method="_on_btn_shoot_button_down"]
-[connection signal="button_up" from="GameUI/BottomBar/btnShoot" to="." method="_on_btn_shoot_button_up"]
+[node name="Icon" type="TextureRect" parent="Hud/GodBadge"]
+custom_minimum_size = Vector2(28, 28)
+texture = ExtResource("19_god")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Text" type="Label" parent="Hud/GodBadge"]
+theme_type_variation = &"StorybookHeading"
+theme_override_font_sizes/font_size = 20
+text = "โหมดทดลอง"
+
+[node name="Toast" type="Panel" parent="Hud"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -190.0
+offset_top = 156.0
+offset_right = 190.0
+offset_bottom = 214.0
+grow_horizontal = 2
+pivot_offset = Vector2(190, 29)
+
+[node name="Message" type="Label" parent="Hud/Toast"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_font_sizes/font_size = 21
+text = "..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelPage" parent="." instance=ExtResource("16_levelpage")]
+unique_name_in_owner = true
+visible = false
+
+[node name="PauseMenu" parent="." instance=ExtResource("17_pause")]
+unique_name_in_owner = true
+visible = false
+
+[node name="MinigameHost" parent="." instance=ExtResource("20_mini")]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="pressed" from="Hud/Tools/btnMusic" to="." method="_on_btn_music_pressed"]
+[connection signal="pressed" from="Hud/Tools/btnSound" to="." method="_on_btn_sound_pressed"]
+[connection signal="pressed" from="Hud/Tools/btnSave" to="." method="_on_btn_save_pressed"]
+[connection signal="pressed" from="Hud/Tools/btnPause" to="." method="_on_btn_pause_pressed"]
+[connection signal="button_down" from="Hud/TouchPad/btnLeft" to="." method="_on_btn_left_pressed"]
+[connection signal="button_up" from="Hud/TouchPad/btnLeft" to="." method="_on_btn_left_released"]
+[connection signal="button_down" from="Hud/TouchPad/btnUp" to="." method="_on_btn_up_pressed"]
+[connection signal="button_up" from="Hud/TouchPad/btnUp" to="." method="_on_btn_up_released"]
+[connection signal="button_down" from="Hud/TouchPad/btnRight" to="." method="_on_btn_right_pressed"]
+[connection signal="button_up" from="Hud/TouchPad/btnRight" to="." method="_on_btn_right_released"]
+[connection signal="button_down" from="Hud/TouchPad/btnThrow" to="." method="_on_btn_shoot_button_down"]
+[connection signal="button_up" from="Hud/TouchPad/btnThrow" to="." method="_on_btn_shoot_button_up"]

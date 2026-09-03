@@ -1,23 +1,21 @@
 extends Node2D
 
-@onready var ui: Control = $CanvasLayer/UI
-
 
 func _ready() -> void:
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	_fit()
-	get_viewport().size_changed.connect(_fit)
-
-
-func _fit() -> void:
-	ui.set_anchors_preset(Control.PRESET_TOP_LEFT)
-	ui.position = Vector2.ZERO
-	ui.size = get_viewport_rect().size
-
-
-func _on_menu_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Levels/menu.tscn")
+	if GameManager.lose_reason == "patience":
+		%Title.text = "อ้ายทองรอไม่ไหว"
+		%Line.text = "กล่องข้าวไปไม่ทัน\nท้องของลูกว่างเปล่าก่อนแม่จะถึง"
+	%Score.text = "กระติบ %d จาก %d" % [GameManager.kratib, GameManager.kratib_needed]
+	AudioManager.stop_music()
+	AudioManager.play("game_over")
 
 
 func _on_retry_pressed() -> void:
+	AudioManager.play("ui_click")
 	GameManager.retry_checkpoint()
+
+
+func _on_menu_pressed() -> void:
+	AudioManager.play("ui_back")
+	SceneTransition.load_scene_path("res://Scenes/Levels/menu.tscn")

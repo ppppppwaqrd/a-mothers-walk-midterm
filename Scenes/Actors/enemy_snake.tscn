@@ -60,11 +60,11 @@ speed = 60.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2(0, -14)
-scale = Vector2(1.7, 0.85)
+scale = Vector2(1.25, 0.9)
 
 [node name="CollisionShape2D2" parent="HitArea" index="0"]
 position = Vector2(0, -14)
-scale = Vector2(1.7, 0.85)
+scale = Vector2(1.25, 0.9)
 
 [node name="AnimateSprite" type="AnimatedSprite2D" parent="Sprite" index="0"]
 position = Vector2(0, -12)

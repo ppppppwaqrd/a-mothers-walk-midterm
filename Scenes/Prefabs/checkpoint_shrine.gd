@@ -26,6 +26,7 @@ func _on_body_entered(body: Node2D) -> void:
 		body.spawn_point = global_position
 	if not used:
 		used = true
+		AudioManager.play("checkpoint_bell")
 		_flash()
 		var ui := get_tree().get_first_node_in_group("GameUI")
 		if ui == null:

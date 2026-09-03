@@ -1,69 +1,145 @@
 [gd_scene format=4 uid="uid://dfeqtr4us2oxc"]
 
-[ext_resource type="PackedScene" uid="uid://bjntpxb1c8jxn" path="res://Scenes/Levels/base_level.tscn" id="1_base"]
-[ext_resource type="PackedScene" uid="uid://level06amotherwalk" path="res://Scenes/Levels/level_06.tscn" id="2_next"]
-[ext_resource type="TileSet" uid="uid://dpk7f214d463s" path="res://Scenes/Prefabs/ground_tile_set_03.tres" id="3_tiles"]
+[ext_resource type="Script" uid="uid://c7w5vtdg0leb7" path="res://Scenes/Levels/level_background.gd" id="1_bg"]
+[ext_resource type="PackedScene" uid="uid://cyti38f0lagf2" path="res://Scenes/Prefabs/level_finish_door.tscn" id="1_door"]
+[ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Actors/player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://cwm5w1bxx3js3" path="res://Scenes/Levels/base_level.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cdwabmqtlxr1y" path="res://Scenes/Levels/game_ui.tscn" id="1_ui"]
+[ext_resource type="PackedScene" uid="uid://dgeqtr4us2oxc" path="res://Scenes/Levels/level_06.tscn" id="2_next"]
+[ext_resource type="TileSet" uid="uid://dpk7f214d663s" path="res://Scenes/Prefabs/ground_tile_set_05.tres" id="3_tiles"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_thorns.tscn" id="10_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_pendulum.tscn" id="11_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="12_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/stone_ammo_item.tscn" id="13_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/jump_leaf.tscn" id="14_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/checkpoint_shrine.tscn" id="15_a"]
-[ext_resource type="PackedScene" path="res://Scenes/Prefabs/villager_help.tscn" id="16_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/minigame_shrine.tscn" id="16_mini"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/pushable.tscn" id="16_push"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/puzzle_switch.tscn" id="17_a"]
-[ext_resource type="PackedScene" path="res://Scenes/Prefabs/puzzle_gate.tscn" id="18_a"]
-[ext_resource type="PackedScene" path="res://Scenes/Actors/enemy_snake.tscn" id="19_a"]
-[ext_resource type="PackedScene" path="res://Scenes/Actors/enemy_crow.tscn" id="20_a"]
-[ext_resource type="PackedScene" path="res://Scenes/Actors/enemy_boar.tscn" id="21_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/puzzle_bridge.tscn" id="18_a"]
+[ext_resource type="PackedScene" uid="uid://bowl33xkoh7en" path="res://Scenes/Actors/enemy_snake.tscn" id="19_a"]
+[ext_resource type="PackedScene" uid="uid://65by6gnncq4t" path="res://Scenes/Actors/enemy_crow.tscn" id="20_a"]
+[ext_resource type="PackedScene" uid="uid://637k1gnncq4t" path="res://Scenes/Actors/enemy_boar.tscn" id="21_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_spear.tscn" id="22_spear"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_blade.tscn" id="23_blade"]
 
-[node name="BaseLevel" instance=ExtResource("1_base")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fall"]
+size = Vector2(4200, 140)
 
-[node name="LevelFinishDoor" parent="." index="1"]
-position = Vector2(2560, 448)
+[node name="BaseLevel" type="Node2D" unique_id=1346614768]
+script = ExtResource("1_script")
+level_id = "level_05"
+level_title = "คูน้ำกลางคืน"
+
+[node name="LevelBackground" type="Node2D" parent="." unique_id=289832587]
+z_index = -100
+z_as_relative = false
+script = ExtResource("1_bg")
+
+[node name="Sky" type="Sprite2D" parent="LevelBackground" unique_id=1739073751]
+centered = false
+
+[node name="Far" type="Sprite2D" parent="LevelBackground" unique_id=395209804]
+centered = false
+
+[node name="Mid" type="Sprite2D" parent="LevelBackground" unique_id=977671072]
+centered = false
+
+[node name="Near" type="Sprite2D" parent="LevelBackground" unique_id=1275632957]
+centered = false
+
+[node name="LevelFinishDoor" parent="." unique_id=345340989 instance=ExtResource("1_door")]
+z_index = 1
+position = Vector2(2560, 512)
 next_scene = ExtResource("2_next")
 
-[node name="Ground" type="TileMapLayer" parent="Level" index="1"]
-tile_map_data = PackedByteArray("AAD+/wgAAAADAAEAAAD//wgAAAADAAEAAAAAAAgAAAADAAEAAAABAAgAAAADAAEAAAACAAgAAAADAAEAAAADAAgAAAADAAEAAAAEAAgAAAADAAEAAAAFAAgAAAADAAEAAAAGAAgAAAADAAEAAAAHAAgAAAADAAEAAAAIAAgAAAADAAEAAAAJAAgAAAADAAEAAAAKAAgAAAADAAEAAAALAAgAAAADAAEAAAAMAAgAAAADAAEAAAANAAgAAAADAAEAAAAOAAgAAAADAAEAAAAPAAgAAAADAAEAAAD+/wkAAAADAAEAAAD//wkAAAADAAEAAAAAAAkAAAADAAEAAAABAAkAAAADAAEAAAACAAkAAAADAAEAAAADAAkAAAADAAEAAAAEAAkAAAADAAEAAAAFAAkAAAADAAEAAAAGAAkAAAADAAEAAAAHAAkAAAADAAEAAAAIAAkAAAADAAEAAAAJAAkAAAADAAEAAAAKAAkAAAADAAEAAAALAAkAAAADAAEAAAAMAAkAAAADAAEAAAANAAkAAAADAAEAAAAOAAkAAAADAAEAAAAPAAkAAAADAAEAAAD+/woAAAADAAEAAAD//woAAAADAAEAAAAAAAoAAAADAAEAAAABAAoAAAADAAEAAAACAAoAAAADAAEAAAADAAoAAAADAAEAAAAEAAoAAAADAAEAAAAFAAoAAAADAAEAAAAGAAoAAAADAAEAAAAHAAoAAAADAAEAAAAIAAoAAAADAAEAAAAJAAoAAAADAAEAAAAKAAoAAAADAAEAAAALAAoAAAADAAEAAAAMAAoAAAADAAEAAAANAAoAAAADAAEAAAAOAAoAAAADAAEAAAAPAAoAAAADAAEAAAD+/wsAAAADAAEAAAD//wsAAAADAAEAAAAAAAsAAAADAAEAAAABAAsAAAADAAEAAAACAAsAAAADAAEAAAADAAsAAAADAAEAAAAEAAsAAAADAAEAAAAFAAsAAAADAAEAAAAGAAsAAAADAAEAAAAHAAsAAAADAAEAAAAIAAsAAAADAAEAAAAJAAsAAAADAAEAAAAKAAsAAAADAAEAAAALAAsAAAADAAEAAAAMAAsAAAADAAEAAAANAAsAAAADAAEAAAAOAAsAAAADAAEAAAAPAAsAAAADAAEAAAAIAAYAAAADAAEAAAAJAAYAAAADAAEAAAAKAAYAAAADAAEAAAAQAAgAAAADAAEAAAARAAgAAAADAAEAAAASAAgAAAADAAEAAAATAAgAAAADAAEAAAAUAAgAAAADAAEAAAAVAAgAAAADAAEAAAAWAAgAAAADAAEAAAAXAAgAAAADAAEAAAAYAAgAAAADAAEAAAAZAAgAAAADAAEAAAAaAAgAAAADAAEAAAAbAAgAAAADAAEAAAAcAAgAAAADAAEAAAAdAAgAAAADAAEAAAAeAAgAAAADAAEAAAAfAAgAAAADAAEAAAAQAAkAAAADAAEAAAARAAkAAAADAAEAAAASAAkAAAADAAEAAAATAAkAAAADAAEAAAAUAAkAAAADAAEAAAAVAAkAAAADAAEAAAAWAAkAAAADAAEAAAAXAAkAAAADAAEAAAAYAAkAAAADAAEAAAAZAAkAAAADAAEAAAAaAAkAAAADAAEAAAAbAAkAAAADAAEAAAAcAAkAAAADAAEAAAAdAAkAAAADAAEAAAAeAAkAAAADAAEAAAAfAAkAAAADAAEAAAAQAAoAAAADAAEAAAARAAoAAAADAAEAAAASAAoAAAADAAEAAAATAAoAAAADAAEAAAAUAAoAAAADAAEAAAAVAAoAAAADAAEAAAAWAAoAAAADAAEAAAAXAAoAAAADAAEAAAAYAAoAAAADAAEAAAAZAAoAAAADAAEAAAAaAAoAAAADAAEAAAAbAAoAAAADAAEAAAAcAAoAAAADAAEAAAAdAAoAAAADAAEAAAAeAAoAAAADAAEAAAAfAAoAAAADAAEAAAAQAAsAAAADAAEAAAARAAsAAAADAAEAAAASAAsAAAADAAEAAAATAAsAAAADAAEAAAAUAAsAAAADAAEAAAAVAAsAAAADAAEAAAAWAAsAAAADAAEAAAAXAAsAAAADAAEAAAAYAAsAAAADAAEAAAAZAAsAAAADAAEAAAAaAAsAAAADAAEAAAAbAAsAAAADAAEAAAAcAAsAAAADAAEAAAAdAAsAAAADAAEAAAAeAAsAAAADAAEAAAAfAAsAAAADAAEAAAAUAAYAAAADAAEAAAAVAAYAAAADAAEAAAAWAAYAAAADAAEAAAAXAAYAAAADAAEAAAAaAAcAAAADAAEAAAAbAAcAAAADAAEAAAAcAAcAAAADAAEAAAAgAAgAAAADAAEAAAAhAAgAAAADAAEAAAAiAAgAAAADAAEAAAAjAAgAAAADAAEAAAAkAAgAAAADAAEAAAAlAAgAAAADAAEAAAAmAAgAAAADAAEAAAAnAAgAAAADAAEAAAAoAAgAAAADAAEAAAApAAgAAAADAAEAAAAqAAgAAAADAAEAAAArAAgAAAADAAEAAAAgAAkAAAADAAEAAAAhAAkAAAADAAEAAAAiAAkAAAADAAEAAAAjAAkAAAADAAEAAAAkAAkAAAADAAEAAAAlAAkAAAADAAEAAAAmAAkAAAADAAEAAAAnAAkAAAADAAEAAAAoAAkAAAADAAEAAAApAAkAAAADAAEAAAAqAAkAAAADAAEAAAArAAkAAAADAAEAAAAgAAoAAAADAAEAAAAhAAoAAAADAAEAAAAiAAoAAAADAAEAAAAjAAoAAAADAAEAAAAkAAoAAAADAAEAAAAlAAoAAAADAAEAAAAmAAoAAAADAAEAAAAnAAoAAAADAAEAAAAoAAoAAAADAAEAAAApAAoAAAADAAEAAAAqAAoAAAADAAEAAAArAAoAAAADAAEAAAAgAAsAAAADAAEAAAAhAAsAAAADAAEAAAAiAAsAAAADAAEAAAAjAAsAAAADAAEAAAAkAAsAAAADAAEAAAAlAAsAAAADAAEAAAAmAAsAAAADAAEAAAAnAAsAAAADAAEAAAAoAAsAAAADAAEAAAApAAsAAAADAAEAAAAqAAsAAAADAAEAAAArAAsAAAADAAEAAAA=")
+[node name="Level" type="Node2D" parent="." unique_id=365258672]
+
+[node name="Ground" type="TileMapLayer" parent="Level" unique_id=501184274]
+tile_map_data = PackedByteArray("AAD+/wgAAAAGAAAAAAD//wgAAAAEAAAAAAAAAAgAAAAGAAAAAAABAAgAAAAFAAAAAAACAAgAAAADAAAAAAADAAgAAAAFAAAAAAAEAAgAAAADAAAAAAAFAAgAAAAFAAAAAAAGAAgAAAAEAAAAAAAHAAgAAAAGAAAAAAAIAAgAAAAEAAAAAAAJAAgAAAAGAAAAAAAKAAgAAAAEAAAAAAALAAgAAAADAAAAAAAMAAgAAAAFAAAAAAANAAgAAAADAAAAAAAOAAgAAAAFAAAAAAAPAAgAAAADAAAAAAD+/wkAAAAEAAEAAAD//wkAAAAGAAEAAAAAAAkAAAAEAAEAAAABAAkAAAADAAEAAAACAAkAAAAFAAEAAAADAAkAAAADAAEAAAAEAAkAAAAFAAEAAAAFAAkAAAADAAEAAAAGAAkAAAAGAAEAAAAHAAkAAAAEAAEAAAAIAAkAAAAGAAEAAAAJAAkAAAAEAAEAAAAKAAkAAAAGAAEAAAALAAkAAAAFAAEAAAAMAAkAAAADAAEAAAANAAkAAAAFAAEAAAAOAAkAAAADAAEAAAAPAAkAAAAFAAEAAAD+/woAAAAGAAEAAAD//woAAAAEAAEAAAAAAAoAAAAGAAEAAAABAAoAAAAFAAEAAAACAAoAAAADAAEAAAADAAoAAAAFAAEAAAAEAAoAAAADAAEAAAAFAAoAAAAFAAEAAAAGAAoAAAAEAAEAAAAHAAoAAAAGAAEAAAAIAAoAAAAEAAEAAAAJAAoAAAAGAAEAAAAKAAoAAAAEAAEAAAALAAoAAAADAAEAAAAMAAoAAAAFAAEAAAANAAoAAAADAAEAAAAOAAoAAAAFAAEAAAAPAAoAAAADAAEAAAD+/wsAAAAEAAEAAAD//wsAAAAGAAEAAAAAAAsAAAAEAAEAAAABAAsAAAADAAEAAAACAAsAAAAFAAEAAAADAAsAAAADAAEAAAAEAAsAAAAFAAEAAAAFAAsAAAADAAEAAAAGAAsAAAAGAAEAAAAHAAsAAAAEAAEAAAAIAAsAAAAGAAEAAAAJAAsAAAAEAAEAAAAKAAsAAAAGAAEAAAALAAsAAAAFAAEAAAAMAAsAAAADAAEAAAANAAsAAAAFAAEAAAAOAAsAAAADAAEAAAAPAAsAAAAFAAEAAAAQAAgAAAAFAAAAAAARAAgAAAAEAAAAAAASAAgAAAAGAAAAAAATAAgAAAAEAAAAAAAaAAgAAAADAAEAAAAbAAgAAAAGAAEAAAAcAAgAAAAEAAEAAAAdAAgAAAAGAAAAAAAeAAgAAAAEAAAAAAAfAAgAAAAGAAAAAAAQAAkAAAADAAEAAAARAAkAAAAGAAEAAAASAAkAAAAEAAEAAAATAAkAAAAGAAEAAAAaAAkAAAAFAAEAAAAbAAkAAAAEAAEAAAAcAAkAAAAGAAEAAAAdAAkAAAAEAAEAAAAeAAkAAAAGAAEAAAAfAAkAAAAEAAEAAAAQAAoAAAAFAAEAAAARAAoAAAAEAAEAAAASAAoAAAAGAAEAAAATAAoAAAAEAAEAAAAaAAoAAAADAAEAAAAbAAoAAAAGAAEAAAAcAAoAAAAEAAEAAAAdAAoAAAAGAAEAAAAeAAoAAAAEAAEAAAAfAAoAAAAGAAEAAAAQAAsAAAADAAEAAAARAAsAAAAGAAEAAAASAAsAAAAEAAEAAAATAAsAAAAGAAEAAAAaAAsAAAAFAAEAAAAbAAsAAAAEAAEAAAAcAAsAAAAGAAEAAAAdAAsAAAAEAAEAAAAeAAsAAAAGAAEAAAAfAAsAAAAEAAEAAAAaAAcAAAAFAAAAAAAbAAcAAAAEAAAAAAAcAAcAAAAGAAAAAAAgAAgAAAAEAAAAAAAhAAgAAAADAAAAAAAiAAgAAAAFAAAAAAAjAAgAAAADAAAAAAAkAAgAAAAFAAAAAAAlAAgAAAADAAAAAAAmAAgAAAAGAAAAAAAnAAgAAAAEAAAAAAAoAAgAAAAGAAAAAAApAAgAAAAEAAAAAAAqAAgAAAAGAAAAAAArAAgAAAAFAAAAAAAgAAkAAAAGAAEAAAAhAAkAAAAFAAEAAAAiAAkAAAADAAEAAAAjAAkAAAAFAAEAAAAkAAkAAAADAAEAAAAlAAkAAAAFAAEAAAAmAAkAAAAEAAEAAAAnAAkAAAAGAAEAAAAoAAkAAAAEAAEAAAApAAkAAAAGAAEAAAAqAAkAAAAEAAEAAAArAAkAAAADAAEAAAAgAAoAAAAEAAEAAAAhAAoAAAADAAEAAAAiAAoAAAAFAAEAAAAjAAoAAAADAAEAAAAkAAoAAAAFAAEAAAAlAAoAAAADAAEAAAAmAAoAAAAGAAEAAAAnAAoAAAAEAAEAAAAoAAoAAAAGAAEAAAApAAoAAAAEAAEAAAAqAAoAAAAGAAEAAAArAAoAAAAFAAEAAAAgAAsAAAAGAAEAAAAhAAsAAAAFAAEAAAAiAAsAAAADAAEAAAAjAAsAAAAFAAEAAAAkAAsAAAADAAEAAAAlAAsAAAAFAAEAAAAmAAsAAAAEAAEAAAAnAAsAAAAGAAEAAAAoAAsAAAAEAAEAAAApAAsAAAAGAAEAAAAqAAsAAAAEAAEAAAArAAsAAAADAAEAAAAIAAUAAAAEAAAAAAAJAAUAAAAGAAAAAAAKAAUAAAAEAAAAAAA=")
 tile_set = ExtResource("3_tiles")
 
-[node name="PuzzleGate" parent="." instance=ExtResource("18_a")]
-position = Vector2(928.0, 512)
+[node name="Player" parent="." unique_id=735594086 instance=ExtResource("1_player")]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(80, 300)
 
-[node name="PuzzleSwitch" parent="." instance=ExtResource("17_a")]
-position = Vector2(576, 384)
-gate_paths = [NodePath("../PuzzleGate")]
+[node name="Coins" type="Node2D" parent="." unique_id=1743892011]
+z_index = 2
 
-[node name="CheckpointShrine" parent="." instance=ExtResource("15_a")]
-position = Vector2(1280, 512)
+[node name="KratibItem" parent="Coins" unique_id=1590106268 instance=ExtResource("12_a")]
+position = Vector2(640, 300)
 
-[node name="VillagerHelp" parent="." instance=ExtResource("16_a")]
-position = Vector2(256, 512)
-help_message = "ชาวบ้านขอบคุณ — ความอดทนไอ้ทองเพิ่มขึ้น"
+[node name="StoneAmmoItem" parent="Coins" unique_id=1946104496 instance=ExtResource("13_a")]
+position = Vector2(1792, 484)
 
-[node name="TrapThorns" parent="." instance=ExtResource("10_a")]
-position = Vector2(1536, 512)
+[node name="JumpLeaf" parent="Coins" unique_id=10607094 instance=ExtResource("14_a")]
+position = Vector2(1920, 428)
 
-[node name="TrapPendulum" parent="." instance=ExtResource("11_a")]
-position = Vector2(1792, 320)
+[node name="Enemies" type="Node2D" parent="." unique_id=1959066941]
 
-[node name="KratibItem" parent="Coins" index="0" instance=ExtResource("12_a")]
-position = Vector2(512, 364)
+[node name="Snake1" parent="Enemies" unique_id=1638354314 instance=ExtResource("19_a")]
+position = Vector2(768, 512)
 
-[node name="StoneAmmoItem" parent="Coins" index="1" instance=ExtResource("13_a")]
-position = Vector2(1408, 364)
-
-[node name="JumpLeaf" parent="Coins" index="2" instance=ExtResource("14_a")]
-position = Vector2(1664, 428)
-
-[node name="Snake1" parent="Enemies" index="0" instance=ExtResource("19_a")]
-position = Vector2(1152, 512)
-
-[node name="Boar1" parent="Enemies" index="1" instance=ExtResource("21_a")]
+[node name="Boar1" parent="Enemies" unique_id=1577420485 instance=ExtResource("21_a")]
 position = Vector2(2176, 512)
 
-[node name="Crow1" parent="Enemies" index="2" instance=ExtResource("20_a")]
-position = Vector2(1408, 256)
-patrol_width = 260.0
+[node name="Crow1" parent="Enemies" unique_id=1927949599 instance=ExtResource("20_a")]
+position = Vector2(2048, 220)
+patrol_width = 180.0
 
-[node name="Label" parent="UserInterface" index="1"]
-text = "ด่าน 5 — คูน้ำกลางคืน"
+[node name="Crow2" parent="Enemies" unique_id=342475452 instance=ExtResource("20_a")]
+position = Vector2(960, 200)
+patrol_width = 200.0
+
+[node name="UserInterface" parent="." unique_id=1927466435 instance=ExtResource("1_ui")]
+
+[node name="Text" type="Node2D" parent="." unique_id=1027099989]
+
+[node name="FallKill" type="Area2D" parent="." unique_id=588104142]
+position = Vector2(1600, 760)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallKill" unique_id=1950285118]
+shape = SubResource("RectangleShape2D_fall")
+
+[node name="PuzzleBridge" parent="." unique_id=840686138 instance=ExtResource("18_a")]
+position = Vector2(1088, 512)
+scale = Vector2(1.2, 1)
+open_offset = Vector2(384, 0)
+
+[node name="PuzzleSwitch" parent="." unique_id=997582676 instance=ExtResource("17_a")]
+position = Vector2(576, 320)
+gate_paths = Array[NodePath]([NodePath("../PuzzleBridge")])
+alert_text = "สะพานข้ามคูเปิดแล้ว"
+
+[node name="CheckpointShrine" parent="." unique_id=1491318582 instance=ExtResource("15_a")]
+position = Vector2(-28, 459)
+
+[node name="Pushable" parent="." unique_id=111084519 instance=ExtResource("16_push")]
+position = Vector2(246, 502)
+
+[node name="MinigameShrine" parent="." unique_id=1983306524 instance=ExtResource("16_mini")]
+position = Vector2(1984, 512)
+hard = true
+
+[node name="TrapThorns" parent="." unique_id=767641580 instance=ExtResource("10_a")]
+position = Vector2(1728, 512)
+
+[node name="TrapPendulum" parent="." unique_id=673511484 instance=ExtResource("11_a")]
+position = Vector2(1856, 320)
+
+[node name="TrapSpear" parent="." unique_id=359006064 instance=ExtResource("22_spear")]
+position = Vector2(320, 512)
+
+[node name="TrapPendulum2" parent="." unique_id=1335722627 instance=ExtResource("11_a")]
+position = Vector2(1472, 400)
+
+[node name="TrapBlade" parent="." unique_id=459171942 instance=ExtResource("23_blade")]
+position = Vector2(2368, 476)
+
+[connection signal="hit_enemy" from="Player" to="." method="_on_player_hit_enemy"]
+[connection signal="hit_trap" from="Player" to="." method="_on_player_hit_trap"]
+[connection signal="body_entered" from="FallKill" to="." method="_on_fall_kill_body_entered"]

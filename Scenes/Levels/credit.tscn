@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://bajrtxxftc6wt"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/credit.gd" id="1_script"]
-[ext_resource type="Theme" uid="uid://d3eng5cvycmjf" path="res://Scenes/Prefabs/theme.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://Assets/Generated/UI/ui_credit.png" id="3_bg"]
-[ext_resource type="FontFile" uid="uid://b3ivysmhcn84h" path="res://Assets/Fonts/Kodchasan-Bold.ttf" id="4_font"]
-[ext_resource type="PackedScene" uid="uid://puc4l62gx6et" path="res://Scenes/Prefabs/button_exit.tscn" id="5_exit"]
+[ext_resource type="Theme" uid="uid://cs7bk1storybk0" path="res://Scenes/UI/storybook_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://Scenes/UI/page_backdrop.gd" id="3_backdrop"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/ui_credit.png" id="4_plate"]
 
 [node name="Credit" type="Node2D"]
 script = ExtResource("1_script")
@@ -12,7 +11,6 @@ script = ExtResource("1_script")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" type="Control" parent="CanvasLayer"]
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -20,119 +18,84 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_theme")
 
-[node name="Background" type="TextureRect" parent="CanvasLayer/UI"]
-layout_mode = 1
+[node name="Backdrop" type="Control" parent="CanvasLayer/UI"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_bg")
-expand_mode = 1
-stretch_mode = 6
+script = ExtResource("3_backdrop")
+plate = ExtResource("4_plate")
 
-[node name="Dim" type="ColorRect" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.05, 0.03, 0.02, 0.35)
-
-[node name="btnExit" parent="CanvasLayer/UI" instance=ExtResource("5_exit")]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 28.0
-offset_right = 158.0
-offset_bottom = 82.0
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 18
-text = "กลับ"
-
-[node name="Title" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 5
+[node name="Page" type="Panel" parent="CanvasLayer/UI"]
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -320.0
-offset_top = 80.0
-offset_right = 320.0
-offset_bottom = 150.0
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -280.0
+offset_right = 380.0
+offset_bottom = 280.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(0.98, 0.9, 0.55, 1)
-theme_override_colors/font_outline_color = Color(0.22, 0.1, 0.04, 1)
-theme_override_constants/outline_size = 12
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 42
-text = "เครดิต"
+grow_vertical = 2
+
+[node name="Body" type="VBoxContainer" parent="CanvasLayer/UI/Page"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 46.0
+offset_top = 40.0
+offset_right = -46.0
+offset_bottom = -40.0
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="CanvasLayer/UI/Page/Body"]
+theme_type_variation = &"StorybookTitle"
+theme_override_font_sizes/font_size = 40
+text = "ผู้จัดทำ"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Course" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -420.0
-offset_top = 150.0
-offset_right = 420.0
-offset_bottom = 230.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.96, 0.86, 1)
-theme_override_colors/font_outline_color = Color(0.15, 0.08, 0.03, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("4_font")
+[node name="Rule" type="ColorRect" parent="CanvasLayer/UI/Page/Body"]
+custom_minimum_size = Vector2(0, 2)
+color = Color(0.42, 0.32, 0.22, 0.45)
+
+[node name="Members" type="Label" parent="CanvasLayer/UI/Page/Body"]
+theme_override_constants/line_spacing = 8
+theme_override_font_sizes/font_size = 21
+text = "673380348-4  นายสรวิศ สำราญบึงแก
+673380308-6  นายจักรภัทร เวียงสิมมา
+673380328-0  นายพรหมพัฒน ศิริภัคกุลวัฒน์"
+horizontal_alignment = 1
+
+[node name="Group" type="Label" parent="CanvasLayer/UI/Page/Body"]
+theme_override_colors/font_color = Color(0.42, 0.31, 0.2, 1)
+theme_override_font_sizes/font_size = 19
+text = "กลุ่มที่ 4 — AI Section 1"
+horizontal_alignment = 1
+
+[node name="Gap" type="Control" parent="CanvasLayer/UI/Page/Body"]
+custom_minimum_size = Vector2(0, 6)
+
+[node name="Course" type="Label" parent="CanvasLayer/UI/Page/Body"]
+theme_override_colors/font_color = Color(0.42, 0.31, 0.2, 1)
 theme_override_font_sizes/font_size = 18
 text = "Computer Game Development Course 2026
 College of Computing, Khon Kaen University"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="TeamTitle" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -280.0
-offset_top = -40.0
-offset_right = 280.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.98, 0.82, 0.4, 1)
-theme_override_colors/font_outline_color = Color(0.2, 0.08, 0.03, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 24
-text = "ผู้จัดทำ"
+[node name="Craft" type="Label" parent="CanvasLayer/UI/Page/Body"]
+theme_override_colors/font_color = Color(0.45, 0.34, 0.23, 1)
+theme_override_font_sizes/font_size = 17
+text = "ภาพพื้นหลัง ไทล์ ไอคอน เพลง และเสียงประกอบทั้งหมด
+สร้างขึ้นเองด้วยสคริปต์ในโฟลเดอร์ scripts/"
 horizontal_alignment = 1
-vertical_alignment = 1
+autowrap_mode = 3
 
-[node name="Member" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -420.0
-offset_top = -10.0
-offset_right = 420.0
-offset_bottom = 140.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.97, 0.9, 1)
-theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 20
-text = "673380348-4 นายสรวิศ สำราญบึงแก
-673380308-6 นายจักรภัทร เวียงสิมมา
-673380328-0 นายพรหมพัฒน ศิริภัคกุลวัฒน์
-กลุ่มที่ 4 — AI Section 1"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="btnBack" type="Button" parent="CanvasLayer/UI"]
+anchors_preset = 0
+offset_left = 32.0
+offset_top = 28.0
+offset_right = 152.0
+offset_bottom = 80.0
+text = "กลับ"
+
+[connection signal="pressed" from="CanvasLayer/UI/btnBack" to="." method="_on_btn_back_pressed"]

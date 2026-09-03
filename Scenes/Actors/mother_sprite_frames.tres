@@ -21,6 +21,10 @@ region = Rect2(256, 0, 128, 128)
 atlas = ExtResource("4_throw")
 region = Rect2(384, 0, 128, 128)
 
+[sub_resource type="AtlasTexture" id="jump_2"]
+atlas = ExtResource("3_jump")
+region = Rect2(256, 0, 128, 128)
+
 [sub_resource type="AtlasTexture" id="idle_0"]
 atlas = ExtResource("1_idle")
 region = Rect2(0, 0, 128, 128)
@@ -44,10 +48,6 @@ region = Rect2(0, 0, 128, 128)
 [sub_resource type="AtlasTexture" id="jump_1"]
 atlas = ExtResource("3_jump")
 region = Rect2(128, 0, 128, 128)
-
-[sub_resource type="AtlasTexture" id="jump_2"]
-atlas = ExtResource("3_jump")
-region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="walk_0"]
 atlas = ExtResource("2_walk")
@@ -94,6 +94,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("jump_2")
+}],
+"loop": 0,
+"name": &"Fall",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("idle_0")
 }, {
 "duration": 1.0,
@@ -115,12 +123,17 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("jump_1")
-}, {
-"duration": 1.0,
-"texture": SubResource("jump_2")
 }],
 "loop": 0,
 "name": &"Jump",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("jump_0")
+}],
+"loop": 0,
+"name": &"Land",
 "speed": 8.0
 }, {
 "frames": [{

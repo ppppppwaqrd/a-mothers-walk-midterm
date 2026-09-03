@@ -1,231 +1,90 @@
 [gd_scene format=3 uid="uid://b6tvaxw54wsq0"]
 
-[ext_resource type="Script" uid="uid://tkynu7pd01lh" path="res://Scenes/Levels/menu.gd" id="1_hq2ph"]
-[ext_resource type="Texture2D" path="res://Assets/Generated/UI/ui_menu.png" id="2_bg"]
-[ext_resource type="Theme" uid="uid://d3eng5cvycmjf" path="res://Scenes/Prefabs/theme.tres" id="3_theme"]
-[ext_resource type="FontFile" uid="uid://b3ivysmhcn84h" path="res://Assets/Fonts/Kodchasan-Bold.ttf" id="4_font"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
-bg_color = Color(0.35, 0.18, 0.08, 0.92)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.85, 0.68, 0.32, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 12.0
-content_margin_bottom = 8.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
-bg_color = Color(0.48, 0.26, 0.1, 0.95)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.98, 0.86, 0.45, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 12.0
-content_margin_bottom = 8.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
-bg_color = Color(0.22, 0.11, 0.05, 0.95)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.7, 0.52, 0.2, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 12.0
-content_margin_bottom = 8.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_disabled"]
-bg_color = Color(0.2, 0.16, 0.12, 0.7)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.45, 0.38, 0.28, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-content_margin_left = 12.0
-content_margin_top = 8.0
-content_margin_right = 12.0
-content_margin_bottom = 8.0
+[ext_resource type="Script" path="res://Scenes/Levels/menu.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://cs7bk1storybk0" path="res://Scenes/UI/storybook_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://Scenes/UI/page_backdrop.gd" id="3_backdrop"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/Story/cover_menu.png" id="4_plate"]
 
 [node name="Menu" type="Node2D"]
-script = ExtResource("1_hq2ph")
+script = ExtResource("1_script")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" type="Control" parent="CanvasLayer"]
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_theme")
+theme = ExtResource("2_theme")
 
-[node name="Background" type="TextureRect" parent="CanvasLayer/UI"]
-layout_mode = 1
+[node name="Backdrop" type="Control" parent="CanvasLayer/UI"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_bg")
-expand_mode = 1
-stretch_mode = 6
+script = ExtResource("3_backdrop")
+plate = ExtResource("4_plate")
 
-[node name="Dim" type="ColorRect" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.05, 0.03, 0.02, 0.28)
-
-[node name="Title" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -360.0
-offset_top = 48.0
-offset_right = 360.0
-offset_bottom = 122.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.98, 0.9, 0.55, 1)
-theme_override_colors/font_outline_color = Color(0.22, 0.1, 0.04, 1)
-theme_override_constants/outline_size = 12
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 48
-text = "กล่องข้าวน้อย"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Subtitle" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -280.0
-offset_top = 118.0
-offset_right = 280.0
-offset_bottom = 162.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.96, 0.86, 1)
-theme_override_colors/font_outline_color = Color(0.15, 0.08, 0.03, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-text = "A Mother's Walk"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Buttons" type="VBoxContainer" parent="CanvasLayer/UI"]
-layout_mode = 1
+[node name="Cover" type="Panel" parent="CanvasLayer/UI"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -160.0
-offset_right = 150.0
-offset_bottom = 180.0
+offset_left = -270.0
+offset_top = -290.0
+offset_right = 270.0
+offset_bottom = 290.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
-alignment = 1
 
-[node name="btnStart" type="Button" parent="CanvasLayer/UI/Buttons"]
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.9, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
-text = "เริ่มเกม"
+[node name="Body" type="VBoxContainer" parent="CanvasLayer/UI/Cover"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 44.0
+offset_top = 40.0
+offset_right = -44.0
+offset_bottom = -40.0
+theme_override_constants/separation = 10
 
-[node name="btnContinue" type="Button" parent="CanvasLayer/UI/Buttons"]
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.9, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
-disabled = true
-text = "เล่นต่อ"
+[node name="Title" type="Label" parent="CanvasLayer/UI/Cover/Body"]
+theme_type_variation = &"StorybookTitle"
+theme_override_font_sizes/font_size = 46
+text = "กล่องข้าวน้อย"
+horizontal_alignment = 1
 
-[node name="btnOption" type="Button" parent="CanvasLayer/UI/Buttons"]
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.9, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
-text = "ตั้งค่า"
+[node name="Subtitle" type="Label" parent="CanvasLayer/UI/Cover/Body"]
+theme_override_colors/font_color = Color(0.42, 0.31, 0.2, 1)
+theme_override_font_sizes/font_size = 19
+text = "A Mother's Walk"
+horizontal_alignment = 1
 
-[node name="btnCredit" type="Button" parent="CanvasLayer/UI/Buttons"]
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.9, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
-text = "เครดิต"
+[node name="Rule" type="ColorRect" parent="CanvasLayer/UI/Cover/Body"]
+custom_minimum_size = Vector2(0, 2)
+color = Color(0.42, 0.32, 0.22, 0.45)
 
-[node name="btnExit" type="Button" parent="CanvasLayer/UI/Buttons"]
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 0.9, 1)
-theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
-text = "ออก"
+[node name="Buttons" type="VBoxContainer" parent="CanvasLayer/UI/Cover/Body"]
+theme_override_constants/separation = 10
 
-[connection signal="pressed" from="CanvasLayer/UI/Buttons/btnStart" to="." method="_on_btn_start_pressed"]
-[connection signal="pressed" from="CanvasLayer/UI/Buttons/btnContinue" to="." method="_on_btn_continue_pressed"]
-[connection signal="pressed" from="CanvasLayer/UI/Buttons/btnOption" to="." method="_on_btn_option_pressed"]
-[connection signal="pressed" from="CanvasLayer/UI/Buttons/btnCredit" to="." method="_on_btn_credit_pressed"]
-[connection signal="pressed" from="CanvasLayer/UI/Buttons/btnExit" to="." method="_on_btn_exit_pressed"]
+[node name="btnStart" type="Button" parent="CanvasLayer/UI/Cover/Body/Buttons"]
+text = "เริ่มเรื่องใหม่"
+
+[node name="btnContinue" type="Button" parent="CanvasLayer/UI/Cover/Body/Buttons"]
+unique_name_in_owner = true
+text = "อ่านต่อจากเดิม"
+
+[node name="btnOption" type="Button" parent="CanvasLayer/UI/Cover/Body/Buttons"]
+text = "ตั้งค่าเสียง"
+
+[node name="btnCredit" type="Button" parent="CanvasLayer/UI/Cover/Body/Buttons"]
+text = "ผู้จัดทำ"
+
+[node name="btnExit" type="Button" parent="CanvasLayer/UI/Cover/Body/Buttons"]
+text = "ปิดสมุด"
+
+[connection signal="pressed" from="CanvasLayer/UI/Cover/Body/Buttons/btnStart" to="." method="_on_btn_start_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Cover/Body/Buttons/btnContinue" to="." method="_on_btn_continue_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Cover/Body/Buttons/btnOption" to="." method="_on_btn_option_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Cover/Body/Buttons/btnCredit" to="." method="_on_btn_credit_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/Cover/Body/Buttons/btnExit" to="." method="_on_btn_exit_pressed"]

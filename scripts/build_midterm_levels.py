@@ -1,4 +1,4 @@
-﻿"""Generate level_05 and level_06 for midterm, and print helper paths."""
+"""Generate level_05 and level_06 for midterm, and print helper paths."""
 from __future__ import annotations
 
 import base64
@@ -139,7 +139,7 @@ def write_l6(data: str) -> None:
     text = f"""[gd_scene format=4 uid="uid://level06amotherwalk"]
 
 [ext_resource type="PackedScene" uid="uid://bjntpxb1c8jxn" path="res://Scenes/Levels/base_level.tscn" id="1_base"]
-[ext_resource type="PackedScene" uid="uid://b46lxwc5r3dy4" path="res://Scenes/Levels/game_win.tscn" id="2_next"]
+[ext_resource type="PackedScene" uid="uid://c1yqm7xd80o0v" path="res://Scenes/Levels/game_win.tscn" id="2_next"]
 [ext_resource type="TileSet" uid="uid://dpk7f214d563s" path="res://Scenes/Prefabs/ground_tile_set_04.tres" id="3_tiles"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/portal_gate.tscn" id="10_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="11_a"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d27bcsmx82vfa"]
 
 [ext_resource type="Script" uid="uid://cqthh7s5qpuw3" path="res://Scenes/Actors/enemy.gd" id="1_7cwx2"]
-[ext_resource type="AudioStream" uid="uid://wg4mya74ni6n" path="res://Assets/Sound/FX/explosion.wav" id="2_5n1qu"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/ink_splat.png" id="2_ink"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_21vrd"]
 radius = 17.0
@@ -21,7 +21,7 @@ colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=600502477 groups=["Enemy"]]
 collision_layer = 4
-collision_mask = 13
+collision_mask = 1
 script = ExtResource("1_7cwx2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=587424215]
@@ -41,28 +41,29 @@ z_index = 2
 position = Vector2(2.08165e-12, -33)
 scale = Vector2(1.5, 1.5)
 emitting = false
-amount = 20
-lifetime = 2.0
+amount = 18
+texture = ExtResource("2_ink")
+lifetime = 0.7
 one_shot = true
 explosiveness = 1.0
-lifetime_randomness = 0.5
+lifetime_randomness = 0.4
 emission_shape = 2
 emission_sphere_radius = 21.05
 direction = Vector2(0, -1)
-spread = 21.48
-gravity = Vector2(0, 400)
-initial_velocity_min = 100.0
-initial_velocity_max = 300.0
-angular_velocity_min = 100.0
-angular_velocity_max = 100.0
-damping_min = 1.0
-damping_max = 1.0
+spread = 50.0
+gravity = Vector2(0, 280)
+initial_velocity_min = 40.0
+initial_velocity_max = 180.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+damping_min = 8.0
+damping_max = 18.0
 angle_min = -90.0
 angle_max = 90.0
-scale_amount_min = 2.0
-scale_amount_max = 30.0
+scale_amount_min = 0.35
+scale_amount_max = 1.1
 scale_amount_curve = SubResource("Curve_yvw6o")
-color = Color(0.671534, 0.004919853, 0, 1)
+color = Color(0.23, 0.16, 0.12, 1)
 color_ramp = SubResource("Gradient_wxnld")
 
 [node name="Sprite" type="Node2D" parent="." unique_id=1445111960]
@@ -80,11 +81,6 @@ target_position = Vector2(-28, 0)
 
 [node name="floorRay" type="RayCast2D" parent="Sprite/Ray" unique_id=1219665679]
 position = Vector2(-24, -16)
-target_position = Vector2(0, 23)
-
-[node name="DeathSfx" type="AudioStreamPlayer" parent="." unique_id=1907249660]
-stream = ExtResource("2_5n1qu")
-volume_db = -3.0
-bus = &"sfx"
+target_position = Vector2(0, 36)
 
 [connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]

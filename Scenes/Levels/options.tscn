@@ -1,134 +1,136 @@
-[gd_scene format=3 uid="uid://cuq7vusmo7y5g"]
+[gd_scene format=3 uid="uid://cw3o1hovavtcs"]
 
-[ext_resource type="Script" path="res://Scenes/Levels/options.gd" id="1_opt"]
-[ext_resource type="Theme" uid="uid://d3eng5cvycmjf" path="res://Scenes/Prefabs/theme.tres" id="2_theme"]
-[ext_resource type="FontFile" path="res://Assets/Fonts/Kodchasan-Bold.ttf" id="3_font"]
-[ext_resource type="Texture2D" path="res://Assets/Generated/UI/ui_menu.png" id="4_bg"]
+[ext_resource type="Script" path="res://Scenes/Levels/options.gd" id="1_script"]
+[ext_resource type="Theme" uid="uid://cs7bk1storybk0" path="res://Scenes/UI/storybook_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://Scenes/UI/page_backdrop.gd" id="3_backdrop"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/UI/ui_menu.png" id="4_plate"]
 
 [node name="Options" type="Node2D"]
-script = ExtResource("1_opt")
+script = ExtResource("1_script")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="BG" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_bg")
-expand_mode = 1
-stretch_mode = 6
-modulate = Color(0.55, 0.55, 0.65, 1)
-
 [node name="UI" type="Control" parent="CanvasLayer"]
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_theme")
 
-[node name="Title" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 5
+[node name="Backdrop" type="Control" parent="CanvasLayer/UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("3_backdrop")
+plate = ExtResource("4_plate")
+
+[node name="Page" type="Panel" parent="CanvasLayer/UI"]
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -220.0
-offset_top = 80.0
-offset_right = 220.0
-offset_bottom = 140.0
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -260.0
+offset_right = 300.0
+offset_bottom = 260.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.95, 0.8, 1)
-theme_override_colors/font_outline_color = Color(0.1, 0.05, 0.02, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("3_font")
+grow_vertical = 2
+
+[node name="Body" type="VBoxContainer" parent="CanvasLayer/UI/Page"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 40.0
+offset_right = -48.0
+offset_bottom = -40.0
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="CanvasLayer/UI/Page/Body"]
+theme_type_variation = &"StorybookTitle"
 theme_override_font_sizes/font_size = 40
-text = "ตั้งค่า"
+text = "ตั้งค่าเสียง"
 horizontal_alignment = 1
 
-[node name="MusicBtn" type="Button" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -80.0
-offset_right = 40.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_theme")
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 24
-text = "เพลง"
+[node name="Rule" type="ColorRect" parent="CanvasLayer/UI/Page/Body"]
+custom_minimum_size = Vector2(0, 2)
+color = Color(0.42, 0.32, 0.22, 0.45)
 
-[node name="MusicState" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 60.0
-offset_top = -80.0
-offset_right = 200.0
-offset_bottom = -20.0
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 24
-text = "เปิด"
+[node name="MusicRow" type="HBoxContainer" parent="CanvasLayer/UI/Page/Body"]
+theme_override_constants/separation = 14
+
+[node name="MusicLabel" type="Label" parent="CanvasLayer/UI/Page/Body/MusicRow"]
+custom_minimum_size = Vector2(140, 0)
+theme_override_font_sizes/font_size = 21
+text = "เสียงเพลง"
 vertical_alignment = 1
 
-[node name="SfxBtn" type="Button" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = 0.0
-offset_right = 40.0
-offset_bottom = 60.0
-theme = ExtResource("2_theme")
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 24
-text = "เสียงเอฟเฟกต์"
+[node name="Music" type="HSlider" parent="CanvasLayer/UI/Page/Body/MusicRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
 
-[node name="SfxState" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 60.0
-offset_top = 0.0
-offset_right = 200.0
-offset_bottom = 60.0
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 24
-text = "เปิด"
+[node name="MusicPct" type="Label" parent="CanvasLayer/UI/Page/Body/MusicRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 0)
+theme_override_font_sizes/font_size = 19
+text = "80%"
+horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="BackBtn" type="Button" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = 120.0
-offset_right = 120.0
-offset_bottom = 180.0
-theme = ExtResource("2_theme")
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 24
-text = "กลับเมนู"
+[node name="MusicOn" type="CheckBox" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
+text = "เปิดเสียงเพลง"
 
-[connection signal="pressed" from="CanvasLayer/UI/MusicBtn" to="." method="_on_music_pressed"]
-[connection signal="pressed" from="CanvasLayer/UI/SfxBtn" to="." method="_on_sfx_pressed"]
-[connection signal="pressed" from="CanvasLayer/UI/BackBtn" to="." method="_on_back_pressed"]
+[node name="Gap" type="Control" parent="CanvasLayer/UI/Page/Body"]
+custom_minimum_size = Vector2(0, 10)
+
+[node name="SoundRow" type="HBoxContainer" parent="CanvasLayer/UI/Page/Body"]
+theme_override_constants/separation = 14
+
+[node name="SoundLabel" type="Label" parent="CanvasLayer/UI/Page/Body/SoundRow"]
+custom_minimum_size = Vector2(140, 0)
+theme_override_font_sizes/font_size = 21
+text = "เสียงประกอบ"
+vertical_alignment = 1
+
+[node name="Sound" type="HSlider" parent="CanvasLayer/UI/Page/Body/SoundRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+
+[node name="SoundPct" type="Label" parent="CanvasLayer/UI/Page/Body/SoundRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(62, 0)
+theme_override_font_sizes/font_size = 19
+text = "90%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SoundOn" type="CheckBox" parent="CanvasLayer/UI/Page/Body"]
+unique_name_in_owner = true
+text = "เปิดเสียงประกอบ"
+
+[node name="btnBack" type="Button" parent="CanvasLayer/UI"]
+anchors_preset = 0
+offset_left = 32.0
+offset_top = 28.0
+offset_right = 152.0
+offset_bottom = 80.0
+text = "กลับ"
+
+[connection signal="value_changed" from="CanvasLayer/UI/Page/Body/MusicRow/Music" to="." method="_on_music_value_changed"]
+[connection signal="toggled" from="CanvasLayer/UI/Page/Body/MusicOn" to="." method="_on_music_on_toggled"]
+[connection signal="value_changed" from="CanvasLayer/UI/Page/Body/SoundRow/Sound" to="." method="_on_sound_value_changed"]
+[connection signal="toggled" from="CanvasLayer/UI/Page/Body/SoundOn" to="." method="_on_sound_on_toggled"]
+[connection signal="pressed" from="CanvasLayer/UI/btnBack" to="." method="_on_btn_back_pressed"]

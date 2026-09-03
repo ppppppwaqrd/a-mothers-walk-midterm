@@ -21,20 +21,21 @@
 
 ### ฟีเจอร์หลัก
 
-- หลอดความอดทนของไอ้ทอง (ลดลงตามเวลา)
+- ธีมสมุดนิทานไทย: พื้นหลังสีน้ำ parallax 6 ด่าน, บทนำ 6 หน้า, HUD หมึกบนกระดาษ
+- หลอดความอดทนของไอ้ทอง (หมดแล้วแพ้) และกระติบข้าว 8 ใบสำหรับตอนจบสุข
 - กระสุนหินจำกัด + เก็บก้อนหินเติม
-- จุดพัก (checkpoint) / ช่วยชาวบ้าน / ปริศนาสวิตช์
+- จุดพัก / ช่วยชาวบ้าน / ศาลเทวดามินิเกม / ปริศนาดันหิน
 - หมูป่า–ควายตายยาก + ดาเมจตอนชนต่างกัน
-- Options เปิด–ปิดเพลงและเสียงเอฟเฟกต์
+- ตั้งค่าเสียงแบบสไลเดอร์ + หน้าหยุดเกม (Esc)
 
 ### ด่าน
 
-1. ออกจากหมู่บ้าน  
-2. ป่าไผ่  
-3. ทางขรุขระ  
-4. ทุ่งนากลางทาง  
-5. คูน้ำกลางคืน  
-6. ส่งกล่องข้าวให้อ้ายทอง  
+1. ออกจากหมู่บ้าน — เช้าตรู่  
+2. ป่าไผ่ — สาย  
+3. ทางขรุขระ — เที่ยง  
+4. ทุ่งนากลางทาง — บ่ายแก่  
+5. คูน้ำกลางคืน — พลบค่ำ  
+6. ส่งกล่องข้าวให้อ้ายทอง — แสงสุดท้าย  
 
 ### ภาพตัวอย่าง
 
@@ -43,6 +44,7 @@
 
 ### ลิงก์
 
+- **รายงานโครงงาน:** [docs/midterm-report.docx](docs/midterm-report.docx)
 - **GitHub Project:** [ppppppwaqrd/a-mothers-walk-midterm](https://github.com/ppppppwaqrd/a-mothers-walk-midterm)
 - **Play (GitHub Pages):** [เล่นเกม](https://ppppppwaqrd.github.io/a-mothers-walk-midterm/)
 - **itch.io:** *(อัปจากโฟลเดอร์ `itch/` แล้วใส่ลิงก์ที่นี่)*
@@ -63,7 +65,7 @@
 
 ## Credits
 
-- **Engine:** Godot Engine 4.x
-- **Starter Kit:** [computingkku/2D-Platformer-Starter-Kit](https://github.com/computingkku/2D-Platformer-Starter-Kit)
-- **Tiles / SFX base:** [Kenney.nl](https://www.kenney.nl/), [sfxr.me](https://sfxr.me/)
-- **Thai Font:** [f0nt.com](https://www.f0nt.com/)
+- **Engine:** Godot Engine 4.7
+- **Fonts:** Charmonman, Mali (SIL Open Font License)
+- **Music / SFX:** synthesized for this project (no borrowed loops)
+- **Starter Kit (mechanics base):** [computingkku/2D-Platformer-Starter-Kit](https://github.com/computingkku/2D-Platformer-Starter-Kit)

@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://blevelpage001"]
+
+[ext_resource type="Script" path="res://Scenes/UI/level_page.gd" id="1_page"]
+[ext_resource type="Theme" uid="uid://cs7bk1storybk0" path="res://Scenes/UI/storybook_theme.tres" id="2_theme"]
+
+[node name="LevelPage" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("2_theme")
+script = ExtResource("1_page")
+
+[node name="Shade" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.16, 0.11, 0.07, 0.42)
+
+[node name="Page" type="Panel" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -268.0
+offset_right = 400.0
+offset_bottom = 268.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Illustration" type="TextureRect" parent="Page"]
+unique_name_in_owner = true
+offset_left = 28.0
+offset_top = 24.0
+offset_right = 772.0
+offset_bottom = 248.0
+expand_mode = 1
+stretch_mode = 6
+visible = false
+
+[node name="Body" type="VBoxContainer" parent="Page"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 46.0
+offset_top = 256.0
+offset_right = -46.0
+offset_bottom = -28.0
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="Chapter" type="Label" parent="Page/Body"]
+unique_name_in_owner = true
+theme_type_variation = &"StorybookHeading"
+theme_override_font_sizes/font_size = 26
+text = "บทที่ 1"
+horizontal_alignment = 1
+
+[node name="Rule" type="ColorRect" parent="Page/Body"]
+custom_minimum_size = Vector2(0, 2)
+color = Color(0.42, 0.32, 0.22, 0.45)
+
+[node name="Title" type="Label" parent="Page/Body"]
+unique_name_in_owner = true
+theme_type_variation = &"StorybookTitle"
+text = "ออกจากหมู่บ้าน"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Hint" type="Label" parent="Page/Body"]
+unique_name_in_owner = true
+theme_override_font_sizes/font_size = 20
+text = "A/D เดิน · Space กระโดด · J ปาหิน"
+horizontal_alignment = 1
+autowrap_mode = 3

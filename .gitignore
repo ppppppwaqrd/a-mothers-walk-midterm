@@ -1,5 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
+__pycache__/
+scripts/_preview/
+scripts/_shots/
 
 # Godot-specific ignores
 .import/

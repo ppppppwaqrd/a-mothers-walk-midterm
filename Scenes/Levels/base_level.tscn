@@ -4,32 +4,34 @@
 [ext_resource type="PackedScene" uid="uid://cyti38f0lagf2" path="res://Scenes/Prefabs/level_finish_door.tscn" id="2_3b8rg"]
 [ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Actors/player.tscn" id="4_hr04v"]
 [ext_resource type="PackedScene" uid="uid://cdwabmqtlxr1y" path="res://Scenes/Levels/game_ui.tscn" id="5_71eip"]
-[ext_resource type="AudioStream" uid="uid://dhmn57nc23ah1" path="res://Assets/Sound/walen.ogg" id="6_34r03"]
-[ext_resource type="Theme" uid="uid://d3eng5cvycmjf" path="res://Scenes/Prefabs/theme.tres" id="7_xghcx"]
 [ext_resource type="Script" path="res://Scenes/Levels/level_background.gd" id="8_bg"]
-[ext_resource type="Texture2D" path="res://Assets/Generated/BG/bg_level_01.png" id="9_bgtex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fall"]
+size = Vector2(4200, 140)
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource("1_iemmg")
 
-[node name="LevelBackground" type="CanvasLayer" parent="."]
-layer = -100
+[node name="LevelBackground" type="Node2D" parent="."]
+z_index = -100
+z_as_relative = false
 script = ExtResource("8_bg")
 
-[node name="TextureRect" type="TextureRect" parent="LevelBackground"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("9_bgtex")
-expand_mode = 1
-stretch_mode = 5
+[node name="Sky" type="Sprite2D" parent="LevelBackground"]
+centered = false
+
+[node name="Far" type="Sprite2D" parent="LevelBackground"]
+centered = false
+
+[node name="Mid" type="Sprite2D" parent="LevelBackground"]
+centered = false
+
+[node name="Near" type="Sprite2D" parent="LevelBackground"]
+centered = false
 
 [node name="LevelFinishDoor" parent="." instance=ExtResource("2_3b8rg")]
 z_index = 1
-position = Vector2(1592, 400)
+position = Vector2(1592, 512)
 
 [node name="Level" type="Node2D" parent="."]
 
@@ -45,30 +47,17 @@ z_index = 2
 
 [node name="UserInterface" parent="." instance=ExtResource("5_71eip")]
 
-[node name="Label" type="Label" parent="UserInterface"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -40.0
-offset_right = 200.0
-offset_bottom = 40.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("7_xghcx")
-theme_override_font_sizes/font_size = 36
-text = "Level"
-horizontal_alignment = 1
-
 [node name="Text" type="Node2D" parent="."]
 
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_34r03")
-volume_db = -4.0
-bus = &"music"
+[node name="FallKill" type="Area2D" parent="."]
+position = Vector2(1600, 760)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallKill"]
+shape = SubResource("RectangleShape2D_fall")
 
 [connection signal="hit_enemy" from="Player" to="." method="_on_player_hit_enemy"]
 [connection signal="hit_trap" from="Player" to="." method="_on_player_hit_trap"]
-[connection signal="finished" from="MusicPlayer" to="." method="_on_music_player_finished"]
+[connection signal="body_entered" from="FallKill" to="." method="_on_fall_kill_body_entered"]

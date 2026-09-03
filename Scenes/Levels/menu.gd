@@ -1,39 +1,34 @@
 extends Node2D
+## The cover of the book: where a run is started, resumed, or set up.
 
-@onready var ui: Control = $CanvasLayer/UI
-@onready var btn_continue: Button = $CanvasLayer/UI/Buttons/btnContinue
 
 func _ready() -> void:
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	_fit_ui_to_viewport()
-	get_viewport().size_changed.connect(_fit_ui_to_viewport)
-	btn_continue.disabled = !GameManager.has_gamesaved()
+	%btnContinue.disabled = not GameManager.has_gamesaved()
 	GameManager.load_option()
-
-
-func _fit_ui_to_viewport() -> void:
-	var vp_size := get_viewport_rect().size
-	ui.set_anchors_preset(Control.PRESET_TOP_LEFT)
-	ui.position = Vector2.ZERO
-	ui.size = vp_size
+	AudioManager.play_music("menu_theme")
 
 
 func _on_btn_start_pressed() -> void:
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	AudioManager.play("ui_click")
 	GameManager.new_game()
 
 
-func _on_btn_option_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Levels/options.tscn")
-
-
-func _on_btn_credit_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/Levels/credit.tscn")
-
-
 func _on_btn_continue_pressed() -> void:
+	AudioManager.play("ui_click")
 	GameManager.load_game()
 
 
+func _on_btn_option_pressed() -> void:
+	AudioManager.play("ui_click")
+	SceneTransition.load_scene_path("res://Scenes/Levels/options.tscn")
+
+
+func _on_btn_credit_pressed() -> void:
+	AudioManager.play("ui_click")
+	SceneTransition.load_scene_path("res://Scenes/Levels/credit.tscn")
+
+
 func _on_btn_exit_pressed() -> void:
+	AudioManager.play("ui_back")
 	get_tree().quit()

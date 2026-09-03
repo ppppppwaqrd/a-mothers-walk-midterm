@@ -2,6 +2,9 @@
 extends Node2D
 
 var score: int = 0
+## Sticky-rice baskets collected this run. Only kratib pickups count toward the happy ending.
+var kratib: int = 0
+var kratib_needed: int = 8
 var hp: int = 100
 var life: int = 4
 var max_life: int = 5
@@ -10,9 +13,15 @@ var max_hp: int = 100
 ## Ai Tong patience / hunger (drains over time while playing a level).
 var patience: float = 100.0
 var max_patience: float = 100.0
-## ~5+ minutes for 6 levels (100 / 320 ≈ 0.31 per sec).
-var patience_drain_per_sec: float = 0.31
+## Visible within one level (~2 minutes full bar). Fail a thevada test to speed it up.
+var patience_drain_per_sec: float = 0.9
+## Raised when a rest-stop minigame is failed. Not saved; resets on a new level/run.
+var patience_drain_mult: float = 1.0
 var patience_active: bool = false
+## Set when the run is already changing to a win/lose page.
+var _ending: bool = false
+## "patience" when Ai Tong's bar emptied; otherwise lives ran out.
+var lose_reason: String = ""
 
 ## Mid-level shrine checkpoint (survives death within the same level).
 var checkpoint_position: Vector2 = Vector2.ZERO
@@ -24,29 +33,65 @@ var max_ammo: int = 10
 
 var sfx_on: bool = true
 var music_on: bool = true
+## Bus levels, 0..1 linear, set from the pause menu sliders.
+var music_volume: float = 0.8
+var sfx_volume: float = 0.9
 
 var player: Player = null
 var current_level: String = "res://Scenes/Levels/level_01.tscn"
 var save_path := "user://game.save"
 var save_player_position: Vector2 = Vector2.ZERO
 
+## Presentation cheat: fly, ignore damage, never run out of stones. Not saved.
+var god_mode: bool = false
+signal god_mode_changed(on: bool)
+
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("GodMode"):
+		toggle_god_mode()
+		get_viewport().set_input_as_handled()
+
+
+func toggle_god_mode() -> void:
+	god_mode = not god_mode
+	if player != null and is_instance_valid(player) and player.has_method("apply_god_mode"):
+		player.apply_god_mode(god_mode)
+	god_mode_changed.emit(god_mode)
+	AudioManager.play("ui_click")
+
 
 func _process(delta: float) -> void:
+	if _ending or get_tree().paused:
+		return
 	if not patience_active:
 		return
 	if player == null or not is_instance_valid(player):
 		return
 	if patience <= 0.0:
+		end_from_patience()
 		return
-	patience = maxf(0.0, patience - patience_drain_per_sec * delta)
+	patience = maxf(0.0, patience - patience_drain_per_sec * patience_drain_mult * delta)
 	if patience <= 0.0:
 		patience = 0.0
-		# Ai Tong ran out of patience — mother fails this attempt.
-		death()
+		end_from_patience()
 
 
 func add_score(v: int = 1) -> void:
 	score += v
+
+
+func add_kratib(v: int = 1) -> void:
+	kratib += v
+	score += v
+
+
+func has_happy_ending() -> bool:
+	return kratib >= kratib_needed
 
 
 func add_ammo(v: int = 3) -> void:
@@ -54,6 +99,8 @@ func add_ammo(v: int = 3) -> void:
 
 
 func try_consume_ammo() -> bool:
+	if god_mode:
+		return true
 	if ammo <= 0:
 		return false
 	ammo -= 1
@@ -62,8 +109,13 @@ func try_consume_ammo() -> bool:
 
 func reset_run_resources() -> void:
 	patience = max_patience
+	patience_drain_mult = 1.0
 	ammo = 5
 	clear_level_checkpoint()
+
+
+func fail_minigame() -> void:
+	patience_drain_mult += 0.5
 
 
 func clear_level_checkpoint() -> void:
@@ -86,23 +138,40 @@ func load_next_level(next_scene: PackedScene) -> void:
 
 func new_game() -> void:
 	score = 0
+	kratib = 0
 	hp = max_hp
 	life = 4
+	_ending = false
+	lose_reason = ""
 	reset_run_resources()
 	save_player_position = Vector2.ZERO
 	current_level = "res://Scenes/Levels/level_01.tscn"
 	_clear_save()
-	get_tree().change_scene_to_file(current_level)
+	get_tree().change_scene_to_file("res://Scenes/Levels/story_intro.tscn")
 
 
 func restart() -> void:
 	new_game()
 
 
+## Start the current level over from its beginning, keeping score and lives.
+func retry_level() -> void:
+	hp = max_hp
+	_ending = false
+	lose_reason = ""
+	patience = max_patience
+	patience_drain_mult = 1.0
+	save_player_position = Vector2.ZERO
+	clear_level_checkpoint()
+	get_tree().change_scene_to_file(current_level)
+
+
 ## After Game Over: retry the last checkpoint level (not always level 1).
 func retry_checkpoint() -> void:
 	hp = max_hp
 	life = 4
+	_ending = false
+	lose_reason = ""
 	reset_run_resources()
 	save_player_position = Vector2.ZERO
 	if current_level == "" or not ResourceLoader.exists(current_level):
@@ -116,14 +185,16 @@ func on_level_entered(level_path: String) -> void:
 	if level_path == "" or level_path.begins_with("res://Scenes/Levels/game_"):
 		patience_active = false
 		return
-	if level_path.begins_with("res://Scenes/Levels/menu") or level_path.begins_with("res://Scenes/Levels/credit") or level_path.begins_with("res://Scenes/Levels/options"):
+	if level_path.begins_with("res://Scenes/Levels/menu") or level_path.begins_with("res://Scenes/Levels/credit") or level_path.begins_with("res://Scenes/Levels/options") or level_path.begins_with("res://Scenes/Levels/story_intro"):
 		patience_active = false
 		return
-	# New level (not death reload) → clear mid-level shrine.
+	# New level (not death reload) → clear mid-level shrine and thevada haste.
 	if current_level != "" and current_level != level_path:
 		clear_level_checkpoint()
+		patience_drain_mult = 1.0
 	current_level = level_path
 	patience_active = true
+	_ending = false
 	save_checkpoint()
 	if player != null:
 		if has_level_checkpoint and checkpoint_position != Vector2.ZERO:
@@ -136,6 +207,8 @@ func on_level_entered(level_path: String) -> void:
 
 
 func damage(val: int = 1) -> void:
+	if god_mode:
+		return
 	hp = hp - val
 	if hp <= 0:
 		death()
@@ -148,10 +221,10 @@ func add_hp(val: int = 1) -> void:
 
 
 func update_option() -> void:
-	var music_bus := AudioServer.get_bus_index("music")
-	var sfx_bus := AudioServer.get_bus_index("sfx")
-	AudioServer.set_bus_mute(sfx_bus, not sfx_on)
-	AudioServer.set_bus_mute(music_bus, not music_on)
+	# The on/off toggles and the sliders both feed the same bus, so a muted
+	# toggle wins regardless of where the slider sits.
+	AudioManager.set_bus_volume(&"music", music_volume if music_on else 0.0)
+	AudioManager.set_bus_volume(&"sfx", sfx_volume if sfx_on else 0.0)
 
 
 func add_life() -> void:
@@ -159,7 +232,25 @@ func add_life() -> void:
 		life += 1
 
 
+func end_from_patience() -> void:
+	if _ending:
+		return
+	_ending = true
+	patience = 0.0
+	patience_active = false
+	lose_reason = "patience"
+	if player != null and is_instance_valid(player):
+		player.movement_enabled = false
+	await get_tree().create_timer(0.4).timeout
+	if not is_inside_tree():
+		return
+	clear_level_checkpoint()
+	get_tree().change_scene_to_file("res://Scenes/Levels/game_over.tscn")
+
+
 func death() -> void:
+	if god_mode or _ending:
+		return
 	patience_active = false
 	if player != null:
 		await player.death_tween()
@@ -169,6 +260,7 @@ func death() -> void:
 	ammo = mini(max_ammo, maxi(ammo, 3))
 	save_checkpoint()
 	if life <= 0:
+		lose_reason = "lives"
 		clear_level_checkpoint()
 		get_tree().change_scene_to_file("res://Scenes/Levels/game_over.tscn")
 	else:
@@ -183,6 +275,8 @@ func save_option() -> void:
 		var payload: Dictionary = {
 			"music": music_on,
 			"sound": sfx_on,
+			"music_volume": music_volume,
+			"sfx_volume": sfx_volume,
 		}
 		file.store_pascal_string(JSON.stringify(payload, "  "))
 		file.close()
@@ -197,7 +291,9 @@ func load_option() -> void:
 		if typeof(data) == TYPE_DICTIONARY:
 			music_on = data.get("music", true)
 			sfx_on = data.get("sound", true)
-			update_option()
+			music_volume = float(data.get("music_volume", music_volume))
+			sfx_volume = float(data.get("sfx_volume", sfx_volume))
+	update_option()
 
 
 func save_checkpoint() -> void:
@@ -211,6 +307,7 @@ func save_checkpoint() -> void:
 		"current_level": current_level,
 		"player": pos,
 		"score": score,
+		"kratib": kratib,
 		"life": life,
 		"hp": hp,
 		"patience": patience,
@@ -223,9 +320,11 @@ func save_checkpoint() -> void:
 
 
 func save_game() -> void:
+	# Levels all share base_level.tscn as their root, so ask the level for its id
+	# instead of trusting scene_file_path.
 	var scene := get_tree().current_scene
-	if scene != null and scene.scene_file_path != "":
-		current_level = scene.scene_file_path
+	if scene != null and scene.has_method("level_scene_path"):
+		current_level = scene.level_scene_path()
 	save_checkpoint()
 
 
@@ -246,6 +345,7 @@ func load_game() -> void:
 		return
 	current_level = str(data.get("current_level", current_level))
 	score = int(data.get("score", score))
+	kratib = int(data.get("kratib", 0))
 	life = int(data.get("life", 4))
 	hp = int(data.get("hp", max_hp))
 	patience = float(data.get("patience", max_patience))

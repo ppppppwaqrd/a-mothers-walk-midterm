@@ -1,74 +1,85 @@
-"""Create ground_tile_set_01..04.tres + .import stubs."""
-from pathlib import Path
+"""Write one TileSet per level and point each level scene at its own.
 
-ROOT = Path(r"c:\Users\jakkr\OneDrive\เดสก์ท็อป\Gamedev\lab4\2D-Platformer-Starter-Kit-main")
-src = (ROOT / "Scenes/Prefabs/ground_tile_set.tres").read_text(encoding="utf-8")
+Each tileset declares only the cells the levels actually place: four surface
+variants and four soil variants, all with full-cell collision. The level scenes
+also carried tileset UIDs that did not match the files they pointed at (Godot was
+silently falling back to the path), so the references are rewritten here to keep
+UID and path in agreement.
 
-UIDS = {
-    1: "uid://gtilelevel01amw",
-    2: "uid://gtilelevel02amw",
-    3: "uid://gtilelevel03amw",
-    4: "uid://gtilelevel04amw",
-}
-TEX_UIDS = {
-    1: "uid://texlevel01tiles",
-    2: "uid://texlevel02tiles",
-    3: "uid://texlevel03tiles",
-    4: "uid://texlevel04tiles",
-}
-
-IMPORT = """[remap]
-
-importer="texture"
-type="CompressedTexture2D"
-uid="{uid}"
-path="res://.godot/imported/{name}-placeholder.ctex"
-metadata={{
-"vram_texture": false
-}}
-
-[deps]
-
-source_file="res://Assets/Generated/Tiles/{name}"
-dest_files=["res://.godot/imported/{name}-placeholder.ctex"]
-
-[params]
-
-compress/mode=0
-compress/high_quality=false
-compress/lossy_quality=0.7
-compress/uastc_level=0
-compress/rdo_quality_loss=0.0
-compress/hdr_compression=1
-compress/normal_map=0
-compress/channel_pack=0
-mipmaps/generate=false
-mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
-process/channel_remap/red=0
-process/channel_remap/green=1
-process/channel_remap/blue=2
-process/channel_remap/alpha=3
-process/fix_alpha_border=true
-process/premult_alpha=false
-process/normal_map_invert_y=false
-process/hdr_as_srgb=false
-process/hdr_clamp_exposure=false
-process/size_limit=0
-detect_3d/compress_to=1
+Usage: python scripts/make_level_tilesets.py
 """
 
-for n in range(1, 5):
-    name = f"tiles_level_0{n}.png"
-    tex = f"res://Assets/Generated/Tiles/{name}"
-    body = src.replace("uid://bvk6vx5i1riqd", UIDS[n])
-    body = body.replace("uid://jaegp53ccc7w", TEX_UIDS[n])
-    body = body.replace("res://Assets/Spritesheet/platformPack_tilesheet.png", tex)
-    out = ROOT / f"Scenes/Prefabs/ground_tile_set_0{n}.tres"
-    out.write_text(body, encoding="utf-8")
-    imp = ROOT / "Assets/Generated/Tiles" / f"{name}.import"
-    imp.write_text(IMPORT.format(uid=TEX_UIDS[n], name=name), encoding="utf-8")
-    print("wrote", out.name)
+from __future__ import annotations
 
-print("done")
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+PREFABS = ROOT / "Scenes" / "Prefabs"
+LEVELS = ROOT / "Scenes" / "Levels"
+
+TILESET_UID = {
+    1: "uid://dpk7f214d263s",
+    2: "uid://dpk7f214d363s",
+    3: "uid://dpk7f214d463s",
+    4: "uid://dpk7f214d563s",
+    5: "uid://dpk7f214d663s",
+    6: "uid://dpk7f214d763s",
+}
+
+FULL_CELL = "PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)"
+
+# Surface variants on row 0, soil variants on row 1; see build_storybook_tiles.py.
+VARIANTS = 4
+FIRST_COL = 3
+
+TEMPLATE = """[gd_resource type="TileSet" format=3 uid="{uid}"]
+
+[ext_resource type="Texture2D" path="res://Assets/Generated/Tiles/tiles_level_{nn}.png" id="1_sheet"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ground"]
+texture = ExtResource("1_sheet")
+texture_region_size = Vector2i(64, 64)
+{cells}
+
+[resource]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_ground")
+"""
+
+
+def cell_block() -> str:
+    lines = []
+    for row in (0, 1):
+        for v in range(VARIANTS):
+            coord = f"{FIRST_COL + v}:{row}"
+            lines.append(f"{coord}/0 = 0")
+            lines.append(f"{coord}/0/physics_layer_0/polygon_0/points = {FULL_CELL}")
+    return "\n".join(lines)
+
+
+def main() -> None:
+    cells = cell_block()
+    for level, uid in TILESET_UID.items():
+        nn = f"{level:02d}"
+        path = PREFABS / f"ground_tile_set_{nn}.tres"
+        path.write_text(TEMPLATE.format(uid=uid, nn=nn, cells=cells), encoding="utf-8")
+        print(f"wrote {path.name}")
+
+    pattern = re.compile(r'\[ext_resource type="TileSet" uid="[^"]*" path="res://Scenes/Prefabs/ground_tile_set_\d\d\.tres"')
+    for level, uid in TILESET_UID.items():
+        nn = f"{level:02d}"
+        scene = LEVELS / f"level_{nn}.tscn"
+        text = scene.read_text(encoding="utf-8")
+        replacement = f'[ext_resource type="TileSet" uid="{uid}" path="res://Scenes/Prefabs/ground_tile_set_{nn}.tres"'
+        new_text, count = pattern.subn(replacement, text)
+        if count == 0:
+            print(f"  !! no tileset reference found in level_{nn}.tscn")
+            continue
+        scene.write_text(new_text, encoding="utf-8")
+        print(f"  level_{nn}.tscn -> ground_tile_set_{nn}.tres")
+
+
+if __name__ == "__main__":
+    main()

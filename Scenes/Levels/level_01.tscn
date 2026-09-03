@@ -1,53 +1,112 @@
 [gd_scene format=4 uid="uid://dekkdb3a0eifd"]
 
-[ext_resource type="PackedScene" uid="uid://bjntpxb1c8jxn" path="res://Scenes/Levels/base_level.tscn" id="1_base"]
+[ext_resource type="Script" uid="uid://c7w5vtdg0leb7" path="res://Scenes/Levels/level_background.gd" id="1_bg"]
+[ext_resource type="PackedScene" uid="uid://cyti38f0lagf2" path="res://Scenes/Prefabs/level_finish_door.tscn" id="1_door"]
+[ext_resource type="PackedScene" uid="uid://w7m6tehvvy3g" path="res://Scenes/Actors/player.tscn" id="1_player"]
+[ext_resource type="Script" uid="uid://cwm5w1bxx3js3" path="res://Scenes/Levels/base_level.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cdwabmqtlxr1y" path="res://Scenes/Levels/game_ui.tscn" id="1_ui"]
 [ext_resource type="PackedScene" uid="uid://cppg5yoxwv0dy" path="res://Scenes/Levels/level_02.tscn" id="2_next"]
-[ext_resource type="TileSet" uid="uid://gtilelevel01amw" path="res://Scenes/Prefabs/ground_tile_set_01.tres" id="3_tiles"]
+[ext_resource type="TileSet" uid="uid://dpk7f214d263s" path="res://Scenes/Prefabs/ground_tile_set_01.tres" id="3_tiles"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/trap_thorns.tscn" id="10_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/kratib_item.tscn" id="11_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/heart_item.tscn" id="12_a"]
 [ext_resource type="PackedScene" path="res://Scenes/Prefabs/stone_ammo_item.tscn" id="13_ammo"]
-[ext_resource type="PackedScene" path="res://Scenes/Prefabs/villager_help.tscn" id="13_vil"]
-[ext_resource type="PackedScene" uid="uid://637k1gnncq4t" path="res://Scenes/Actors/enemy_boar.tscn" id="14_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/pushable.tscn" id="13_push"]
 [ext_resource type="PackedScene" uid="uid://bowl33xkoh7en" path="res://Scenes/Actors/enemy_snake.tscn" id="15_a"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/puzzle_gate.tscn" id="17_gate"]
+[ext_resource type="PackedScene" path="res://Scenes/Prefabs/puzzle_switch.tscn" id="18_sw"]
 
-[node name="BaseLevel" unique_id=2137480861 instance=ExtResource("1_base")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fall"]
+size = Vector2(4200, 140)
 
-[node name="LevelFinishDoor" parent="." index="1"]
-position = Vector2(2304, 448)
+[node name="BaseLevel" type="Node2D" unique_id=1640586948]
+script = ExtResource("1_script")
+
+[node name="LevelBackground" type="Node2D" parent="." unique_id=267718935]
+z_index = -100
+z_as_relative = false
+script = ExtResource("1_bg")
+
+[node name="Sky" type="Sprite2D" parent="LevelBackground" unique_id=2040980246]
+centered = false
+
+[node name="Far" type="Sprite2D" parent="LevelBackground" unique_id=1912179297]
+centered = false
+
+[node name="Mid" type="Sprite2D" parent="LevelBackground" unique_id=1416603656]
+centered = false
+
+[node name="Near" type="Sprite2D" parent="LevelBackground" unique_id=1203100453]
+centered = false
+
+[node name="LevelFinishDoor" parent="." unique_id=245745742 instance=ExtResource("1_door")]
+z_index = 1
+position = Vector2(2304, 512)
 next_scene = ExtResource("2_next")
 
-[node name="Ground" type="TileMapLayer" parent="Level" index="0" unique_id=1176051180]
-tile_map_data = PackedByteArray("AAD+/wgAAAAAAAAAAAD//wgAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAEAAgAAAAAAAAAAAAFAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAAHAAgAAAAAAAAAAAAIAAgAAAAAAAAAAAAJAAgAAAAAAAAAAAAKAAgAAAAAAAAAAAALAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAANAAgAAAAAAAAAAAD+/wkAAAADAAAAAAD//wkAAAADAAAAAAAAAAkAAAADAAAAAAABAAkAAAADAAAAAAACAAkAAAADAAAAAAADAAkAAAADAAAAAAAEAAkAAAADAAAAAAAFAAkAAAADAAAAAAAGAAkAAAADAAAAAAAHAAkAAAADAAAAAAAIAAkAAAADAAAAAAAJAAkAAAADAAAAAAAKAAkAAAADAAAAAAALAAkAAAADAAAAAAAMAAkAAAADAAAAAAANAAkAAAADAAAAAAD+/woAAAADAAAAAAD//woAAAADAAAAAAAAAAoAAAADAAAAAAABAAoAAAADAAAAAAACAAoAAAADAAAAAAADAAoAAAADAAAAAAAEAAoAAAADAAAAAAAFAAoAAAADAAAAAAAGAAoAAAADAAAAAAAHAAoAAAADAAAAAAAIAAoAAAADAAAAAAAJAAoAAAADAAAAAAAKAAoAAAADAAAAAAALAAoAAAADAAAAAAAMAAoAAAADAAAAAAANAAoAAAADAAAAAAD+/wsAAAADAAAAAAD//wsAAAADAAAAAAAAAAsAAAADAAAAAAABAAsAAAADAAAAAAACAAsAAAADAAAAAAADAAsAAAADAAAAAAAEAAsAAAADAAAAAAAFAAsAAAADAAAAAAAGAAsAAAADAAAAAAAHAAsAAAADAAAAAAAIAAsAAAADAAAAAAAJAAsAAAADAAAAAAAKAAsAAAADAAAAAAALAAsAAAADAAAAAAAMAAsAAAADAAAAAAANAAsAAAADAAAAAAAPAAgAAAAAAAAAAAAQAAgAAAAAAAAAAAARAAgAAAAAAAAAAAASAAgAAAAAAAAAAAATAAgAAAAAAAAAAAAUAAgAAAAAAAAAAAAVAAgAAAAAAAAAAAAWAAgAAAAAAAAAAAAXAAgAAAAAAAAAAAAYAAgAAAAAAAAAAAAZAAgAAAAAAAAAAAAaAAgAAAAAAAAAAAAbAAgAAAAAAAAAAAAcAAgAAAAAAAAAAAAPAAkAAAADAAAAAAAQAAkAAAADAAAAAAARAAkAAAADAAAAAAASAAkAAAADAAAAAAATAAkAAAADAAAAAAAUAAkAAAADAAAAAAAVAAkAAAADAAAAAAAWAAkAAAADAAAAAAAXAAkAAAADAAAAAAAYAAkAAAADAAAAAAAZAAkAAAADAAAAAAAaAAkAAAADAAAAAAAbAAkAAAADAAAAAAAcAAkAAAADAAAAAAAPAAoAAAADAAAAAAAQAAoAAAADAAAAAAARAAoAAAADAAAAAAASAAoAAAADAAAAAAATAAoAAAADAAAAAAAUAAoAAAADAAAAAAAVAAoAAAADAAAAAAAWAAoAAAADAAAAAAAXAAoAAAADAAAAAAAYAAoAAAADAAAAAAAZAAoAAAADAAAAAAAaAAoAAAADAAAAAAAbAAoAAAADAAAAAAAcAAoAAAADAAAAAAAPAAsAAAADAAAAAAAQAAsAAAADAAAAAAARAAsAAAADAAAAAAASAAsAAAADAAAAAAATAAsAAAADAAAAAAAUAAsAAAADAAAAAAAVAAsAAAADAAAAAAAWAAsAAAADAAAAAAAXAAsAAAADAAAAAAAYAAsAAAADAAAAAAAZAAsAAAADAAAAAAAaAAsAAAADAAAAAAAbAAsAAAADAAAAAAAcAAsAAAADAAAAAAAIAAcAAAADAAEAAAAJAAcAAAADAAEAAAAKAAcAAAADAAEAAAALAAcAAAADAAEAAAAWAAcAAAADAAEAAAAXAAcAAAADAAEAAAAYAAcAAAADAAEAAAAeAAgAAAAAAAAAAAAfAAgAAAAAAAAAAAAgAAgAAAAAAAAAAAAhAAgAAAAAAAAAAAAiAAgAAAAAAAAAAAAjAAgAAAAAAAAAAAAkAAgAAAAAAAAAAAAlAAgAAAAAAAAAAAAmAAgAAAAAAAAAAAAnAAgAAAAAAAAAAAAeAAkAAAADAAAAAAAfAAkAAAADAAAAAAAgAAkAAAADAAAAAAAhAAkAAAADAAAAAAAiAAkAAAADAAAAAAAjAAkAAAADAAAAAAAkAAkAAAADAAAAAAAlAAkAAAADAAAAAAAmAAkAAAADAAAAAAAnAAkAAAADAAAAAAAeAAoAAAADAAAAAAAfAAoAAAADAAAAAAAgAAoAAAADAAAAAAAhAAoAAAADAAAAAAAiAAoAAAADAAAAAAAjAAoAAAADAAAAAAAkAAoAAAADAAAAAAAlAAoAAAADAAAAAAAmAAoAAAADAAAAAAAnAAoAAAADAAAAAAAeAAsAAAADAAAAAAAfAAsAAAADAAAAAAAgAAsAAAADAAAAAAAhAAsAAAADAAAAAAAiAAsAAAADAAAAAAAjAAsAAAADAAAAAAAkAAsAAAADAAAAAAAlAAsAAAADAAAAAAAmAAsAAAADAAAAAAAnAAsAAAADAAAAAAAfAA0AAAAFAAEAAAAdAAgAAAAAAAAAAAA=")
+[node name="Level" type="Node2D" parent="." unique_id=1588973973]
+
+[node name="Ground" type="TileMapLayer" parent="Level" unique_id=117934707]
+tile_map_data = PackedByteArray("AAD+/wgAAAAGAAAAAAD//wgAAAAEAAAAAAAAAAgAAAAGAAAAAAABAAgAAAAFAAAAAAACAAgAAAADAAAAAAADAAgAAAAFAAAAAAAEAAgAAAADAAAAAAAFAAgAAAAFAAAAAAAGAAgAAAAEAAAAAAAHAAgAAAAGAAAAAAAIAAgAAAAEAAEAAAAJAAgAAAAGAAEAAAAKAAgAAAAEAAEAAAALAAgAAAADAAEAAAAMAAgAAAAFAAAAAAANAAgAAAADAAAAAAD+/wkAAAAEAAEAAAD//wkAAAAGAAEAAAAAAAkAAAAEAAEAAAABAAkAAAADAAEAAAACAAkAAAAFAAEAAAADAAkAAAADAAEAAAAEAAkAAAAFAAEAAAAFAAkAAAADAAEAAAAGAAkAAAAGAAEAAAAHAAkAAAAEAAEAAAAIAAkAAAAGAAEAAAAJAAkAAAAEAAEAAAAKAAkAAAAGAAEAAAALAAkAAAAFAAEAAAAMAAkAAAADAAEAAAANAAkAAAAFAAEAAAD+/woAAAAGAAEAAAD//woAAAAEAAEAAAAAAAoAAAAGAAEAAAABAAoAAAAFAAEAAAACAAoAAAADAAEAAAADAAoAAAAFAAEAAAAEAAoAAAADAAEAAAAFAAoAAAAFAAEAAAAGAAoAAAAEAAEAAAAHAAoAAAAGAAEAAAAIAAoAAAAEAAEAAAAJAAoAAAAGAAEAAAAKAAoAAAAEAAEAAAALAAoAAAADAAEAAAAMAAoAAAAFAAEAAAANAAoAAAADAAEAAAD+/wsAAAAEAAEAAAD//wsAAAAGAAEAAAAAAAsAAAAEAAEAAAABAAsAAAADAAEAAAACAAsAAAAFAAEAAAADAAsAAAADAAEAAAAEAAsAAAAFAAEAAAAFAAsAAAADAAEAAAAGAAsAAAAGAAEAAAAHAAsAAAAEAAEAAAAIAAsAAAAGAAEAAAAJAAsAAAAEAAEAAAAKAAsAAAAGAAEAAAALAAsAAAAFAAEAAAAMAAsAAAADAAEAAAANAAsAAAAFAAEAAAAPAAgAAAADAAAAAAAQAAgAAAAFAAAAAAARAAgAAAAEAAAAAAASAAgAAAAGAAAAAAATAAgAAAAEAAAAAAAUAAgAAAAGAAAAAAAVAAgAAAAEAAAAAAAWAAgAAAADAAEAAAAXAAgAAAAFAAEAAAAYAAgAAAADAAEAAAAZAAgAAAAFAAAAAAAaAAgAAAADAAAAAAAbAAgAAAAGAAAAAAAcAAgAAAAEAAAAAAAPAAkAAAAFAAEAAAAQAAkAAAADAAEAAAARAAkAAAAGAAEAAAASAAkAAAAEAAEAAAATAAkAAAAGAAEAAAAUAAkAAAAEAAEAAAAVAAkAAAAGAAEAAAAWAAkAAAAFAAEAAAAXAAkAAAADAAEAAAAYAAkAAAAFAAEAAAAZAAkAAAADAAEAAAAaAAkAAAAFAAEAAAAbAAkAAAAEAAEAAAAcAAkAAAAGAAEAAAAPAAoAAAADAAEAAAAQAAoAAAAFAAEAAAARAAoAAAAEAAEAAAASAAoAAAAGAAEAAAATAAoAAAAEAAEAAAAUAAoAAAAGAAEAAAAVAAoAAAAEAAEAAAAWAAoAAAADAAEAAAAXAAoAAAAFAAEAAAAYAAoAAAADAAEAAAAZAAoAAAAFAAEAAAAaAAoAAAADAAEAAAAbAAoAAAAGAAEAAAAcAAoAAAAEAAEAAAAPAAsAAAAFAAEAAAAQAAsAAAADAAEAAAARAAsAAAAGAAEAAAASAAsAAAAEAAEAAAATAAsAAAAGAAEAAAAUAAsAAAAEAAEAAAAVAAsAAAAGAAEAAAAWAAsAAAAFAAEAAAAXAAsAAAADAAEAAAAYAAsAAAAFAAEAAAAZAAsAAAADAAEAAAAaAAsAAAAFAAEAAAAbAAsAAAAEAAEAAAAcAAsAAAAGAAEAAAAIAAcAAAAGAAAAAAAJAAcAAAAEAAAAAAAKAAcAAAAGAAAAAAALAAcAAAAFAAAAAAAWAAcAAAAFAAAAAAAXAAcAAAADAAAAAAAYAAcAAAAFAAAAAAAeAAgAAAAEAAAAAAAfAAgAAAAGAAAAAAAgAAgAAAAEAAAAAAAhAAgAAAADAAAAAAAiAAgAAAAFAAAAAAAjAAgAAAADAAAAAAAkAAgAAAAFAAAAAAAlAAgAAAADAAAAAAAmAAgAAAAGAAAAAAAnAAgAAAAEAAAAAAAeAAkAAAAGAAEAAAAfAAkAAAAEAAEAAAAgAAkAAAAGAAEAAAAhAAkAAAAFAAEAAAAiAAkAAAADAAEAAAAjAAkAAAAFAAEAAAAkAAkAAAADAAEAAAAlAAkAAAAFAAEAAAAmAAkAAAAEAAEAAAAnAAkAAAAGAAEAAAAeAAoAAAAEAAEAAAAfAAoAAAAGAAEAAAAgAAoAAAAEAAEAAAAhAAoAAAADAAEAAAAiAAoAAAAFAAEAAAAjAAoAAAADAAEAAAAkAAoAAAAFAAEAAAAlAAoAAAADAAEAAAAmAAoAAAAGAAEAAAAnAAoAAAAEAAEAAAAeAAsAAAAGAAEAAAAfAAsAAAAEAAEAAAAgAAsAAAAGAAEAAAAhAAsAAAAFAAEAAAAiAAsAAAADAAEAAAAjAAsAAAAFAAEAAAAkAAsAAAADAAEAAAAlAAsAAAAFAAEAAAAmAAsAAAAEAAEAAAAnAAsAAAAGAAEAAAAfAA0AAAAEAAAAAAAdAAgAAAAGAAAAAAAOAAkAAAAFAAEAAAAOAAoAAAADAAEAAAAOAAsAAAAFAAEAAAAOAAgAAAAFAAAAAAA=")
 tile_set = ExtResource("3_tiles")
 
-[node name="KratibItem" parent="Coins" index="0" unique_id=1787002743 instance=ExtResource("11_a")]
-position = Vector2(256, 484)
+[node name="Player" parent="." unique_id=528290581 instance=ExtResource("1_player")]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(80, 300)
 
-[node name="KratibItem2" parent="Coins" index="1" unique_id=162061222 instance=ExtResource("11_a")]
+[node name="Coins" type="Node2D" parent="." unique_id=1478057069]
+z_index = 2
+
+[node name="KratibItem" parent="Coins" unique_id=1508341147 instance=ExtResource("11_a")]
+position = Vector2(1860, 488)
+
+[node name="KratibItem2" parent="Coins" unique_id=1186999208 instance=ExtResource("11_a")]
 position = Vector2(608, 420)
 
-[node name="HeartItem" parent="Coins" index="2" unique_id=1413136960 instance=ExtResource("12_a")]
+[node name="HeartItem" parent="Coins" unique_id=283345677 instance=ExtResource("12_a")]
 position = Vector2(1472, 420)
 
-[node name="StoneAmmoItem" parent="Coins" index="3" instance=ExtResource("13_ammo")]
-position = Vector2(960, 484)
+[node name="StoneAmmoItem" parent="Coins" unique_id=1274392036 instance=ExtResource("13_ammo")]
+position = Vector2(1747, 496)
 
-[node name="VillagerHelp" parent="." instance=ExtResource("13_vil")]
-position = Vector2(400, 512)
+[node name="Enemies" type="Node2D" parent="." unique_id=1330822737]
 
-[node name="Boar1" parent="Enemies" index="0" unique_id=1277050420 instance=ExtResource("14_a")]
-position = Vector2(1071, 497)
-
-[node name="Snake1" parent="Enemies" index="1" unique_id=906102101 instance=ExtResource("15_a")]
-position = Vector2(1901, 506)
+[node name="Snake1" parent="Enemies" unique_id=1831620400 instance=ExtResource("15_a")]
+position = Vector2(1984, 512)
 direction = -1
 
-[node name="Label" parent="UserInterface" index="1"]
-text = "ด่าน 1 — ออกจากหมู่บ้าน"
+[node name="UserInterface" parent="." unique_id=1650468802 instance=ExtResource("1_ui")]
 
-[node name="TrapThorns" parent="." index="9" unique_id=1356482048 instance=ExtResource("10_a")]
+[node name="Text" type="Node2D" parent="." unique_id=578529000]
+
+[node name="FallKill" type="Area2D" parent="." unique_id=809556248]
+position = Vector2(1600, 760)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FallKill" unique_id=382124858]
+shape = SubResource("RectangleShape2D_fall")
+
+[node name="Pushable" parent="." unique_id=2098237820 instance=ExtResource("13_push")]
+position = Vector2(886, 515)
+
+[node name="TrapThorns" parent="." unique_id=777760956 instance=ExtResource("10_a")]
 position = Vector2(451, 512)
 
-[node name="TrapThorns2" parent="." index="10" unique_id=663422369 instance=ExtResource("10_a")]
-position = Vector2(1333, 505)
+[node name="TrapThorns2" parent="." unique_id=325382122 instance=ExtResource("10_a")]
+position = Vector2(1170, 504)
+
+[node name="PuzzleSwitch" parent="." unique_id=2133481256 instance=ExtResource("18_sw")]
+position = Vector2(1027, 512)
+gate_paths = Array[NodePath]([NodePath("../PuzzleGate")])
+trigger_pushable = true
+alert_text = "กำแพงไผ่เปิดแล้ว"
+
+[node name="PuzzleGate" parent="." unique_id=406515547 instance=ExtResource("17_gate")]
+position = Vector2(1286, 498)
+
+[connection signal="hit_enemy" from="Player" to="." method="_on_player_hit_enemy"]
+[connection signal="hit_trap" from="Player" to="." method="_on_player_hit_trap"]
+[connection signal="body_entered" from="FallKill" to="." method="_on_fall_kill_body_entered"]

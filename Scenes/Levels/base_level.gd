@@ -1,33 +1,40 @@
 extends Node2D
 
+## Which level this scene is, e.g. "level_03". Every level scene has this same
+## base scene as its root, so `scene_file_path` always reports base_level.tscn
+## and cannot be used to tell the levels apart. This id picks the background
+## artwork, the tileset, the music, and the entry in the save file.
+@export var level_id: String = "level_01"
+
+## Shown on the chapter page that opens the level.
+@export var level_title: String = "ออกจากหมู่บ้าน"
+
+const CONTROLS_HINT := "เก็บกระติบให้ครบ 8 ใบ · อย่าให้หลอดไอ้ทองหมด"
+
+
+func level_scene_path() -> String:
+	return "res://Scenes/Levels/%s.tscn" % level_id
+
+
+## "level_03" -> 3
+func level_number() -> int:
+	return int(level_id.trim_prefix("level_"))
+
+
 func _ready() -> void:
 	GameManager.player = %Player
-	GameManager.on_level_entered(scene_file_path)
+	GameManager.on_level_entered(level_scene_path())
 	var bg := get_node_or_null("LevelBackground")
-	if bg and bg.has_method("_apply_for_current_scene"):
-		bg._apply_for_current_scene()
+	if bg and bg.has_method("apply_level"):
+		bg.apply_level(level_id)
 	if %Player:
 		%Player.spawn_point = %Player.global_position
-	$MusicPlayer.play(0)
-	_show_start_hints()
-
-
-func _show_start_hints() -> void:
-	var label := $UserInterface/Label
-	if label == null:
-		return
-	var level_title := str(label.text).strip_edges()
-	label.text = "%s\nA/D เดิน | Space กระโดด | J ปาหิน" % level_title
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	var tween = create_tween()
-	label.scale = Vector2.ZERO
-	tween.tween_property(label, "scale", Vector2.ONE, 0.8)
-	await get_tree().create_timer(4.0).timeout
-	if is_instance_valid(label):
-		label.queue_free()
+	AudioManager.play_music_for(level_id)
+	$UserInterface.show_level_page("บทที่ %d" % level_number(), level_title, CONTROLS_HINT, level_id)
 
 
 func _on_player_hit_enemy(enemy: Node2D = null) -> void:
+	AudioManager.play("hurt")
 	if enemy != null and enemy.has_method("get_touch_damage"):
 		GameManager.damage(enemy.get_touch_damage())
 	else:
@@ -35,10 +42,17 @@ func _on_player_hit_enemy(enemy: Node2D = null) -> void:
 
 
 func _on_player_hit_trap() -> void:
+	AudioManager.play("hurt")
 	GameManager.damage(20)
 	if GameManager.player and GameManager.player.has_method("damage_tween"):
 		GameManager.player.damage_tween()
 
 
-func _on_music_player_finished() -> void:
-	$MusicPlayer.play(0)
+func _on_fall_kill_body_entered(body: Node2D) -> void:
+	if not body.is_in_group("Player"):
+		return
+	if GameManager.god_mode:
+		body.global_position = body.spawn_point
+		body.velocity = Vector2.ZERO
+		return
+	GameManager.death()

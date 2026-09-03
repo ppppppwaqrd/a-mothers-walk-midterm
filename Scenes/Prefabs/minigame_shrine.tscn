@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scenes/Prefabs/minigame_shrine.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://Assets/Generated/Spritesheet/deva.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mg"]
+size = Vector2(56, 88)
+
+[node name="MinigameShrine" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -48)
+texture = ExtResource("2_tex")
+
+[node name="Hint" type="Label" parent="."]
+offset_left = -88.0
+offset_top = -112.0
+offset_right = 88.0
+offset_bottom = -86.0
+theme_override_font_sizes/font_size = 14
+text = "เดินเข้ามาคุย"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -44)
+shape = SubResource("RectangleShape2D_mg")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

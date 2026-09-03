@@ -6,5 +6,5 @@ extends Area2D
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player") and body.has_method("jump"):
 		body.velocity.y = -bounce_force
-		if AudioManager.jump_sfx:
-			AudioManager.jump_sfx.play()
+		# Lower than the player's own jump, so a board reads as a bigger launch.
+		AudioManager.play("jump", 0.0, 0.78)

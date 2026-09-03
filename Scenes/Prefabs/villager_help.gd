@@ -16,7 +16,7 @@ func _on_body_entered(body: Node2D) -> void:
 	GameManager.patience = minf(GameManager.max_patience, GameManager.patience + patience_reward)
 	GameManager.add_ammo(ammo_reward)
 	GameManager.add_score(score_reward)
-	AudioManager.coin_pickup_sfx.play()
+	AudioManager.play("checkpoint_bell")
 	var ui := get_tree().current_scene.get_node_or_null("UserInterface")
 	if ui and ui.has_method("alert"):
 		ui.alert(help_message)

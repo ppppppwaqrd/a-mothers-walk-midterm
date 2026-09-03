@@ -224,7 +224,7 @@ patrol_width = 240.0
     },
     4: {
         "uid": "uid://level04amotherwalk",
-        "next": ("uid://b46lxwc5r3dy4", "res://Scenes/Levels/game_win.tscn"),
+        "next": ("uid://c1yqm7xd80o0v", "res://Scenes/Levels/game_win.tscn"),
         "title": "ด่าน 4 — ทุ่งนาของไอ้ทอง",
         "cells": build_level4,
         "door": (wx(48), wy_top(G - 1)),
