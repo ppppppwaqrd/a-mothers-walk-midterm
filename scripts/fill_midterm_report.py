@@ -301,7 +301,7 @@ def main() -> None:
         [
             "GitHub Project (ซอร์สโค้ด):  https://github.com/ppppppwaqrd/a-mothers-walk-midterm",
             "GitHub Pages (เล่นบนเว็บ):  https://ppppppwaqrd.github.io/a-mothers-walk-midterm/",
-            "itch.io (เผยแพร่เกม HTML5 ตามข้อกำหนดรายวิชา):  อัปโหลดจากโฟลเดอร์ itch/ ของโปรเจกต์ แล้ววาง URL เกมที่นี่  ______________________________",
+            "itch.io:  https://wsm-jkp.itch.io/amotherswalk",
             "เครื่องมือ: Godot Engine 4.7  ·  ฟอนต์ Charmonman / Mali (SIL OFL)  ·  เพลงและเสียงเอฟเฟกต์สร้างสำหรับโปรเจกต์นี้",
         ],
     )

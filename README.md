@@ -47,7 +47,7 @@
 - **รายงานโครงงาน:** [docs/midterm-report.docx](docs/midterm-report.docx)
 - **GitHub Project:** [ppppppwaqrd/a-mothers-walk-midterm](https://github.com/ppppppwaqrd/a-mothers-walk-midterm)
 - **Play (GitHub Pages):** [เล่นเกม](https://ppppppwaqrd.github.io/a-mothers-walk-midterm/)
-- **itch.io:** *(อัปจากโฟลเดอร์ `itch/` แล้วใส่ลิงก์ที่นี่)*
+- **itch.io:** [wsm-jkp.itch.io/amotherswalk](https://wsm-jkp.itch.io/amotherswalk)
 - **Lab 04 (ส่งแล้ว):** [lab04-a-mothers-walk](https://github.com/ppppppwaqrd/lab04-a-mothers-walk)
 
 ---

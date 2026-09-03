@@ -9,7 +9,7 @@
 5. Paste description from `ITCH_DESCRIPTION.md`
 6. Cover image: use `cover.png`
 7. Set visibility to Public (or Restricted for grading)
-8. Copy the game URL and put it in the project README
+8. Game URL: https://wsm-jkp.itch.io/amotherswalk
 
 ## Controls
 
